@@ -1,5 +1,5 @@
 ﻿using Json2Visio.Web.Models;
-using Microsoft.Office.Interop.Visio;
+//using IVisio = Microsoft.Office.Interop.Visio;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -9,6 +9,8 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using VisioAutomation.VDX;
+using VisioAutomation.VDX.Elements;
 
 namespace Json2Visio.ConsoleApp
 {
@@ -32,17 +34,52 @@ namespace Json2Visio.ConsoleApp
             return input;
         }
 
-        private static void GenerateVisio(Input input)
+        public static void GenerateVisio(Input input)
         {
-            var application = new Application();
-            var outputPath = System.IO.Path.Combine(ROOT_DIR, @"Output\result.vsdx");
-            var document = application.Documents.Add("");
+            var outputPath = System.IO.Path.Combine(ROOT_DIR, @"Output\result.vdx");
 
-            var visioPage = application.ActivePage;
+            var template = new Template();
+            var doc = new Drawing(template);
 
-            var visioShape = visioPage.DrawLine(5, 4, 7.5, 1);
+            var w1 = new DocumentWindow();
+            w1.ShowGrid = false;
+            w1.ShowGuides = false;
+            w1.ShowConnectionPoints = false;
+            w1.ShowPageBreaks = false;
 
-            document.SaveAs(outputPath);
+            var page = GeneratePage(doc);
+
+            w1.Page = page.ID;
+
+            doc.Windows.Add(w1);
+
+            doc.Save(outputPath);
         }
+
+        private static Page GeneratePage(Drawing doc)
+        {
+            var page = new Page(800, 400);
+            doc.Pages.Add(page);
+
+            int rounded_rect_id = doc.GetMasterMetaData("Rounded REctAngle").ID;
+
+            var shape1 = new Shape(rounded_rect_id, 40, 30);
+            page.Shapes.Add(shape1);
+
+            return page;
+        }
+
+        //private static void GenerateVisioWithInterop(Input input)
+        //{
+        //    var application = new Application();
+        //    var outputPath = System.IO.Path.Combine(ROOT_DIR, @"Output\result.vsdx");
+        //    var document = application.Documents.Add("");
+
+        //    var visioPage = application.ActivePage;
+
+        //    var visioShape = visioPage.DrawLine(5, 4, 7.5, 1);
+
+        //    document.SaveAs(outputPath);
+        //}
     }
 }
