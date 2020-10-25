@@ -10,6 +10,7 @@
   "author": "Ihor Deyneka",
   "license": "MIT",
   "dependencies": {
+    "file-saver": "^2.0.2",
     "jszip": "^3.5.0"
   }
 }

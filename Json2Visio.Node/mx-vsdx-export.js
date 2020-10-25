@@ -1,7 +1,7 @@
 /**
  * Export mxFile as Vsdx file
  */
-function VsdxExport(editorUi)
+function VsdxExport(input)
 {
 	var that = this;
 	
@@ -825,141 +825,129 @@ function VsdxExport(editorUi)
 	 */
 	this.exportCurrentDiagrams = function ()
 	{
-		try 
+		var zip = new JSZip();
+			
+		//init class global variables
+		vsdxCanvas.init(zip);
+		idsMap = {};
+		idsCounter = 1;
+		
+		var pages = {};
+		var pageLayers = {};
+		var modelsAttr = {};
+		
+		var pagesCount = editorUi.pages != null? editorUi.pages.length : 1;
+		
+		function collectLayers(graph, diagramName)
 		{
-			if (editorUi.spinner.spin(document.body, mxResources.get('exporting')))
+			var layers = graph.model.getChildCells(graph.model.root);
+			pageLayers[diagramName] = [];
+			
+			for (var k = 0; k < layers.length; k++)
 			{
-				var zip = new JSZip();
-			    
-				//init class global variables
-				vsdxCanvas.init(zip);
-				idsMap = {};
-				idsCounter = 1;
-				
-				var pages = {};
-				var pageLayers = {};
-				var modelsAttr = {};
-				
-				var pagesCount = editorUi.pages != null? editorUi.pages.length : 1;
-				
-				function collectLayers(graph, diagramName)
+				//KNOWN We don't export invisible layers, we may support it later but we need to have a full cell state for invisible cells
+				if (layers[k].visible)
 				{
-					var layers = graph.model.getChildCells(graph.model.root);
-					pageLayers[diagramName] = [];
-					
-					for (var k = 0; k < layers.length; k++)
-					{
-						//KNOWN We don't export invisible layers, we may support it later but we need to have a full cell state for invisible cells
-						if (layers[k].visible)
-						{
-							pageLayers[diagramName].push({
-								name: layers[k].value || 'Background',
-								visible: layers[k].visible,
-								locked: layers[k].style && layers[k].style.indexOf('locked=1') >= 0 
-							});
-						}
-					}
-				};
-				
-				if (editorUi.pages != null) 
-				{
-					var selectedCells = editorUi.editor.graph.getSelectionCells();
-					var currentPage = editorUi.currentPage;
-	
-					for (var i=0; i < editorUi.pages.length; i++)
-					{
-						var page = editorUi.pages[i];
-						
-						if (editorUi.currentPage != page)
-						{
-							editorUi.selectPage(page, true);
-						}
-						
-						var diagramName = page.getName();
-						var graph = editorUi.editor.graph;
-						
-						//Handles dark mode
-						var temp = null;
-						
-						if (graph.themes != null && graph.defaultThemeName == 'darkTheme')
-						{
-							temp = graph.stylesheet;
-							graph.stylesheet = graph.getDefaultStylesheet();
-							graph.refresh();
-						}
-						
-						try
-						{
-							var modelAttrib = getGraphAttributes(graph);
-							pages[diagramName] = convertMxModel2Page(graph, modelAttrib);
-							collectLayers(graph, diagramName);
-							addImagesRels(zip, i+1);
-							modelsAttr[diagramName] = modelAttrib;
-						}
-						finally
-						{
-							if (temp != null)
-							{
-								graph.stylesheet = temp;
-								graph.refresh();
-							}
-						}
-					}
-					
-					if (currentPage != editorUi.currentPage)
-					{
-						editorUi.selectPage(currentPage, true);
-					}
-					
-					editorUi.editor.graph.setSelectionCells(selectedCells);
+					pageLayers[diagramName].push({
+						name: layers[k].value || 'Background',
+						visible: layers[k].visible,
+						locked: layers[k].style && layers[k].style.indexOf('locked=1') >= 0 
+					});
 				}
-				else
+			}
+		};
+		
+		if (editorUi.pages != null) 
+		{
+			var selectedCells = editorUi.editor.graph.getSelectionCells();
+			var currentPage = editorUi.currentPage;
+
+			for (var i=0; i < editorUi.pages.length; i++)
+			{
+				var page = editorUi.pages[i];
+				
+				if (editorUi.currentPage != page)
 				{
-					var graph = editorUi.editor.graph;
+					editorUi.selectPage(page, true);
+				}
+				
+				var diagramName = page.getName();
+				var graph = editorUi.editor.graph;
+				
+				//Handles dark mode
+				var temp = null;
+				
+				if (graph.themes != null && graph.defaultThemeName == 'darkTheme')
+				{
+					temp = graph.stylesheet;
+					graph.stylesheet = graph.getDefaultStylesheet();
+					graph.refresh();
+				}
+				
+				try
+				{
 					var modelAttrib = getGraphAttributes(graph);
-					var diagramName = "Page1";
 					pages[diagramName] = convertMxModel2Page(graph, modelAttrib);
 					collectLayers(graph, diagramName);
-					addImagesRels(zip, 1);
+					addImagesRels(zip, i+1);
 					modelsAttr[diagramName] = modelAttrib;
 				}
-				
-				createVsdxSkeleton(zip, pagesCount);
-				
-				addPagesXML(zip, pages, pageLayers, modelsAttr);
-
-				var createZipFile = function() 
+				finally
 				{
-					zip.generateAsync({type:"base64"}).then(
-						function(content) 
-						{
-							editorUi.spinner.stop();
-							var basename = editorUi.getBaseFilename();
-						    editorUi.saveData(basename + ".vsdx", 'vsdx', content,
-						    	'application/vnd.visio2013', true);
-						}
-					);
-				};
-				
-				if (vsdxCanvas.filesLoading > 0)
-				{
-					// wait until all media files are loaded
-					vsdxCanvas.onFilesLoaded = createZipFile;
-				}
-				else
-				{
-					createZipFile();
+					if (temp != null)
+					{
+						graph.stylesheet = temp;
+						graph.refresh();
+					}
 				}
 			}
 			
-			return true;
+			if (currentPage != editorUi.currentPage)
+			{
+				editorUi.selectPage(currentPage, true);
+			}
+			
+			editorUi.editor.graph.setSelectionCells(selectedCells);
 		}
-		catch(e) 
+		else
 		{
-			console.log(e);
-			editorUi.spinner.stop();
-			return false;
+			var graph = editorUi.editor.graph;
+			var modelAttrib = getGraphAttributes(graph);
+			var diagramName = "Page1";
+			pages[diagramName] = convertMxModel2Page(graph, modelAttrib);
+			collectLayers(graph, diagramName);
+			addImagesRels(zip, 1);
+			modelsAttr[diagramName] = modelAttrib;
 		}
+		
+		createVsdxSkeleton(zip, pagesCount);
+		
+		addPagesXML(zip, pages, pageLayers, modelsAttr);
+
+		var createZipFile = function() 
+		{
+			zip.generateAsync({type:"base64"}).then(
+				function(content) 
+				{
+					editorUi.spinner.stop();
+					var basename = editorUi.getBaseFilename();
+						editorUi.saveData(basename + ".vsdx", 'vsdx', content,
+							'application/vnd.visio2013', true);
+				}
+			);
+		};
+		
+		if (vsdxCanvas.filesLoading > 0)
+		{
+			// wait until all media files are loaded
+			vsdxCanvas.onFilesLoaded = createZipFile;
+		}
+		else
+		{
+			createZipFile();
+		}
+			
+			return true;
 	};	
 }
 

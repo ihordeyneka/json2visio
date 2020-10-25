@@ -1,5 +1,8 @@
 const input = require('./input/data.json');
-const VsdxExport = require('./vsdx-export');
+const vsdx = require('./vsdx');
 
-var vsdx = new VsdxExport(input);
-vsdx.exportCurrentDiagrams();
+const options = {
+  exportPath: 'output\\visio.vsdx'
+}
+
+vsdx(input, options);
