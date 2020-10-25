@@ -6,16 +6,16 @@ function createVsdxSkeleton(zip)
 {
   var files = [
     '[Content_Types].xml',
-    '_rels\\.rels',
-    'docProps\\app.xml',
-    'docProps\\core.xml',
-    'docProps\\custom.xml',
-    'docProps\\thumbnail.emf',
-    'visio\\document.xml',
-    'visio\\windows.xml',
-    'visio\\_rels\\document.xml.rels',
-    'visio\\pages\\pages.xml',
-    'visio\\pages\\_rels\\pages.xml.rels'
+    '_rels/.rels',
+    'docProps/app.xml',
+    'docProps/core.xml',
+    'docProps/custom.xml',
+    'docProps/thumbnail.emf',
+    'visio/document.xml',
+    'visio/windows.xml',
+    'visio/_rels/document.xml.rels',
+    'visio/pages/pages.xml',
+    'visio/pages/_rels/pages.xml.rels'
   ];
 
   for (var file of files)
@@ -28,7 +28,7 @@ function createVsdxSkeleton(zip)
 
 function addPageXML(zip, input)
 {
-  var filePath = 'visio\\pages\\page1.xml';
+  var filePath = 'visio/pages/page1.xml';
   var fileContent = '<?xml version="1.0" encoding="utf-8"?><PageContents xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns="http://schemas.microsoft.com/office/visio/2012/main"><Shapes><OutputShape /><OutputShape /><OutputShape /></Shapes><Connects><OutputConnect /><OutputConnect /><OutputConnect /></Connects></PageContents>';
   zip.file(filePath, fileContent);
 }
