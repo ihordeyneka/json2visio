@@ -1,0 +1,15 @@
+{
+  "name": "json2visio",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "app": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ihor Deyneka",
+  "license": "MIT",
+  "dependencies": {
+    "jszip": "^3.5.0"
+  }
+}
