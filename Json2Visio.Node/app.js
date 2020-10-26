@@ -5,4 +5,7 @@ const options = {
   exportPath: 'output/visio.vsdx'
 }
 
+input.connections = [];
+
 vsdxExport(input, options);
+

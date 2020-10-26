@@ -47,7 +47,9 @@ function vsdxExport(input, options)
 
   zip.generateAsync({type:'base64'}).then(
     function(content) {
-      fs.writeFile(options.exportPath, content, 'base64', () => {});
+      fs.writeFile(options.exportPath, content, 'base64', () => {
+        console.log('VSDX generated');
+      });
     }
   );
 };

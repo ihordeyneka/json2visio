@@ -25,8 +25,8 @@
   ],
   "elements": [
     {
-      "y": -470,
-      "x": -566,
+      "x": 480,
+      "y": 260,
       "id": "6YaXTdNQS6pUD5AWS8c0",
       "name": "Paper1",
       "subName": "Box1",
@@ -35,8 +35,8 @@
       "borderColor": "red"
     },
     {
-      "x": -479,
-      "y": -678,
+      "x": 230,
+      "y": 260,
       "id": "EHKpzSELB7XCc8XSvhLF",
       "name": "Paper2",
       "subName": "Box1",
@@ -45,9 +45,9 @@
       "borderColor": "yellow"
     },
     {
+      "x": 365,
+      "y": 480,
       "id": "svzpDqqgtDAJx3TZTZ7e",
-      "y": -672,
-      "x": -762,
       "name": "PaperA",
       "subName": "BoxA",
       "shape": "Ellipse",
