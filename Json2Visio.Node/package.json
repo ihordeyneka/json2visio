@@ -11,6 +11,7 @@
   "license": "MIT",
   "dependencies": {
     "file-saver": "^2.0.2",
+    "jsdom": "^16.4.0",
     "jszip": "^3.5.0"
   }
 }

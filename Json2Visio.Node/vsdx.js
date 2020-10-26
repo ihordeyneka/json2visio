@@ -1,6 +1,7 @@
 var JSZip = require('JSZip');
 var path = require('path');
 var fs = require('fs');
+var getPageXml = require('./xml-page');
 
 function createVsdxSkeleton(zip)
 {
@@ -18,6 +19,7 @@ function createVsdxSkeleton(zip)
     'visio/masters/_rels/masters.xml.rels',
     'visio/_rels/document.xml.rels',
     'visio/pages/pages.xml',
+    //'visio/pages/page1.xml', //this file is the actual diagram and we will replace its content based on the input
     'visio/pages/_rels/pages.xml.rels',
     'visio/pages/_rels/page1.xml.rels'
   ];
@@ -33,13 +35,11 @@ function createVsdxSkeleton(zip)
 function addPageXML(zip, input)
 {
   var file = 'visio/pages/page1.xml';
-
-  var templatePath = path.join('visio_template', file);
-  var data = fs.readFileSync(templatePath);
+  var data = getPageXml(input);
   zip.file(file, data);
 }
 
-function VsdxExport(input, options)
+function vsdxExport(input, options)
 {
   var zip = new JSZip();
   createVsdxSkeleton(zip);
@@ -52,4 +52,4 @@ function VsdxExport(input, options)
   );
 };
 
-module.exports = VsdxExport;
+module.exports = vsdxExport;

@@ -1,0 +1,235 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<PageContents xmlns='http://schemas.microsoft.com/office/visio/2012/main'
+  xmlns:r='http://schemas.openxmlformats.org/officeDocument/2006/relationships' xml:space='preserve'>
+  <Shapes>
+    <Shape ID='1' NameU='Shape1' IsCustomNameU='1' Name='Shape1' IsCustomName='1' Type='Shape' LineStyle='0' FillStyle='0' TextStyle='0'>
+      <Cell N='PinX' V='5.31496062992126'/>
+      <Cell N='PinY' V='8.956692913385828'/>
+      <Cell N='Width' V='1.181102362204725'/>
+      <Cell N='Height' V='0.5905511811023623'/>
+      <Cell N='LocPinX' V='0.5905511811023623'/>
+      <Cell N='LocPinY' V='0.2952755905511811'/>
+      <Cell N='Angle' V='0' U='NUM' F='No Formula'/>
+      <Cell N='FlipX' V='0' F='No Formula'/>
+      <Cell N='FlipY' V='0' F='No Formula'/>
+      <Cell N='ResizeMode' V='0' F='No Formula'/>
+      <Cell N='LayerMember' V='0'/>
+      <Cell N='FillForegnd' V='#ffffff'/>
+      <Cell N='LineColor' V='#000000'/>
+      <Cell N='Rounding' V='0.1181102362204725'/>
+      <Section N='Geometry' IX='0'>
+        <Cell N='NoFill' V='0'/>
+        <Cell N='NoLine' V='0'/>
+        <Cell N='NoShow' V='0' F='No Formula'/>
+        <Cell N='NoSnap' V='0' F='No Formula'/>
+        <Cell N='NoQuickDrag' V='0' F='No Formula'/>
+        <Row T='MoveTo' IX='1'>
+          <Cell N='X' V='0'/>
+          <Cell N='Y' V='0.5905511811023623'/>
+        </Row>
+        <Row T='LineTo' IX='2'>
+          <Cell N='X' V='1.181102362204725'/>
+          <Cell N='Y' V='0.5905511811023623'/>
+        </Row>
+        <Row T='LineTo' IX='3'>
+          <Cell N='X' V='1.181102362204725'/>
+          <Cell N='Y' V='0'/>
+        </Row>
+        <Row T='LineTo' IX='4'>
+          <Cell N='X' V='0'/>
+          <Cell N='Y' V='0'/>
+        </Row>
+        <Row T='LineTo' IX='5'>
+          <Cell N='X' V='0'/>
+          <Cell N='Y' V='0.5905511811023623'/>
+        </Row>
+      </Section>
+      <Text>PaperB
+BoxB
+      </Text>
+    </Shape>
+    <Shape ID='2' NameU='Shape2' IsCustomNameU='1' Name='Shape2' IsCustomName='1' Type='Shape' LineStyle='0' FillStyle='0' TextStyle='0'>
+      <Cell N='PinX' V='2.854330708661418'/>
+      <Cell N='PinY' V='8.956692913385828'/>
+      <Cell N='Width' V='1.181102362204725'/>
+      <Cell N='Height' V='0.7874015748031497'/>
+      <Cell N='LocPinX' V='0.5905511811023623'/>
+      <Cell N='LocPinY' V='0.3937007874015748'/>
+      <Cell N='Angle' V='0' U='NUM' F='No Formula'/>
+      <Cell N='FlipX' V='0' F='No Formula'/>
+      <Cell N='FlipY' V='0' F='No Formula'/>
+      <Cell N='ResizeMode' V='0' F='No Formula'/>
+      <Cell N='LayerMember' V='0'/>
+      <Cell N='FillForegnd' V='#ffffff'/>
+      <Cell N='LineColor' V='#000000'/>
+      <Section N='Geometry' IX='0'>
+        <Cell N='NoFill' V='0'/>
+        <Cell N='NoLine' V='0'/>
+        <Cell N='NoShow' V='0' F='No Formula'/>
+        <Cell N='NoSnap' V='0' F='No Formula'/>
+        <Cell N='NoQuickDrag' V='0' F='No Formula'/>
+        <Row T='Ellipse' IX='1'>
+          <Cell N='X' V='0.5905511811023623' F='Width*0.5'/>
+          <Cell N='Y' V='0.3937007874015748' F='Height*0.5'/>
+          <Cell N='A' V='0' U='DL' F='Width*0'/>
+          <Cell N='B' V='0.3937007874015748' U='DL' F='Height*0.5'/>
+          <Cell N='C' V='0.5905511811023623' U='DL' F='Width*0.5'/>
+          <Cell N='D' V='0.7874015748031497' U='DL' F='Height*1'/>
+        </Row>
+      </Section>
+      <Text>PaperA BoxA
+      </Text>
+    </Shape>
+    <Shape ID='3' NameU='Shape3' IsCustomNameU='1' Name='Shape3' IsCustomName='1' Type='Shape' LineStyle='0' FillStyle='0' TextStyle='0'>
+      <Cell N='PinX' V='4.183070866141732'/>
+      <Cell N='PinY' V='6.791338582677166'/>
+      <Cell N='Width' V='1.181102362204725'/>
+      <Cell N='Height' V='0.5905511811023623'/>
+      <Cell N='LocPinX' V='0.5905511811023623'/>
+      <Cell N='LocPinY' V='0.2952755905511811'/>
+      <Cell N='Angle' V='0' U='NUM' F='No Formula'/>
+      <Cell N='FlipX' V='0' F='No Formula'/>
+      <Cell N='FlipY' V='0' F='No Formula'/>
+      <Cell N='ResizeMode' V='0' F='No Formula'/>
+      <Cell N='LayerMember' V='0'/>
+      <Cell N='FillForegnd' V='#ffffff'/>
+      <Cell N='LineColor' V='#000000'/>
+      <Cell N='Rounding' V='0.1181102362204725'/>
+      <Section N='Geometry' IX='0'>
+        <Cell N='NoFill' V='0'/>
+        <Cell N='NoLine' V='0'/>
+        <Cell N='NoShow' V='0' F='No Formula'/>
+        <Cell N='NoSnap' V='0' F='No Formula'/>
+        <Cell N='NoQuickDrag' V='0' F='No Formula'/>
+        <Row T='MoveTo' IX='1'>
+          <Cell N='X' V='0'/>
+          <Cell N='Y' V='0.5905511811023623'/>
+        </Row>
+        <Row T='LineTo' IX='2'>
+          <Cell N='X' V='1.181102362204725'/>
+          <Cell N='Y' V='0.5905511811023623'/>
+        </Row>
+        <Row T='LineTo' IX='3'>
+          <Cell N='X' V='1.181102362204725'/>
+          <Cell N='Y' V='0'/>
+        </Row>
+        <Row T='LineTo' IX='4'>
+          <Cell N='X' V='0'/>
+          <Cell N='Y' V='0'/>
+        </Row>
+        <Row T='LineTo' IX='5'>
+          <Cell N='X' V='0'/>
+          <Cell N='Y' V='0.5905511811023623'/>
+        </Row>
+      </Section>
+      <Text>PaperC BoxC
+      </Text>
+    </Shape>
+    <Shape ID='4' NameU='Dynamic connector.4' Name='Dynamic connector.4' Type='Shape' Master='4'>
+      <Cell N='PinX' V='5.044291338582678'/>
+      <Cell N='PinY' V='7.726377952755906'/>
+      <Cell N='Width' V='0.5413385826771654'/>
+      <Cell N='Height' V='1.87007874015748'/>
+      <Cell N='LocPinX' V='0.2706692913385827'/>
+      <Cell N='LocPinY' V='0.9350393700787402'/>
+      <Cell N='BeginX' V='5.31496062992126' F='_WALKGLUE(BegTrigger,EndTrigger,WalkPreference)'/>
+      <Cell N='BeginY' V='8.661417322834646' F='_WALKGLUE(BegTrigger,EndTrigger,WalkPreference)'/>
+      <Cell N='EndX' V='4.773622047244094' F='_WALKGLUE(EndTrigger,BegTrigger,WalkPreference)'/>
+      <Cell N='EndY' V='6.791338582677166' F='_WALKGLUE(EndTrigger,BegTrigger,WalkPreference)'/>
+      <Cell N='LayerMember' V='0'/>
+      <Cell N='BegTrigger' V='2' F='_XFTRIGGER(Sheet.1!EventXFMod)'/>
+      <Cell N='EndTrigger' V='2' F='_XFTRIGGER(Sheet.3!EventXFMod)'/>
+      <Cell N='ConFixedCode' V='6'/>
+      <Cell N='FillPattern' V='0'/>
+      <Cell N='LineColor' V='#000000'/>
+      <Cell N='Rounding' V='0.04921259842519685'/>
+      <Cell N='EndArrowSize' V='2'/>
+      <Cell N='BeginArrow' V='0'/>
+      <Cell N='EndArrow' V='5'/>
+      <Cell N='BeginArrowSize' V='2'/>
+      <Cell N='TextBkgnd' V='#ffffff' F='RGB(255,255,255)+1'/>
+      <Section N='Geometry' IX='0'>
+        <Row T='MoveTo' IX='1'>
+          <Cell N='X' V='0.5413385826771654'/>
+          <Cell N='Y' V='1.87007874015748'/>
+        </Row>
+        <Row T='LineTo' IX='2'>
+          <Cell N='Y' V='0'/>
+        </Row>
+      </Section>
+    </Shape>
+    <Shape ID='5' NameU='Dynamic connector.5' Name='Dynamic connector.5' Type='Shape' Master='4'>
+      <Cell N='PinX' V='3.223425196850394'/>
+      <Cell N='PinY' V='7.677165354330709'/>
+      <Cell N='Width' V='0.7381889763779528'/>
+      <Cell N='Height' V='1.771653543307087'/>
+      <Cell N='LocPinX' V='0.3690944881889764'/>
+      <Cell N='LocPinY' V='0.8858267716535434'/>
+      <Cell N='BeginX' V='3.59251968503937' F='_WALKGLUE(BegTrigger,EndTrigger,WalkPreference)'/>
+      <Cell N='BeginY' V='6.791338582677166' F='_WALKGLUE(BegTrigger,EndTrigger,WalkPreference)'/>
+      <Cell N='EndX' V='2.854330708661418' F='_WALKGLUE(EndTrigger,BegTrigger,WalkPreference)'/>
+      <Cell N='EndY' V='8.562992125984252' F='_WALKGLUE(EndTrigger,BegTrigger,WalkPreference)'/>
+      <Cell N='LayerMember' V='0'/>
+      <Cell N='BegTrigger' V='2' F='_XFTRIGGER(Sheet.3!EventXFMod)'/>
+      <Cell N='EndTrigger' V='2' F='_XFTRIGGER(Sheet.2!EventXFMod)'/>
+      <Cell N='ConFixedCode' V='6'/>
+      <Cell N='FillPattern' V='0'/>
+      <Cell N='LineColor' V='#000000'/>
+      <Cell N='Rounding' V='0.04921259842519685'/>
+      <Cell N='EndArrowSize' V='2'/>
+      <Cell N='BeginArrow' V='0'/>
+      <Cell N='EndArrow' V='5'/>
+      <Cell N='BeginArrowSize' V='2'/>
+      <Cell N='TextBkgnd' V='#ffffff' F='RGB(255,255,255)+1'/>
+      <Section N='Geometry' IX='0'>
+        <Row T='MoveTo' IX='1'>
+          <Cell N='X' V='0.7381889763779528'/>
+        </Row>
+        <Row T='LineTo' IX='2'>
+          <Cell N='Y' V='1.771653543307087'/>
+        </Row>
+      </Section>
+    </Shape>
+    <Shape ID='6' NameU='Dynamic connector.6' Name='Dynamic connector.6' Type='Shape' Master='4'>
+      <Cell N='PinX' V='4.084645669291339'/>
+      <Cell N='PinY' V='8.951771653543307'/>
+      <Cell N='Width' V='1.279527559055118'/>
+      <Cell N='Height' V='0.00984251968503937'/>
+      <Cell N='LocPinX' V='0.6397637795275591'/>
+      <Cell N='LocPinY' V='0.004921259842519685'/>
+      <Cell N='BeginX' V='3.44488188976378' F='_WALKGLUE(BegTrigger,EndTrigger,WalkPreference)'/>
+      <Cell N='BeginY' V='8.956692913385828' F='_WALKGLUE(BegTrigger,EndTrigger,WalkPreference)'/>
+      <Cell N='EndX' V='4.724409448818898' F='_WALKGLUE(EndTrigger,BegTrigger,WalkPreference)'/>
+      <Cell N='EndY' V='8.956692913385828' F='_WALKGLUE(EndTrigger,BegTrigger,WalkPreference)'/>
+      <Cell N='LayerMember' V='0'/>
+      <Cell N='BegTrigger' V='2' F='_XFTRIGGER(Sheet.2!EventXFMod)'/>
+      <Cell N='EndTrigger' V='2' F='_XFTRIGGER(Sheet.1!EventXFMod)'/>
+      <Cell N='ConFixedCode' V='6'/>
+      <Cell N='FillPattern' V='0'/>
+      <Cell N='LineColor' V='#000000'/>
+      <Cell N='Rounding' V='0.04921259842519685'/>
+      <Cell N='EndArrowSize' V='2'/>
+      <Cell N='BeginArrow' V='0'/>
+      <Cell N='EndArrow' V='5'/>
+      <Cell N='BeginArrowSize' V='2'/>
+      <Cell N='TextBkgnd' V='#ffffff' F='RGB(255,255,255)+1'/>
+      <Section N='Geometry' IX='0'>
+        <Row T='MoveTo' IX='1'>
+          <Cell N='Y' V='0.00984251968503937'/>
+        </Row>
+        <Row T='LineTo' IX='2'>
+          <Cell N='X' V='1.279527559055118'/>
+          <Cell N='Y' V='0.00984251968503937'/>
+        </Row>
+      </Section>
+    </Shape>
+  </Shapes>
+  <Connects>
+    <Connect FromSheet='6' FromCell='EndX' FromPart='12' ToSheet='1' ToCell='PinX' ToPart='3'/>
+    <Connect FromSheet='6' FromCell='BeginX' FromPart='9' ToSheet='2' ToCell='PinX' ToPart='3'/>
+    <Connect FromSheet='5' FromCell='EndX' FromPart='12' ToSheet='2' ToCell='PinX' ToPart='3'/>
+    <Connect FromSheet='5' FromCell='BeginX' FromPart='9' ToSheet='3' ToCell='PinX' ToPart='3'/>
+    <Connect FromSheet='4' FromCell='EndX' FromPart='12' ToSheet='3' ToCell='PinX' ToPart='3'/>
+    <Connect FromSheet='4' FromCell='BeginX' FromPart='9' ToSheet='1' ToCell='PinX' ToPart='3'/>
+  </Connects>
+</PageContents>
