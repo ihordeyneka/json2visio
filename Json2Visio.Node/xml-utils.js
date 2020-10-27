@@ -42,18 +42,26 @@ self.createCellElem = function(xmlDoc, name, val, formula)
   return cell;
 };
 
-self.createRowScaled = function(xmlDoc, type, index, x, y, xF, yF) 
+self.createRowScaled = function(xmlDoc, type, index, x, y, xF, yF, a, b, d, aF, bF, dF) 
 {
-	return self.createRowRel(xmlDoc, type, index, x / self.CONVERSION_FACTOR, y / self.CONVERSION_FACTOR, xF, yF);
+  return self.createRowRel(xmlDoc, type, index, x / self.CONVERSION_FACTOR, y / self.CONVERSION_FACTOR, xF, yF,
+    a / self.CONVERSION_FACTOR, b / self.CONVERSION_FACTOR, d, aF, bF, dF);
 };
 
-self.createRowRel = function(xmlDoc, type, index, x, y, xF, yF) 
+self.createRowRel = function(xmlDoc, type, index, x, y, xF, yF, a, b, d, aF, bF, dF) 
 {
 	var row = self.createElt(xmlDoc, "Row");
 	row.setAttribute("T", type);
 	row.setAttribute("IX", index);
 	row.appendChild(self.createCellElem(xmlDoc, "X", x, xF));
-	row.appendChild(self.createCellElem(xmlDoc, "Y", y, yF));
+  row.appendChild(self.createCellElem(xmlDoc, "Y", y, yF));
+  
+  if (a !== undefined && a !== null)
+  {
+    row.appendChild(self.createCellElem(xmlDoc, "A", a, aF));
+    row.appendChild(self.createCellElem(xmlDoc, "B", b, bF));
+    row.appendChild(self.createCellElem(xmlDoc, "D", d, dF));
+  }
 	
 	return row;
 };

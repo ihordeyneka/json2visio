@@ -1,5 +1,6 @@
 var xmlUtils = require('./xml-utils');
 var Rect = require('./shapes/rect');
+var Ellipse = require('./shapes/ellipse');
 
 var xmlDoc = null;
 
@@ -25,7 +26,7 @@ function createShape(shapes, element)
   switch (element.shape)
   {
     case 'ellipse':
-      figure = new Rect(element); //should instantiate Ellipse
+      figure = new Ellipse(element);
       break;
     case 'box':
     default:
