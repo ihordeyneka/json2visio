@@ -31,8 +31,8 @@
       "name": "Paper1",
       "subName": "Box1",
       "shape": "box",
-      "backgroundColor": "yellow",
-      "borderColor": "red"
+      "backgroundColor": "#ffff00",
+      "borderColor": "#ff0000"
     },
     {
       "x": 230,
@@ -41,8 +41,8 @@
       "name": "Paper2",
       "subName": "Box1",
       "shape": "box",
-      "backgroundColor": "yellow",
-      "borderColor": "yellow"
+      "backgroundColor": "#ffff00",
+      "borderColor": "#ffff00"
     },
     {
       "x": 365,
@@ -50,9 +50,9 @@
       "id": "svzpDqqgtDAJx3TZTZ7e",
       "name": "PaperA",
       "subName": "BoxA",
-      "shape": "Ellipse",
-      "backgroundColor": "green",
-      "borderColor": "green"
+      "shape": "ellipse",
+      "backgroundColor": "#00ff00",
+      "borderColor": "#00ff00"
     }
   ],
   "data": [
