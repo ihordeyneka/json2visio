@@ -3,6 +3,7 @@ var Rect = require('./shapes/rect');
 
 var xmlDoc = null;
 
+var figureMap = {};
 var idsMap = {};
 var idsCounter = 1;
 
@@ -31,6 +32,8 @@ function createShape(shapes, element)
       figure = new Rect(element);
       break;
   }
+
+  figureMap[element.id] = figure;
   
   var shapeId = mapId(element.id);
   var shape = figure.createShape(xmlDoc, shapeId);
@@ -39,12 +42,12 @@ function createShape(shapes, element)
   shapes.appendChild(shape);
 }
 
-function createEdge(shapes, connection, input)
+function createEdge(shapes, connection)
 {
   var shape = xmlUtils.createElt(xmlDoc, "Shape");
   var connectionId = mapId(connection.fromElementId + connection.toElementId);
 
-  var bounds = getConnectBounds(connection, input);
+  var ends = getConnectEnds(connection);
   var layerIndex = 0;
 
   shape.setAttribute("ID", connectionId);
@@ -53,21 +56,18 @@ function createEdge(shapes, connection, input)
   shape.setAttribute("Type", "Shape");
   shape.setAttribute("Master", "4"); //Dynamic Connector Master
 
-  var beginX = bounds.from.x;
-  var endX = bounds.to.x;
-  var beginY = xmlUtils.PAGE_HEIGHT - bounds.from.y;
-  var endY = xmlUtils.PAGE_HEIGHT - bounds.to.y;
-
-  // beginX = 525;
-  // endX = 440;
-  // beginY = 880;
-  // endY = 720;
+  var beginX = ends.from.x;
+  var endX = ends.to.x;
+  var beginY = xmlUtils.PAGE_HEIGHT - ends.from.y;
+  var endY = xmlUtils.PAGE_HEIGHT - ends.to.y;
 
   var width = endX - beginX;
   var height = endY - beginY;
+  var midX = (beginX + endX)/2;
+  var midY = (beginY + endY)/2;
 
-  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "PinX", (beginX + endX)/2, "GUARD((BeginX+EndX)/2)"));
-  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "PinY", (beginY + endY)/2, "GUARD((BeginY+EndY)/2)"));
+  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "PinX", midX, "GUARD((BeginX+EndX)/2)"));
+  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "PinY", midY, "GUARD((BeginY+EndY)/2)"));
   shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "Width", width, "GUARD(EndX-BeginX)"));
   shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "Height", height, "GUARD(EndY-BeginY)"));
   shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "LocPinX", width/2, "GUARD(Width*0.5)"));
@@ -84,11 +84,13 @@ function createEdge(shapes, connection, input)
   shape.appendChild(xmlUtils.createCellElem(xmlDoc, "LayerMember", layerIndex + ""));
 
   //Formula is used to make the edge dynamic (specify source id and target id)
-  shape.appendChild(xmlUtils.createCellElem(xmlDoc, "BegTrigger", "2", "_XFTRIGGER(Sheet."+ mapId(bounds.from.id) +"!EventXFMod)"));
-  shape.appendChild(xmlUtils.createCellElem(xmlDoc, "EndTrigger", "2", "_XFTRIGGER(Sheet."+ mapId(bounds.to.id) +"!EventXFMod)"));
+  shape.appendChild(xmlUtils.createCellElem(xmlDoc, "BegTrigger", "2", "_XFTRIGGER(Sheet."+ mapId(connection.fromElementId) +"!EventXFMod)"));
+  shape.appendChild(xmlUtils.createCellElem(xmlDoc, "EndTrigger", "2", "_XFTRIGGER(Sheet."+ mapId(connection.toElementId) +"!EventXFMod)"));
   shape.appendChild(xmlUtils.createCellElem(xmlDoc, "ShapeRouteStyle", "16"));
   shape.appendChild(xmlUtils.createCellElem(xmlDoc, "ConFixedCode", "6"));
   shape.appendChild(xmlUtils.createCellElem(xmlDoc, "ConLineRouteExt", "1"));
+
+  shape.appendChild(xmlUtils.createCellElem(xmlDoc, "LineColor", connection.color));
 
   shape.appendChild(xmlUtils.createCellElem(xmlDoc, "EndArrowSize", "2"));
   shape.appendChild(xmlUtils.createCellElem(xmlDoc, "BeginArrow", "0"));
@@ -96,11 +98,14 @@ function createEdge(shapes, connection, input)
   shape.appendChild(xmlUtils.createCellElem(xmlDoc, "BeginArrowSize", "2"));
   //missing FillPattern, LineColor, Rounding, TextBkgnd
 
-  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "TxtPinX", width, "Inh"));
-  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "TxtPinY", height, "Inh"));
+  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "TxtPinX", width/2, "Inh"));
+  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "TxtPinY", height/2, "Inh"));
 
-  shape.appendChild(createConnectionSectionControl(width, height));
+  shape.appendChild(createConnectionSectionControl(width/2, height/2));
   shape.appendChild(createConnectionSectionGeo(width, height));
+
+  if (connection.label)
+    shape.appendChild(xmlUtils.createTextElem(xmlDoc, connection.label));
 
   shapes.appendChild(shape);
 }
@@ -122,22 +127,35 @@ function createConnect(connects, connection)
   connects.appendChild(connectEnd);    
 }
 
-function getConnectBounds(connection, input)
+function getConnectEnds(connection)
 {
-  var fromElement, toElement;
-  for (var element of input.elements)
+  var figureFrom = figureMap[connection.fromElementId];
+  var figureTo = figureMap[connection.toElementId];
+
+  var pointsFrom = figureFrom.getConnectPoints();
+  var pointsTo = figureTo.getConnectPoints();
+
+  //find min distance between points
+  var distance = 10000000;
+  var p0, pe;
+  for (var fromPoint of pointsFrom)
   {
-    if (element.id == connection.fromElementId)
-      fromElement = element;
-    if (element.id == connection.toElementId)
-      toElement = element;
+    for (var toPoint of pointsTo)
+    {
+      var curDistance = Math.sqrt((fromPoint.x - toPoint.x)*(fromPoint.x - toPoint.x) +
+        (fromPoint.y - toPoint.y)*(fromPoint.y - toPoint.y));
+      if (curDistance < distance)
+      {
+        distance = curDistance;
+        p0 = fromPoint;
+        pe = toPoint;
+      }
+    }
   }
 
   return {
-    width: toElement.x - fromElement.x,
-    height: toElement.y - fromElement.y,
-    from: { x: fromElement.x, y: fromElement.y, id: fromElement.id },
-    to: { x: toElement.x, y: toElement.y, id: toElement.id }
+    from: { x: p0.x, y: p0.y },
+    to: { x: pe.x, y: pe.y }
   };
 }
 
@@ -154,7 +172,7 @@ function createConnectionSectionGeo(width, height)
   return section;
 }
 
-function createConnectionSectionControl(width, height)
+function createConnectionSectionControl(x, y)
 {
   var section = xmlUtils.createElt(xmlDoc, "Section");
 
@@ -163,10 +181,10 @@ function createConnectionSectionControl(width, height)
   var row = xmlUtils.createElt(xmlDoc, "Row");
   row.setAttribute("N", "TextPosition");
 
-  row.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "X", width));
-  row.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "Y", height));
-  row.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "XDyn", width, "Inh"));
-  row.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "YDyn", height, "Inh"));
+  row.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "X", x));
+  row.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "Y", y));
+  row.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "XDyn", x, "Inh"));
+  row.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "YDyn", y, "Inh"));
 
   section.appendChild(row);
 
@@ -196,7 +214,7 @@ function getPageXml(input)
 
   for (var connection of input.connections) 
   {
-    createEdge(shapes, connection, input);
+    createEdge(shapes, connection);
     createConnect(connects, connection);
   }
 

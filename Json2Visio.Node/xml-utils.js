@@ -61,12 +61,19 @@ self.createRowRel = function(xmlDoc, type, index, x, y, xF, yF)
 self.createTextElem = function(xmlDoc, name, subName)
 {
   var textElt = self.createElt(xmlDoc, "Text");
-  textElt.appendChild(self.createEltWithIX(xmlDoc, "cp", 0));
-  textElt.appendChild(self.createEltWithIX(xmlDoc, "pp", 0));
-  textElt.appendChild(self.createEltWithIX(xmlDoc, "tp", 0));
-  textElt.appendChild(xmlDoc.createTextNode(name + "\n"));
-  textElt.appendChild(self.createEltWithIX(xmlDoc, "cp", 1));
-  textElt.appendChild(xmlDoc.createTextNode(subName));
+  if (subName)
+  {
+    textElt.appendChild(self.createEltWithIX(xmlDoc, "cp", 0));
+    textElt.appendChild(self.createEltWithIX(xmlDoc, "pp", 0));
+    textElt.appendChild(self.createEltWithIX(xmlDoc, "tp", 0));
+    textElt.appendChild(xmlDoc.createTextNode(name + "\n"));
+    textElt.appendChild(self.createEltWithIX(xmlDoc, "cp", 1));
+    textElt.appendChild(xmlDoc.createTextNode(subName));
+  }
+  else
+  {
+    textElt.appendChild(xmlDoc.createTextNode(name));
+  }
   return textElt;
 };
 

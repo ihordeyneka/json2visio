@@ -3,19 +3,19 @@
     {
       "fromElementId": "svzpDqqgtDAJx3TZTZ7e",
       "toElementId": "EHKpzSELB7XCc8XSvhLF",
-      "color": "yellow",
+      "color": "#ffff00",
       "label": ""
     },
     {
       "fromElementId": "EHKpzSELB7XCc8XSvhLF",
       "toElementId": "6YaXTdNQS6pUD5AWS8c0",
-      "color": "red",
+      "color": "#ff0000",
       "label": "this is red"
     },
     {
       "fromElementId": "6YaXTdNQS6pUD5AWS8c0",
       "toElementId": "svzpDqqgtDAJx3TZTZ7e",
-      "color": "green",
+      "color": "#00ff00",
       "label": "",
       "dataY": -541,
       "dataX": -710,
@@ -25,8 +25,8 @@
   ],
   "elements": [
     {
-      "x": 480,
-      "y": 260,
+      "x": 540,
+      "y": 290,
       "id": "6YaXTdNQS6pUD5AWS8c0",
       "name": "Paper1",
       "subName": "Box1",
@@ -35,8 +35,8 @@
       "borderColor": "#ff0000"
     },
     {
-      "x": 230,
-      "y": 260,
+      "x": 290,
+      "y": 290,
       "id": "EHKpzSELB7XCc8XSvhLF",
       "name": "Paper2",
       "subName": "Box2",
@@ -45,8 +45,8 @@
       "borderColor": "#ffff00"
     },
     {
-      "x": 365,
-      "y": 480,
+      "x": 425,
+      "y": 510,
       "id": "svzpDqqgtDAJx3TZTZ7e",
       "name": "PaperA",
       "subName": "BoxA",

@@ -5,7 +5,7 @@ function Rect(element) {
   this.geo = {
     width: 120, //hardcoded
     height: 60,
-    x: element.x,
+    x: element.x, //center
     y: element.y
   };
 };
@@ -26,8 +26,8 @@ Rect.prototype.createShape = function(xmlDoc, shapeId) {
   
   var hw = geo.width/2, hh = geo.height/2;
   
-  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "PinX", geo.x + hw));
-  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "PinY", xmlUtils.PAGE_HEIGHT - geo.y - hh));
+  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "PinX", geo.x));
+  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "PinY", xmlUtils.PAGE_HEIGHT - geo.y));
   shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "Width", geo.width));
   shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "Height", geo.height));
   shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "LocPinX", hw));
@@ -43,7 +43,7 @@ Rect.prototype.createShape = function(xmlDoc, shapeId) {
   shape.appendChild(xmlUtils.createTextElem(xmlDoc, this.element.name, this.element.subName));
 
   return shape;
-}
+};
 
 Rect.prototype.createSectionChar = function createSectionChar(xmlDoc) {
   var section = xmlUtils.createElt(xmlDoc, "Section");
@@ -69,7 +69,7 @@ Rect.prototype.createSectionChar = function createSectionChar(xmlDoc) {
   section.appendChild(row1);
 
   return section;
-}
+};
 
 Rect.prototype.createSectionGeo = function createSectionGeo(xmlDoc) {
   var geoIndex = 0;
@@ -94,5 +94,14 @@ Rect.prototype.createSectionGeo = function createSectionGeo(xmlDoc) {
 
   return section;
 };
+
+Rect.prototype.getConnectPoints = function getConnectPoints() {
+  return [
+    { x: this.geo.x - this.geo.width/2, y: this.geo.y },
+    { x: this.geo.x + this.geo.width/2, y: this.geo.y },
+    { x: this.geo.x, y: this.geo.y - this.geo.height/2 },
+    { x: this.geo.x, y: this.geo.y + this.geo.height/2 }
+  ];
+}
 
 module.exports = Rect;
