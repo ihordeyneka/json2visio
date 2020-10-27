@@ -14,6 +14,13 @@ self.createXmlDocument = function()
   return document.implementation.createDocument("", "", null);
 };
 
+self.createEltWithIX = function(xmlDoc, name, ix)
+{
+  var el = self.createElt(xmlDoc, name);
+  el.setAttribute("IX", ix);
+  return el;
+};
+
 self.createElt = function(xmlDoc, name)
 {
   return (xmlDoc.createElementNS != null) ? xmlDoc.createElementNS(self.XMLNS, name) : xmlDoc.createElement(name);
@@ -51,11 +58,15 @@ self.createRowRel = function(xmlDoc, type, index, x, y, xF, yF)
 	return row;
 };
 
-self.createTextElem = function(xmlDoc ,val)
+self.createTextElem = function(xmlDoc, name, subName)
 {
   var textElt = self.createElt(xmlDoc, "Text");
-  var text = xmlDoc.createTextNode(val);
-  textElt.appendChild(text);
+  textElt.appendChild(self.createEltWithIX(xmlDoc, "cp", 0));
+  textElt.appendChild(self.createEltWithIX(xmlDoc, "pp", 0));
+  textElt.appendChild(self.createEltWithIX(xmlDoc, "tp", 0));
+  textElt.appendChild(xmlDoc.createTextNode(name + "\n"));
+  textElt.appendChild(self.createEltWithIX(xmlDoc, "cp", 1));
+  textElt.appendChild(xmlDoc.createTextNode(subName));
   return textElt;
 };
 

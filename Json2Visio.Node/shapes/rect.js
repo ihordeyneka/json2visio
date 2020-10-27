@@ -38,13 +38,40 @@ Rect.prototype.createShape = function(xmlDoc, shapeId) {
   shape.appendChild(xmlUtils.createCellElem(xmlDoc, "LineColor", this.element.borderColor));
   shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "Rounding", 12));
 
-  shape.appendChild(this.createSection(xmlDoc));
-  shape.appendChild(xmlUtils.createTextElem(xmlDoc, this.element.name));
+  //shape.appendChild(this.createSectionChar(xmlDoc));
+  shape.appendChild(this.createSectionGeo(xmlDoc));
+  shape.appendChild(xmlUtils.createTextElem(xmlDoc, this.element.name, this.element.subName));
 
   return shape;
 }
 
-Rect.prototype.createSection = function createSection(xmlDoc) {
+Rect.prototype.createSectionChar = function createSectionChar(xmlDoc) {
+  var section = xmlUtils.createElt(xmlDoc, "Section");
+
+  section.setAttribute("N", "Character");
+
+  var row0 = xmlUtils.createEltWithIX(xmlDoc, "Row", 0);
+  var cell0 = xmlUtils.createElt(xmlDoc, "Cell");
+  cell0.setAttribute("Style", "17");
+  row0.appendChild(cell0);
+  section.appendChild(row0);
+
+  var row1 = xmlUtils.createEltWithIX(xmlDoc, "Row", 1);
+  var cell1 = xmlUtils.createElt(xmlDoc, "Cell");
+  cell1.setAttribute("Font", "Calibri");
+  cell1.setAttribute("Color", "0");
+  cell1.setAttribute("Style", "34");
+  cell1.setAttribute("Case", "0");
+  cell1.setAttribute("Pos", "0");
+  cell1.setAttribute("FontScale", "-1");
+  cell1.setAttribute("Size", "17");
+  row1.appendChild(cell1);
+  section.appendChild(row1);
+
+  return section;
+}
+
+Rect.prototype.createSectionGeo = function createSectionGeo(xmlDoc) {
   var geoIndex = 0;
   var section = xmlUtils.createElt(xmlDoc, "Section");
 

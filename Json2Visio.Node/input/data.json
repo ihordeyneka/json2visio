@@ -1,26 +1,26 @@
 {
   "connections": [
     {
-      "toElementId": "EHKpzSELB7XCc8XSvhLF",
       "fromElementId": "svzpDqqgtDAJx3TZTZ7e",
+      "toElementId": "EHKpzSELB7XCc8XSvhLF",
       "color": "yellow",
       "label": ""
     },
     {
       "fromElementId": "EHKpzSELB7XCc8XSvhLF",
       "toElementId": "6YaXTdNQS6pUD5AWS8c0",
-      "label": "this is red",
-      "color": "red"
+      "color": "red",
+      "label": "this is red"
     },
     {
-      "dataY": -541,
+      "fromElementId": "6YaXTdNQS6pUD5AWS8c0",
       "toElementId": "svzpDqqgtDAJx3TZTZ7e",
+      "color": "green",
+      "label": "",
+      "dataY": -541,
       "dataX": -710,
       "dataId": "l8catTjfvt0Za6Qw8ovw",
-      "label": "",
-      "shape": "icon.jpg",
-      "color": "green",
-      "fromElementId": "6YaXTdNQS6pUD5AWS8c0"
+      "shape": "icon.jpg"
     }
   ],
   "elements": [
@@ -39,7 +39,7 @@
       "y": 260,
       "id": "EHKpzSELB7XCc8XSvhLF",
       "name": "Paper2",
-      "subName": "Box1",
+      "subName": "Box2",
       "shape": "box",
       "backgroundColor": "#ffff00",
       "borderColor": "#ffff00"
