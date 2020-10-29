@@ -55,7 +55,7 @@ function vsdxExport(input, options)
   createVsdxSkeleton(zip);
   addPageXML(zip, input);
 
-  zip.generateAsync({type:'base64'}).then(
+  zip.generateAsync({type:'base64', compression: "DEFLATE"}).then(
     function(content) {
       fs.writeFile(options.exportPath, content, 'base64', () => {
         console.log('VSDX generated');
