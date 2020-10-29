@@ -6,7 +6,8 @@ var self = {
   PAGE_HEIGHT: 1200,
   CONVERSION_FACTOR: 40 * 2.54, //screenCoordinatesPerCm (40) x CENTIMETERS_PER_INCHES (2.54)
   XMLNS: "http://schemas.microsoft.com/office/visio/2012/main",
-  XMLNS_R: "http://schemas.openxmlformats.org/officeDocument/2006/relationships"
+  XMLNS_R: "http://schemas.openxmlformats.org/officeDocument/2006/relationships",
+  RELS_XMLNS: "http://schemas.openxmlformats.org/package/2006/relationships"
 };
 
 self.createXmlDocument = function()
@@ -21,9 +22,12 @@ self.createEltWithIX = function(xmlDoc, name, ix)
   return el;
 };
 
-self.createElt = function(xmlDoc, name)
+self.createElt = function(xmlDoc, name, ns)
 {
-  return (xmlDoc.createElementNS != null) ? xmlDoc.createElementNS(self.XMLNS, name) : xmlDoc.createElement(name);
+  if (!ns)
+    ns = self.XMLNS;
+
+  return (xmlDoc.createElementNS != null) ? xmlDoc.createElementNS(ns, name) : xmlDoc.createElement(name);
 };
 
 self.createCellElemScaled = function(xmlDoc, name, val, formula)
@@ -56,7 +60,7 @@ self.createRowRel = function(xmlDoc, type, index, x, y, xF, yF, a, b, d, aF, bF,
 	row.appendChild(self.createCellElem(xmlDoc, "X", x, xF));
   row.appendChild(self.createCellElem(xmlDoc, "Y", y, yF));
   
-  if (a !== undefined && a !== null)
+  if (a !== undefined && a !== null && !Number.isNaN(a))
   {
     row.appendChild(self.createCellElem(xmlDoc, "A", a, aF));
     row.appendChild(self.createCellElem(xmlDoc, "B", b, bF));

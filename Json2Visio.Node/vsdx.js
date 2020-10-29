@@ -1,7 +1,7 @@
 var JSZip = require('JSZip');
 var path = require('path');
 var fs = require('fs');
-var getPageXml = require('./xml-page');
+var xmlPage = require('./xml-page');
 
 function createVsdxSkeleton(zip)
 {
@@ -19,9 +19,9 @@ function createVsdxSkeleton(zip)
     'visio/masters/_rels/masters.xml.rels',
     'visio/_rels/document.xml.rels',
     'visio/pages/pages.xml',
+    'visio/pages/_rels/pages.xml.rels'
     //'visio/pages/page1.xml', //this file is the actual diagram and we will replace its content based on the input
-    'visio/pages/_rels/pages.xml.rels',
-    'visio/pages/_rels/page1.xml.rels'
+    //'visio/pages/_rels/page1.xml.rels' //this file is also updated
   ];
 
   for (var file of files)
@@ -34,9 +34,19 @@ function createVsdxSkeleton(zip)
 
 function addPageXML(zip, input)
 {
-  var file = 'visio/pages/page1.xml';
-  var data = getPageXml(input);
-  zip.file(file, data);
+  var pageRel = 'visio/pages/_rels/page1.xml.rels';
+  var pageRelContent = xmlPage.getPageRelXml(zip, input);
+  zip.file(pageRel, pageRelContent);
+
+  for(var data of input.data) {
+    var mediaPath = 'visio/media/' + data.file;
+    var mediaContent = fs.readFileSync('input/' + data.file);
+    zip.file(mediaPath, mediaContent); 
+  }
+  
+  var page = 'visio/pages/page1.xml';
+  var pageContent = xmlPage.getPageXml(input);
+  zip.file(page, pageContent);
 }
 
 function vsdxExport(input, options)

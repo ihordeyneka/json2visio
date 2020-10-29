@@ -2,6 +2,7 @@ var xmlUtils = require('./xml-utils');
 var Rect = require('./shapes/rect');
 var Ellipse = require('./shapes/ellipse');
 
+var self = {};
 var xmlDoc = null;
 
 var figureMap = {};
@@ -48,7 +49,7 @@ function createEdge(shapes, connection)
   var shape = xmlUtils.createElt(xmlDoc, "Shape");
   var connectionId = mapId(connection.fromElementId + connection.toElementId);
 
-  var ends = getConnectEnds(connection);
+  var bounds = getConnectBounds(connection);
   var layerIndex = 0;
 
   shape.setAttribute("ID", connectionId);
@@ -57,30 +58,21 @@ function createEdge(shapes, connection)
   shape.setAttribute("Type", "Shape");
   shape.setAttribute("Master", "4"); //Dynamic Connector Master
 
-  var beginX = ends.from.x;
-  var endX = ends.to.x;
-  var beginY = xmlUtils.PAGE_HEIGHT - ends.from.y;
-  var endY = xmlUtils.PAGE_HEIGHT - ends.to.y;
 
-  var width = endX - beginX;
-  var height = endY - beginY;
-  var midX = (beginX + endX)/2;
-  var midY = (beginY + endY)/2;
-
-  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "PinX", midX, "GUARD((BeginX+EndX)/2)"));
-  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "PinY", midY, "GUARD((BeginY+EndY)/2)"));
-  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "Width", width, "GUARD(EndX-BeginX)"));
-  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "Height", height, "GUARD(EndY-BeginY)"));
-  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "LocPinX", width/2, "GUARD(Width*0.5)"));
-  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "LocPinY", height/2, "GUARD(Height*0.5)"));
+  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "PinX", bounds.midX, "GUARD((BeginX+EndX)/2)"));
+  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "PinY", bounds.midY, "GUARD((BeginY+EndY)/2)"));
+  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "Width", bounds.width, "GUARD(EndX-BeginX)"));
+  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "Height", bounds.height, "GUARD(EndY-BeginY)"));
+  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "LocPinX", bounds.width/2, "GUARD(Width*0.5)"));
+  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "LocPinY", bounds.height/2, "GUARD(Height*0.5)"));
 
   //Formula is used to make the edge dynamic 
-  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "BeginX", beginX, "_WALKGLUE(BegTrigger,EndTrigger,WalkPreference)"));
-  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "BeginY", beginY, "_WALKGLUE(BegTrigger,EndTrigger,WalkPreference)"));
+  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "BeginX", bounds.beginX, "_WALKGLUE(BegTrigger,EndTrigger,WalkPreference)"));
+  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "BeginY", bounds.beginY, "_WALKGLUE(BegTrigger,EndTrigger,WalkPreference)"));
   
   //Formula is used to make the edge dynamic 
-  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "EndX", endX, "_WALKGLUE(EndTrigger,BegTrigger,WalkPreference)"));
-  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "EndY", endY, "_WALKGLUE(EndTrigger,BegTrigger,WalkPreference)"));
+  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "EndX", bounds.endX, "_WALKGLUE(EndTrigger,BegTrigger,WalkPreference)"));
+  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "EndY", bounds.endY, "_WALKGLUE(EndTrigger,BegTrigger,WalkPreference)"));
 
   shape.appendChild(xmlUtils.createCellElem(xmlDoc, "LayerMember", layerIndex + ""));
 
@@ -99,11 +91,11 @@ function createEdge(shapes, connection)
   shape.appendChild(xmlUtils.createCellElem(xmlDoc, "BeginArrowSize", "2"));
   //missing FillPattern, LineColor, Rounding, TextBkgnd
 
-  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "TxtPinX", width/2, "Inh"));
-  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "TxtPinY", height/2, "Inh"));
+  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "TxtPinX", bounds.width/2, "Inh"));
+  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "TxtPinY", bounds.height/2, "Inh"));
 
-  shape.appendChild(createConnectionSectionControl(width/2, height/2));
-  shape.appendChild(createConnectionSectionGeo(width, height));
+  shape.appendChild(createConnectionSectionControl(bounds.width/2, bounds.height/2));
+  shape.appendChild(createConnectionSectionGeo(bounds.width, bounds.height));
 
   if (connection.label)
     shape.appendChild(xmlUtils.createTextElem(xmlDoc, connection.label));
@@ -128,7 +120,64 @@ function createConnect(connects, connection)
   connects.appendChild(connectEnd);    
 }
 
-function getConnectEnds(connection)
+function createData(shapes, connection, data)
+{
+  var shape = xmlUtils.createElt(xmlDoc, "Shape");
+
+  var dataId = mapId(connection.fromElementId + connection.toElementId + connection.dataId);
+
+  var bounds = getConnectBounds(connection);
+
+  shape.setAttribute("ID", dataId);
+  shape.setAttribute("Type", "Foreign");
+  shape.setAttribute("LineStyle", "2");
+  shape.setAttribute("FillStyle", "2");
+  shape.setAttribute("TextStyle", "2");
+
+  //hardcoded
+  var imgWidth = 36;
+  var imgHeight = 36;
+  var txtWidth = 240;
+
+  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "PinX", bounds.midX, "GUARD((BeginX+EndX)/2)"));
+  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "PinY", bounds.midY, "GUARD((BeginY+EndY)/2)"));
+  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "Width", imgWidth, "GUARD(EndX-BeginX)"));
+  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "Height", imgHeight, "GUARD(EndY-BeginY)"));
+  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "LocPinX", imgWidth/2, "GUARD(Width*0.5)"));
+  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "LocPinY", imgHeight/2, "GUARD(Height*0.5)"));
+
+  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "ImgOffsetX", 0));
+  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "ImgOffsetY", 0));
+  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "ImgWidth", imgWidth));
+  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "ImgHeight", imgHeight));
+
+  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "TxtPinX", imgWidth/2, "Width/2"));
+  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "TxtPinY", -imgHeight/2));
+  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "TxtWidth", txtWidth));
+  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "TxtHeight", 0));
+  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "TxtLocPinX", txtWidth/2, "TxtWidth/2"));
+  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "TxtLocPinY", 0, "TxtHeight/2"));
+
+  //geo
+  createDataSectionGeo(shape);
+
+  //foreign data
+  var foreignData = xmlUtils.createElt(xmlDoc, "ForeignData");
+  foreignData.setAttribute("ForeignType", "Bitmap");
+  foreignData.setAttribute("CompressionType", data.compression);
+  var rel = xmlUtils.createElt(xmlDoc, "Rel");
+  rel.setAttributeNS(xmlUtils.XMLNS_R, "id", "rId" + data.relIndex);
+  foreignData.appendChild(rel);
+  shape.appendChild(foreignData);
+
+  //text
+  if (data.name)
+    shape.appendChild(xmlUtils.createTextElem(xmlDoc, data.name));
+
+  shapes.appendChild(shape);
+}
+
+function getConnectBounds(connection)
 {
   var figureFrom = figureMap[connection.fromElementId];
   var figureTo = figureMap[connection.toElementId];
@@ -154,9 +203,25 @@ function getConnectEnds(connection)
     }
   }
 
+  var beginX = p0.x;
+  var endX = pe.x;
+  var beginY = xmlUtils.PAGE_HEIGHT - p0.y;
+  var endY = xmlUtils.PAGE_HEIGHT - pe.y;
+
+  var width = endX - beginX;
+  var height = endY - beginY;
+  var midX = (beginX + endX)/2;
+  var midY = (beginY + endY)/2;
+
   return {
-    from: { x: p0.x, y: p0.y },
-    to: { x: pe.x, y: pe.y }
+    beginX: beginX,
+    endX: endX,
+    beginY: beginY,
+    endY: endY,
+    width: width,
+    height: height,
+    midX: midX,
+    midY: midY
   };
 }
 
@@ -192,7 +257,27 @@ function createConnectionSectionControl(x, y)
   return section;
 }
 
-function getPageXml(input)
+function createDataSectionGeo(shape)
+{
+  var geoIndex = 0;
+  var section = xmlUtils.createElt(xmlDoc, "Section");
+
+  section.setAttribute("N", "Geometry");
+  section.setAttribute("IX", geoIndex++);
+  
+  section.appendChild(xmlUtils.createCellElem(xmlDoc, "NoFill", "0"));
+  section.appendChild(xmlUtils.createCellElem(xmlDoc, "NoLine", "0"));
+
+  section.appendChild(xmlUtils.createRowScaled(xmlDoc, "RelMoveTo", geoIndex++, 0, 0));
+  section.appendChild(xmlUtils.createRowScaled(xmlDoc, "RelLineTo", geoIndex++, 1, 0));
+  section.appendChild(xmlUtils.createRowScaled(xmlDoc, "RelLineTo", geoIndex++, 1, 1));
+  section.appendChild(xmlUtils.createRowScaled(xmlDoc, "RelLineTo", geoIndex++, 0, 1));
+  section.appendChild(xmlUtils.createRowScaled(xmlDoc, "RelLineTo", geoIndex++, 0, 0));
+
+  shape.appendChild(section);
+}
+
+self.getPageXml = function(input)
 {
   xmlDoc = xmlUtils.createXmlDocument();
   var root = xmlUtils.createElt(xmlDoc, "PageContents");
@@ -217,6 +302,13 @@ function getPageXml(input)
   {
     createEdge(shapes, connection);
     createConnect(connects, connection);
+
+    if (connection.dataId) {
+      var data = input.data.find(d => d.id == connection.dataId);
+      if (data) {
+        createData(shapes, connection, data);
+      }
+    }
   }
 
   xmlDoc.appendChild(root);
@@ -225,4 +317,33 @@ function getPageXml(input)
   return content;
 }
 
-module.exports = getPageXml;
+self.getPageRelXml = function(zip, input) {
+  var relDoc = xmlUtils.createXmlDocument();
+  var root = xmlUtils.createElt(relDoc, "Relationships", xmlUtils.RELS_XMLNS);
+
+  var relIndex = 1;
+
+  var masterRel = xmlUtils.createElt(relDoc, "Relationship", xmlUtils.RELS_XMLNS);
+  masterRel.setAttribute('Id', 'rId' + relIndex++);
+  masterRel.setAttribute('Type', 'http://schemas.microsoft.com/visio/2010/relationships/master');
+  masterRel.setAttribute('Target', '../masters/master1.xml');
+  root.appendChild(masterRel);
+
+  for (var data of input.data)
+  {
+    data.relIndex = relIndex;
+
+    var dataRel = xmlUtils.createElt(relDoc, "Relationship", xmlUtils.RELS_XMLNS);
+    dataRel.setAttribute('Id', 'rId' + relIndex++);
+    dataRel.setAttribute('Type', 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/image');
+    dataRel.setAttribute('Target', '../media/' + data.file);
+    root.appendChild(dataRel);
+  }
+
+  relDoc.appendChild(root);
+  var content = xmlUtils.xmlToString(relDoc);
+
+  return content;
+}
+
+module.exports = self;

@@ -17,10 +17,7 @@
       "toElementId": "svzpDqqgtDAJx3TZTZ7e",
       "color": "#00ff00",
       "label": "",
-      "dataY": -541,
-      "dataX": -710,
-      "dataId": "l8catTjfvt0Za6Qw8ovw",
-      "shape": "icon.jpg"
+      "dataId": "l8catTjfvt0Za6Qw8ovw"
     }
   ],
   "elements": [
@@ -58,7 +55,9 @@
   "data": [
     {
       "id": "l8catTjfvt0Za6Qw8ovw",
-      "name": "Sentence"
+      "name": "Sentence",
+      "file": "image1.png",
+      "compression": "PNG"
     }
   ]
 }
