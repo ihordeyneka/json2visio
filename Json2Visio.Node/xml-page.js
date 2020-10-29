@@ -44,7 +44,7 @@ function createShape(shapes, element)
   shapes.appendChild(shape);
 }
 
-function createEdge(shapes, fromElementId, toElementId, color, label)
+function createEdge(shapes, fromElementId, toElementId, color, label, endArrow)
 {
   var shape = xmlUtils.createElt(xmlDoc, "Shape");
   var connectionId = mapId(fromElementId + toElementId);
@@ -87,7 +87,7 @@ function createEdge(shapes, fromElementId, toElementId, color, label)
 
   shape.appendChild(xmlUtils.createCellElem(xmlDoc, "EndArrowSize", "2"));
   shape.appendChild(xmlUtils.createCellElem(xmlDoc, "BeginArrow", "0"));
-  shape.appendChild(xmlUtils.createCellElem(xmlDoc, "EndArrow", "1"));
+  shape.appendChild(xmlUtils.createCellElem(xmlDoc, "EndArrow", endArrow || "1"));
   shape.appendChild(xmlUtils.createCellElem(xmlDoc, "BeginArrowSize", "2"));
   //missing FillPattern, LineColor, Rounding, TextBkgnd
 
@@ -277,11 +277,11 @@ function createDataSectionGeo(shape)
   section.appendChild(xmlUtils.createCellElem(xmlDoc, "NoFill", "0"));
   section.appendChild(xmlUtils.createCellElem(xmlDoc, "NoLine", "0"));
 
-  section.appendChild(xmlUtils.createRowScaled(xmlDoc, "RelMoveTo", geoIndex++, 0, 0));
-  section.appendChild(xmlUtils.createRowScaled(xmlDoc, "RelLineTo", geoIndex++, 1, 0));
-  section.appendChild(xmlUtils.createRowScaled(xmlDoc, "RelLineTo", geoIndex++, 1, 1));
-  section.appendChild(xmlUtils.createRowScaled(xmlDoc, "RelLineTo", geoIndex++, 0, 1));
-  section.appendChild(xmlUtils.createRowScaled(xmlDoc, "RelLineTo", geoIndex++, 0, 0));
+  section.appendChild(xmlUtils.createRowRel(xmlDoc, "RelMoveTo", geoIndex++, 0, 0));
+  section.appendChild(xmlUtils.createRowRel(xmlDoc, "RelLineTo", geoIndex++, 1, 0));
+  section.appendChild(xmlUtils.createRowRel(xmlDoc, "RelLineTo", geoIndex++, 1, 1));
+  section.appendChild(xmlUtils.createRowRel(xmlDoc, "RelLineTo", geoIndex++, 0, 1));
+  section.appendChild(xmlUtils.createRowRel(xmlDoc, "RelLineTo", geoIndex++, 0, 0));
 
   shape.appendChild(section);
 }
@@ -314,7 +314,7 @@ self.getPageXml = function(input)
       var combinedId = connection.fromElementId + connection.dataId + connection.toElementId;
       var foreignData = getForeignShape(connection, data);
 
-      createEdge(shapes, connection.fromElementId, combinedId, connection.color, null);
+      createEdge(shapes, connection.fromElementId, combinedId, connection.color, null, "0");
       createConnect(connects, connection.fromElementId, combinedId);
 
       createEdge(shapes, combinedId, connection.toElementId, connection.color, null);
