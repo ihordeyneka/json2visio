@@ -44,12 +44,12 @@ function createShape(shapes, element)
   shapes.appendChild(shape);
 }
 
-function createEdge(shapes, connection)
+function createEdge(shapes, fromElementId, toElementId, color, label)
 {
   var shape = xmlUtils.createElt(xmlDoc, "Shape");
-  var connectionId = mapId(connection.fromElementId + connection.toElementId);
+  var connectionId = mapId(fromElementId + toElementId);
 
-  var bounds = getConnectBounds(connection);
+  var bounds = getConnectBounds(fromElementId, toElementId);
   var layerIndex = 0;
 
   shape.setAttribute("ID", connectionId);
@@ -77,13 +77,13 @@ function createEdge(shapes, connection)
   shape.appendChild(xmlUtils.createCellElem(xmlDoc, "LayerMember", layerIndex + ""));
 
   //Formula is used to make the edge dynamic (specify source id and target id)
-  shape.appendChild(xmlUtils.createCellElem(xmlDoc, "BegTrigger", "2", "_XFTRIGGER(Sheet."+ mapId(connection.fromElementId) +"!EventXFMod)"));
-  shape.appendChild(xmlUtils.createCellElem(xmlDoc, "EndTrigger", "2", "_XFTRIGGER(Sheet."+ mapId(connection.toElementId) +"!EventXFMod)"));
+  shape.appendChild(xmlUtils.createCellElem(xmlDoc, "BegTrigger", "2", "_XFTRIGGER(Sheet."+ mapId(fromElementId) +"!EventXFMod)"));
+  shape.appendChild(xmlUtils.createCellElem(xmlDoc, "EndTrigger", "2", "_XFTRIGGER(Sheet."+ mapId(toElementId) +"!EventXFMod)"));
   shape.appendChild(xmlUtils.createCellElem(xmlDoc, "ShapeRouteStyle", "16"));
   shape.appendChild(xmlUtils.createCellElem(xmlDoc, "ConFixedCode", "6"));
   shape.appendChild(xmlUtils.createCellElem(xmlDoc, "ConLineRouteExt", "1"));
 
-  shape.appendChild(xmlUtils.createCellElem(xmlDoc, "LineColor", connection.color));
+  shape.appendChild(xmlUtils.createCellElem(xmlDoc, "LineColor", color));
 
   shape.appendChild(xmlUtils.createCellElem(xmlDoc, "EndArrowSize", "2"));
   shape.appendChild(xmlUtils.createCellElem(xmlDoc, "BeginArrow", "0"));
@@ -97,36 +97,37 @@ function createEdge(shapes, connection)
   shape.appendChild(createConnectionSectionControl(bounds.width/2, bounds.height/2));
   shape.appendChild(createConnectionSectionGeo(bounds.width, bounds.height));
 
-  if (connection.label)
-    shape.appendChild(xmlUtils.createTextElem(xmlDoc, connection.label));
+  if (label)
+    shape.appendChild(xmlUtils.createTextElem(xmlDoc, label));
 
   shapes.appendChild(shape);
 }
 
-function createConnect(connects, connection)
+function createConnect(connects, fromElementId, toElementId)
 {
-  var connectionId = mapId(connection.fromElementId + connection.toElementId);
+  var connectionId = mapId(fromElementId + toElementId);
 
   var connectBegin = xmlUtils.createElt(xmlDoc, "Connect");
   connectBegin.setAttribute("FromSheet", connectionId);
   connectBegin.setAttribute("FromCell", "BeginX");
-  connectBegin.setAttribute("ToSheet", mapId(connection.fromElementId));
+  connectBegin.setAttribute("ToSheet", mapId(fromElementId));
   connects.appendChild(connectBegin);
 
   var connectEnd = xmlUtils.createElt(xmlDoc, "Connect");
   connectEnd.setAttribute("FromSheet", connectionId);
   connectEnd.setAttribute("FromCell", "EndX");
-  connectEnd.setAttribute("ToSheet", mapId(connection.toElementId));
+  connectEnd.setAttribute("ToSheet", mapId(toElementId));
   connects.appendChild(connectEnd);    
 }
 
-function createData(shapes, connection, data)
+function getForeignShape(connection, data)
 {
   var shape = xmlUtils.createElt(xmlDoc, "Shape");
 
-  var dataId = mapId(connection.fromElementId + connection.toElementId + connection.dataId);
+  var combinedId = connection.fromElementId + connection.dataId + connection.toElementId;
+  var dataId = mapId(combinedId);
 
-  var bounds = getConnectBounds(connection);
+  var bounds = getConnectBounds(connection.fromElementId, connection.toElementId);
 
   shape.setAttribute("ID", dataId);
   shape.setAttribute("Type", "Foreign");
@@ -174,13 +175,21 @@ function createData(shapes, connection, data)
   if (data.name)
     shape.appendChild(xmlUtils.createTextElem(xmlDoc, data.name));
 
-  shapes.appendChild(shape);
+  figureMap[combinedId] = {
+    getConnectPoints: function() {
+      return [
+        { x: bounds.midX, y: xmlUtils.PAGE_HEIGHT - bounds.midY }
+      ];
+    }
+  };
+
+  return shape;
 }
 
-function getConnectBounds(connection)
+function getConnectBounds(fromElementId, toElementId)
 {
-  var figureFrom = figureMap[connection.fromElementId];
-  var figureTo = figureMap[connection.toElementId];
+  var figureFrom = figureMap[fromElementId];
+  var figureTo = figureMap[toElementId];
 
   var pointsFrom = figureFrom.getConnectPoints();
   var pointsTo = figureTo.getConnectPoints();
@@ -300,14 +309,22 @@ self.getPageXml = function(input)
 
   for (var connection of input.connections) 
   {
-    createEdge(shapes, connection);
-    createConnect(connects, connection);
-
     if (connection.dataId) {
       var data = input.data.find(d => d.id == connection.dataId);
-      if (data) {
-        createData(shapes, connection, data);
-      }
+      var combinedId = connection.fromElementId + connection.dataId + connection.toElementId;
+      var foreignData = getForeignShape(connection, data);
+
+      createEdge(shapes, connection.fromElementId, combinedId, connection.color, null);
+      createConnect(connects, connection.fromElementId, combinedId);
+
+      createEdge(shapes, combinedId, connection.toElementId, connection.color, null);
+      createConnect(connects, combinedId, connection.toElementId);
+      
+      shapes.appendChild(foreignData);
+    }
+    else {
+      createEdge(shapes, connection.fromElementId, connection.toElementId, connection.color, connection.label);
+      createConnect(connects, connection.fromElementId, connection.toElementId);
     }
   }
 
