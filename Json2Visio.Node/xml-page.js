@@ -125,13 +125,19 @@ function createConnect(connects, fromElementId, toElementId)
   var connectBegin = xmlUtils.createElt(xmlDoc, "Connect");
   connectBegin.setAttribute("FromSheet", connectionId);
   connectBegin.setAttribute("FromCell", "BeginX");
+  connectBegin.setAttribute("FromPart", "9");
   connectBegin.setAttribute("ToSheet", mapId(fromElementId));
+  connectBegin.setAttribute("ToCell", "PinX");
+  connectBegin.setAttribute("ToPart", "3");
   connects.appendChild(connectBegin);
 
   var connectEnd = xmlUtils.createElt(xmlDoc, "Connect");
   connectEnd.setAttribute("FromSheet", connectionId);
   connectEnd.setAttribute("FromCell", "EndX");
+  connectEnd.setAttribute("FromPart", "12");
   connectEnd.setAttribute("ToSheet", mapId(toElementId));
+  connectEnd.setAttribute("ToCell", "PinX");
+  connectEnd.setAttribute("ToPart", "3");
   connects.appendChild(connectEnd);    
 }
 
