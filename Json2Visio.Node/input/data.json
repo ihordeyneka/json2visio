@@ -17,7 +17,9 @@
       "toElementId": "svzpDqqgtDAJx3TZTZ7e",
       "color": "#00ff00",
       "label": "",
-      "dataId": "l8catTjfvt0Za6Qw8ovw"
+      "dataId": "l8catTjfvt0Za6Qw8ovw",
+      "dataX": 600,
+      "dataY": 400
     }
   ],
   "elements": [

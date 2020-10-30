@@ -127,8 +127,6 @@ function getForeignShape(connection, data)
   var combinedId = connection.fromElementId + connection.dataId + connection.toElementId;
   var dataId = mapId(combinedId);
 
-  var bounds = getConnectBounds(connection.fromElementId, connection.toElementId);
-
   shape.setAttribute("ID", dataId);
   shape.setAttribute("Type", "Foreign");
   shape.setAttribute("LineStyle", "2");
@@ -140,8 +138,8 @@ function getForeignShape(connection, data)
   var imgHeight = 36;
   var txtWidth = 240;
 
-  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "PinX", bounds.midX, "GUARD((BeginX+EndX)/2)"));
-  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "PinY", bounds.midY, "GUARD((BeginY+EndY)/2)"));
+  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "PinX", connection.dataX, "GUARD((BeginX+EndX)/2)"));
+  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "PinY", xmlUtils.PAGE_HEIGHT - connection.dataY, "GUARD((BeginY+EndY)/2)"));
   shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "Width", imgWidth, "GUARD(EndX-BeginX)"));
   shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "Height", imgHeight, "GUARD(EndY-BeginY)"));
   shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "LocPinX", imgWidth/2, "GUARD(Width*0.5)"));
@@ -178,7 +176,7 @@ function getForeignShape(connection, data)
   figureMap[combinedId] = {
     getConnectPoints: function() {
       return [
-        { x: bounds.midX, y: xmlUtils.PAGE_HEIGHT - bounds.midY }
+        { x: connection.dataX, y: connection.dataY }
       ];
     }
   };
