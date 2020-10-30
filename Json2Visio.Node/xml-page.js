@@ -91,14 +91,29 @@ function createEdge(shapes, fromElementId, toElementId, color, label, endArrow)
   shape.appendChild(xmlUtils.createCellElem(xmlDoc, "BeginArrowSize", "2"));
   //missing FillPattern, LineColor, Rounding, TextBkgnd
 
+  var txtWidth = 240;
   shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "TxtPinX", bounds.width/2, "Inh"));
   shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "TxtPinY", bounds.height/2, "Inh"));
+  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "TxtWidth", txtWidth));
+  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "TxtHeight", 0));
+  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "TxtLocPinX", txtWidth/2, "TxtWidth/2"));
+  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "TxtLocPinY", 0, "TxtHeight/2"));
 
   shape.appendChild(createConnectionSectionControl(bounds.width/2, bounds.height/2));
   shape.appendChild(createConnectionSectionGeo(bounds.width, bounds.height));
 
-  if (label)
+  if (label) {
+    var sectionChar = xmlUtils.createElt(xmlDoc, "Section");
+    sectionChar.setAttribute("N", "Character");
+    var rowChar = xmlUtils.createEltWithIX(xmlDoc, "Row", 0);
+    rowChar.appendChild(xmlUtils.createCellElem(xmlDoc, "Font", "Calibri"));
+    rowChar.appendChild(xmlUtils.createCellElem(xmlDoc, "Style", "0"));
+    rowChar.appendChild(xmlUtils.createCellElem(xmlDoc, "Size", "0.1666666666666667"));
+    sectionChar.appendChild(rowChar);
+    shape.appendChild(sectionChar);
+
     shape.appendChild(xmlUtils.createTextElem(xmlDoc, label));
+  }
 
   shapes.appendChild(shape);
 }
