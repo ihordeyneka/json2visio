@@ -19,7 +19,9 @@
       "label": "",
       "dataId": "l8catTjfvt0Za6Qw8ovw",
       "dataX": 600,
-      "dataY": 400
+      "dataY": 500,
+      "dataWidth": 27,
+      "dataHeight": 36
     }
   ],
   "elements": [

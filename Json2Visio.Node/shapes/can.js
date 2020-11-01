@@ -1,7 +1,7 @@
 var Base = require('./base');
 var xmlUtils = require('../xml-utils');
 
-class Ellipse extends Base
+class Can extends Base
 {
   constructor(element) {
     super(element)
@@ -18,4 +18,4 @@ class Ellipse extends Base
   }
 }
 
-module.exports = Ellipse;
+module.exports = Can;

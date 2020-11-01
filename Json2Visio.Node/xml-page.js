@@ -1,6 +1,7 @@
 var xmlUtils = require('./xml-utils');
 var Rect = require('./shapes/rect');
 var Ellipse = require('./shapes/ellipse');
+var Can = require('./shapes/can');
 
 var self = {};
 var xmlDoc = null;
@@ -28,6 +29,9 @@ function createShape(shapes, element)
   {
     case 'ellipse':
       figure = new Ellipse(element);
+      break;
+    case 'can':
+      figure = new Can(element);
       break;
     case 'box':
     default:
@@ -155,8 +159,8 @@ function getForeignShape(connection, data)
   shape.setAttribute("TextStyle", "2");
 
   //hardcoded
-  var imgWidth = 36;
-  var imgHeight = 36;
+  var imgWidth = connection.dataWidth;
+  var imgHeight = connection.dataHeight;
   var txtWidth = 240;
 
   shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "PinX", connection.dataX, "GUARD((BeginX+EndX)/2)"));
@@ -197,7 +201,10 @@ function getForeignShape(connection, data)
   figureMap[combinedId] = {
     getConnectPoints: function() {
       return [
-        { x: connection.dataX, y: connection.dataY }
+        { x: connection.dataX - imgWidth/2, y: connection.dataY },
+        { x: connection.dataX + imgWidth/2, y: connection.dataY },
+        { x: connection.dataX, y: connection.dataY - imgHeight/2 },
+        { x: connection.dataX, y: connection.dataY + imgHeight/2 }
       ];
     }
   };
