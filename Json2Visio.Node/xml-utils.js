@@ -3,12 +3,13 @@ var window = (new jsdom.JSDOM()).window;
 var document = window.document;
 
 var self = {
-  PAGE_HEIGHT: 1200,
   CONVERSION_FACTOR: 40 * 2.54, //screenCoordinatesPerCm (40) x CENTIMETERS_PER_INCHES (2.54)
   XMLNS: "http://schemas.microsoft.com/office/visio/2012/main",
   XMLNS_R: "http://schemas.openxmlformats.org/officeDocument/2006/relationships",
   RELS_XMLNS: "http://schemas.openxmlformats.org/package/2006/relationships"
 };
+
+self.PAGE_HEIGHT = 11 * self.CONVERSION_FACTOR;
 
 self.createXmlDocument = function()
 {

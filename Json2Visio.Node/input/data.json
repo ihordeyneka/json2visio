@@ -41,9 +41,9 @@
       "id": "EHKpzSELB7XCc8XSvhLF",
       "name": "Paper2",
       "subName": "Box2",
-      "shape": "box",
+      "shape": "can",
       "backgroundColor": "#ffff00",
-      "borderColor": "#ffff00"
+      "borderColor": "#0000ff"
     },
     {
       "x": 425,

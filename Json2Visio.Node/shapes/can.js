@@ -3,18 +3,52 @@ var xmlUtils = require('../xml-utils');
 
 class Can extends Base
 {
-  constructor(element) {
-    super(element)
+  constructor(element, subShapeId) {
+    super(element);
+    this.subShapeId = subShapeId;
+    this.width = 1 * xmlUtils.CONVERSION_FACTOR;
+    this.ellipseHeight = 0.25 * xmlUtils.CONVERSION_FACTOR;
+    this.boxHeight = 1 * xmlUtils.CONVERSION_FACTOR;
   }
 
-  processGeometry(xmlDoc, section) {
-    var geoIndex = 1;
-    var w = this.geo.width;
-    var h = this.geo.height;
+  createShape(xmlDoc, shapeId) {
+    var shape = xmlUtils.createElt(xmlDoc, "Shape");
+      
+    shape.setAttribute("ID", shapeId);
+    shape.setAttribute("Type", "Group");
+    shape.setAttribute("Master", "8"); //Can
+    shape.setAttribute("FillStyle", "0");
+    shape.setAttribute("TextStyle", "0");
+    
+    shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "PinX", this.element.x));
+    shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "PinY", xmlUtils.PAGE_HEIGHT - this.element.y));
+    
+    shape.appendChild(xmlUtils.createCellElem(xmlDoc, "FillForegnd", this.element.backgroundColor));
+    shape.appendChild(xmlUtils.createCellElem(xmlDoc, "LineColor", this.element.borderColor));
   
-    section.appendChild(xmlUtils.createRowScaled(xmlDoc, "MoveTo", geoIndex++, 0, h/2, "0", "Height/2"));
-    section.appendChild(xmlUtils.createRowScaled(xmlDoc, "EllipticalArcTo", geoIndex++, w, h/2, "Width", "Height/2", w/2, h, 0, w/h, "Width/2", "Height", "No Formula", "Width/Height","DL","DL"));
-    section.appendChild(xmlUtils.createRowScaled(xmlDoc, "EllipticalArcTo", geoIndex++, 0, h/2, "0", "Height/2", w/2, 0, 0, w/h, "Width/2", "0", "No Formula", "Width/Height","DL","DL"));
+    shape.appendChild(this.createSectionChar(xmlDoc));
+    shape.appendChild(xmlUtils.createTextElem(xmlDoc, this.element.name, this.element.subName));
+
+    var subShapes = xmlUtils.createElt(xmlDoc, "Shapes");
+    var subShape = xmlUtils.createElt(xmlDoc, "Shape");
+    subShape.setAttribute("ID", this.subShapeId);
+    subShape.setAttribute("Type", "Shape");
+    subShape.setAttribute("MasterShape", "6");
+    subShape.appendChild(xmlUtils.createCellElem(xmlDoc, "FillForegnd", this.element.backgroundColor));
+    subShape.appendChild(xmlUtils.createCellElem(xmlDoc, "LineColor", this.element.borderColor));
+    subShapes.appendChild(subShape);
+    shape.appendChild(subShapes);
+  
+    return shape;
+  }
+
+  getConnectPoints() {
+    return [
+      { x: this.element.x - this.width/2, y: this.element.y },
+      { x: this.element.x + this.width/2, y: this.element.y },
+      { x: this.element.x, y: this.element.y - (this.ellipseHeight + this.boxHeight)/2 },
+      { x: this.element.x, y: this.element.y + (this.ellipseHeight + this.boxHeight)/2 }
+    ];
   }
 }
 

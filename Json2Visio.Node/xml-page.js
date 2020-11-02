@@ -31,7 +31,8 @@ function createShape(shapes, element)
       figure = new Ellipse(element);
       break;
     case 'can':
-      figure = new Can(element);
+      var subShapeId = mapId(element.id + "_child");
+      figure = new Can(element, subShapeId);
       break;
     case 'box':
     default:
@@ -366,11 +367,17 @@ self.getPageRelXml = function(zip, input) {
 
   var relIndex = 1;
 
-  var masterRel = xmlUtils.createElt(relDoc, "Relationship", xmlUtils.RELS_XMLNS);
-  masterRel.setAttribute('Id', 'rId' + relIndex++);
-  masterRel.setAttribute('Type', 'http://schemas.microsoft.com/visio/2010/relationships/master');
-  masterRel.setAttribute('Target', '../masters/master1.xml');
-  root.appendChild(masterRel);
+  var master1Rel = xmlUtils.createElt(relDoc, "Relationship", xmlUtils.RELS_XMLNS);
+  master1Rel.setAttribute('Id', 'rId' + relIndex++);
+  master1Rel.setAttribute('Type', 'http://schemas.microsoft.com/visio/2010/relationships/master');
+  master1Rel.setAttribute('Target', '../masters/master1.xml');
+  root.appendChild(master1Rel);
+
+  var master2Rel = xmlUtils.createElt(relDoc, "Relationship", xmlUtils.RELS_XMLNS);
+  master2Rel.setAttribute('Id', 'rId' + relIndex++);
+  master2Rel.setAttribute('Type', 'http://schemas.microsoft.com/visio/2010/relationships/master');
+  master2Rel.setAttribute('Target', '../masters/master2.xml');
+  root.appendChild(master2Rel);  
 
   for (var data of input.data)
   {

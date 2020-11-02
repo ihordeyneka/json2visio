@@ -1,0 +1,199 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<MasterContents xmlns='http://schemas.microsoft.com/office/visio/2012/main'
+  xmlns:r='http://schemas.openxmlformats.org/officeDocument/2006/relationships' xml:space='preserve'>
+  <Shapes>
+    <Shape ID='5' Type='Group' LineStyle='3' FillStyle='3' TextStyle='3'>
+      <Cell N='PinX' V='2'/>
+      <Cell N='PinY' V='2'/>
+      <Cell N='Width' V='1'/>
+      <Cell N='Height' V='1.25'/>
+      <Cell N='LocPinX' V='0.5' F='Width*0.5'/>
+      <Cell N='LocPinY' V='0.625' F='Height*0.5'/>
+      <Cell N='Angle' V='0'/>
+      <Cell N='FlipX' V='0'/>
+      <Cell N='FlipY' V='0'/>
+      <Cell N='ResizeMode' V='0'/>
+      <Cell N='SelectMode' V='0'/>
+      <Cell N='LineWeight' V='0.003333333333333333' U='PT' F='THEMEVAL("LineWeight",0.24PT)'/>
+      <Cell N='QuickStyleType' V='2'/>
+      <Cell N='EventDblClick' V='0' F='OPENTEXTWIN()'/>
+      <Cell N='ShapeSplit' V='1'/>
+      <Cell N='HelpTopic' V='Vis_PRXY.chm!#60312'/>
+      <Cell N='Copyright' V='Copyright (c) 2012 Microsoft Corporation.  All rights reserved.'/>
+      <Section N='Control'>
+        <Row N='Row_1'>
+          <Cell N='X' V='0.5' F='Width*0.5'/>
+          <Cell N='Y' V='1' F='BOUND(Height*0.8,0,FALSE,0,Height)'/>
+          <Cell N='XDyn' V='0' F='Width*0'/>
+          <Cell N='YDyn' V='0' F='Height*0'/>
+          <Cell N='XCon' V='1'/>
+          <Cell N='YCon' V='0'/>
+          <Cell N='CanGlue' V='0'/>
+          <Cell N='Prompt' V='Viewing Angle'/>
+        </Row>
+      </Section>
+      <Section N='Connection'>
+        <Row T='Connection' IX='0'>
+          <Cell N='X' V='0' F='Width*0'/>
+          <Cell N='Y' V='0.625' F='Height*0.5'/>
+          <Cell N='DirX' V='0'/>
+          <Cell N='DirY' V='0'/>
+          <Cell N='Type' V='0'/>
+          <Cell N='AutoGen' V='0'/>
+          <Cell N='Prompt' V='' F='No Formula'/>
+        </Row>
+        <Row T='Connection' IX='1'>
+          <Cell N='X' V='1' F='Width*1'/>
+          <Cell N='Y' V='0.625' F='Height*0.5'/>
+          <Cell N='DirX' V='0'/>
+          <Cell N='DirY' V='0'/>
+          <Cell N='Type' V='0'/>
+          <Cell N='AutoGen' V='0'/>
+          <Cell N='Prompt' V='' F='No Formula'/>
+        </Row>
+        <Row T='Connection' IX='2'>
+          <Cell N='X' V='0.5' F='Width*0.5'/>
+          <Cell N='Y' V='0' F='Height*0'/>
+          <Cell N='DirX' V='0'/>
+          <Cell N='DirY' V='0'/>
+          <Cell N='Type' V='0'/>
+          <Cell N='AutoGen' V='0'/>
+          <Cell N='Prompt' V='' F='No Formula'/>
+        </Row>
+        <Row T='Connection' IX='3'>
+          <Cell N='X' V='0.5' F='Width*0.5'/>
+          <Cell N='Y' V='1.25' F='Height*1'/>
+          <Cell N='DirX' V='0'/>
+          <Cell N='DirY' V='0'/>
+          <Cell N='Type' V='0'/>
+          <Cell N='AutoGen' V='0'/>
+          <Cell N='Prompt' V='' F='No Formula'/>
+        </Row>
+        <Row T='Connection' IX='4'>
+          <Cell N='X' V='0.5' F='Width*0.5'/>
+          <Cell N='Y' V='1' F='Controls.Row_1.Y'/>
+          <Cell N='DirX' V='0'/>
+          <Cell N='DirY' V='0'/>
+          <Cell N='Type' V='0'/>
+          <Cell N='AutoGen' V='0'/>
+          <Cell N='Prompt' V='' F='No Formula'/>
+        </Row>
+      </Section>
+      <Section N='Character'>
+        <Row IX='0'>
+          <Cell N='Size' V='0.1388888888888889' U='PT'/>
+        </Row>
+      </Section>
+      <Section N='User'>
+        <Row N='visVersion'>
+          <Cell N='Value' V='15'/>
+          <Cell N='Prompt' V=''/>
+        </Row>
+      </Section>
+      <Section N='Geometry' IX='0'>
+        <Cell N='NoFill' V='0'/>
+        <Cell N='NoLine' V='0'/>
+        <Cell N='NoShow' V='0'/>
+        <Cell N='NoSnap' V='0'/>
+        <Cell N='NoQuickDrag' V='0'/>
+        <Row T='Ellipse' IX='1'>
+          <Cell N='X' V='0.5' F='Width*0.5'/>
+          <Cell N='Y' V='1.125' F='Height-(Height-Controls.Row_1.Y)*0.5'/>
+          <Cell N='A' V='0' U='DL' F='Width*0'/>
+          <Cell N='B' V='1.125' U='DL' F='Geometry1.Y1'/>
+          <Cell N='C' V='0.5' U='DL' F='Width*0.5'/>
+          <Cell N='D' V='1.25' U='DL' F='Height*1'/>
+        </Row>
+      </Section>
+      <Shapes>
+        <Shape ID='6' Type='Shape' LineStyle='3' FillStyle='3' TextStyle='3'>
+          <Cell N='PinX' V='0.5' F='Sheet.5!Width*0.5'/>
+          <Cell N='PinY' V='0.625' F='Sheet.5!Height*0.5'/>
+          <Cell N='Width' V='1' F='Sheet.5!Width*1'/>
+          <Cell N='Height' V='1.25' F='Sheet.5!Height*1'/>
+          <Cell N='LocPinX' V='0.5' F='Width*0.5'/>
+          <Cell N='LocPinY' V='0.625' F='Height*0.5'/>
+          <Cell N='Angle' V='0'/>
+          <Cell N='FlipX' V='0'/>
+          <Cell N='FlipY' V='0'/>
+          <Cell N='ResizeMode' V='0'/>
+          <Cell N='LineWeight' V='0.003333333333333333' U='PT' F='THEMEVAL("LineWeight",0.24PT)'/>
+          <Cell N='Copyright' V='Copyright (c) 2012 Microsoft Corporation.  All rights reserved.'/>
+          <Section N='User'>
+            <Row N='ControlHalfHeight'>
+              <Cell N='Value' V='0.125' U='DL' F='(Height-Sheet.5!Controls.Row_1.Y)*0.5'/>
+              <Cell N='Prompt' V=''/>
+            </Row>
+            <Row N='FillForegnd'>
+              <Cell N='Value' V='1' F='Sheet.5!FillForegnd'/>
+              <Cell N='Prompt' V=''/>
+            </Row>
+          </Section>
+          <Section N='FillGradient'>
+            <Row IX='0'>
+              <Cell N='GradientStopColor' V='#e4e4e4' F='GUARD(TINT(THEMECBV(User.FillForegnd,1),-25))'/>
+            </Row>
+            <Row IX='1'>
+              <Cell N='GradientStopColor' V='#e4e4e4' F='GUARD(TINT(THEMECBV(User.FillForegnd,2),-25))'/>
+            </Row>
+            <Row IX='2'>
+              <Cell N='GradientStopColor' V='#e4e4e4' F='GUARD(TINT(THEMECBV(User.FillForegnd,3),-25))'/>
+            </Row>
+            <Row IX='3'>
+              <Cell N='GradientStopColor' V='#e4e4e4' F='GUARD(TINT(THEMECBV(User.FillForegnd,4),-25))'/>
+            </Row>
+            <Row IX='4'>
+              <Cell N='GradientStopColor' V='#e4e4e4' F='GUARD(TINT(THEMECBV(User.FillForegnd,5),-25))'/>
+            </Row>
+            <Row IX='5'>
+              <Cell N='GradientStopColor' V='#e4e4e4' F='GUARD(TINT(THEMECBV(User.FillForegnd,6),-25))'/>
+            </Row>
+            <Row IX='6'>
+              <Cell N='GradientStopColor' V='#e4e4e4' F='GUARD(TINT(THEMECBV(User.FillForegnd,7),-25))'/>
+            </Row>
+            <Row IX='7'>
+              <Cell N='GradientStopColor' V='#e4e4e4' F='GUARD(TINT(THEMECBV(User.FillForegnd,8),-25))'/>
+            </Row>
+            <Row IX='8'>
+              <Cell N='GradientStopColor' V='#e4e4e4' F='GUARD(TINT(THEMECBV(User.FillForegnd,9),-25))'/>
+            </Row>
+            <Row IX='9'>
+              <Cell N='GradientStopColor' V='#e4e4e4' F='GUARD(TINT(THEMECBV(User.FillForegnd,10),-25))'/>
+            </Row>
+          </Section>
+          <Section N='Geometry' IX='0'>
+            <Cell N='NoFill' V='0'/>
+            <Cell N='NoLine' V='0'/>
+            <Cell N='NoShow' V='0'/>
+            <Cell N='NoSnap' V='0'/>
+            <Cell N='NoQuickDrag' V='0'/>
+            <Row T='MoveTo' IX='1'>
+              <Cell N='X' V='0' F='Width*0'/>
+              <Cell N='Y' V='0.125' F='User.ControlHalfHeight'/>
+            </Row>
+            <Row T='EllipticalArcTo' IX='2'>
+              <Cell N='X' V='1' F='Width*1'/>
+              <Cell N='Y' V='0.125' F='User.ControlHalfHeight'/>
+              <Cell N='A' V='0.5' U='DL' F='Width*0.5'/>
+              <Cell N='B' V='0' U='DL' F='Height*0'/>
+              <Cell N='C' V='0' U='DEG'/>
+              <Cell N='D' V='4' F='Width/(User.ControlHalfHeight*2)'/>
+            </Row>
+            <Row T='LineTo' IX='3'>
+              <Cell N='X' V='1' F='Width*1'/>
+              <Cell N='Y' V='1.125' F='Height-User.ControlHalfHeight'/>
+            </Row>
+            <Row T='LineTo' IX='4'>
+              <Cell N='X' V='0' F='Width*0'/>
+              <Cell N='Y' V='1.125' F='Height-User.ControlHalfHeight'/>
+            </Row>
+            <Row T='LineTo' IX='5'>
+              <Cell N='X' V='0' F='Geometry1.X1'/>
+              <Cell N='Y' V='0.125' F='Geometry1.Y1'/>
+            </Row>
+          </Section>
+        </Shape>
+      </Shapes>
+    </Shape>
+  </Shapes>
+</MasterContents>

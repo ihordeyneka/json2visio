@@ -16,6 +16,7 @@ function createVsdxSkeleton(zip)
     'visio/windows.xml',
     'visio/masters/masters.xml',
     'visio/masters/master1.xml',
+    'visio/masters/master2.xml',
     'visio/masters/_rels/masters.xml.rels',
     'visio/_rels/document.xml.rels',
     'visio/pages/pages.xml',
