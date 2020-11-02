@@ -5,6 +5,7 @@ class Can extends Base
 {
   constructor(element, subShapeId) {
     super(element);
+    this.type = 'Group';
     this.subShapeId = subShapeId;
     this.width = 1 * xmlUtils.CONVERSION_FACTOR;
     this.ellipseHeight = 0.25 * xmlUtils.CONVERSION_FACTOR;

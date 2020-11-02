@@ -44,7 +44,7 @@ function createShape(shapes, element)
   
   var shapeId = mapId(element.id);
   var shape = figure.createShape(xmlDoc, shapeId);
-  shape.setAttribute("Type", "Shape");
+  shape.setAttribute("Type", figure.type);
   
   shapes.appendChild(shape);
 }

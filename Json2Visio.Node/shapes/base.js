@@ -4,6 +4,7 @@ class Base
 {
   constructor(element) {
     this.element = element;
+    this.type = 'Shape';
     this.geo = {
       width: 120, //hardcoded
       height: 60,
