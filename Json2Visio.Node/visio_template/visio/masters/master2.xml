@@ -183,13 +183,9 @@
               <Cell N='X' V='1' F='Width*1'/>
               <Cell N='Y' V='1.125' F='Height-User.ControlHalfHeight'/>
             </Row>
-            <Row T='EllipticalArcTo' IX='4'>
+            <Row T='LineTo' IX='4'>
               <Cell N='X' V='0' F='Width*0'/>
               <Cell N='Y' V='1.125' F='Height-User.ControlHalfHeight'/>
-              <Cell N='A' V='0.5' U='DL' F='Width*0.5'/>
-              <Cell N='B' V='1' U='DL' F='Height*1'/>
-              <Cell N='C' V='0' U='DEG'/>
-              <Cell N='D' V='4' F='Width/(User.ControlHalfHeight*2)'/>
             </Row>
             <Row T='LineTo' IX='5'>
               <Cell N='X' V='0' F='Geometry1.X1'/>
