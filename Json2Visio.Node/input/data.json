@@ -40,7 +40,7 @@
       "y": 290,
       "id": "EHKpzSELB7XCc8XSvhLF",
       "name": "Paper2",
-      "subName": "Box2",
+      "subName": "Can2 my super Can",
       "shape": "can",
       "backgroundColor": "#ffff00",
       "borderColor": "#0000ff"
@@ -49,7 +49,7 @@
       "x": 425,
       "y": 510,
       "id": "svzpDqqgtDAJx3TZTZ7e",
-      "name": "PaperA",
+      "name": "PaperA Long Ellipse",
       "subName": "BoxA",
       "shape": "ellipse",
       "backgroundColor": "#00ff00",

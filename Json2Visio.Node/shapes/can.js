@@ -23,6 +23,8 @@ class Can extends Base
     
     shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "PinX", this.element.x));
     shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "PinY", xmlUtils.PAGE_HEIGHT - this.element.y));
+    shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "Width", 0, "GUARD(TEXTWIDTH(theText) + 0.4)"));
+    shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "Height", 0, "GUARD(TEXTHEIGHT(theText,Width) + 0.4)"));
     
     shape.appendChild(xmlUtils.createCellElem(xmlDoc, "FillForegnd", this.element.backgroundColor));
     shape.appendChild(xmlUtils.createCellElem(xmlDoc, "LineColor", this.element.borderColor));
@@ -41,15 +43,6 @@ class Can extends Base
     shape.appendChild(subShapes);
   
     return shape;
-  }
-
-  getConnectPoints() {
-    return [
-      { x: this.element.x - this.width/2, y: this.element.y },
-      { x: this.element.x + this.width/2, y: this.element.y },
-      { x: this.element.x, y: this.element.y - (this.ellipseHeight + this.boxHeight)/2 },
-      { x: this.element.x, y: this.element.y + (this.ellipseHeight + this.boxHeight)/2 }
-    ];
   }
 }
 
