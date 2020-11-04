@@ -1,20 +1,44 @@
 <?xml version='1.0' encoding='utf-8' ?>
-<Masters xmlns='http://schemas.microsoft.com/office/visio/2012/main' xmlns:r='http://schemas.openxmlformats.org/officeDocument/2006/relationships' xml:space='preserve'><Master ID='4' NameU='Dynamic connector' IsCustomNameU='1' Name='Dynamic connector' IsCustomName='1' Prompt='This connector automatically routes between the shapes it connects.' IconSize='1' AlignName='2' MatchByName='1' IconUpdate='0' UniqueID='{002A9108-0000-0000-8E40-00608CF305B2}' BaseID='{F7290A45-E3AD-11D2-AE4F-006008C9F5A9}' PatternFlags='0' Hidden='0' MasterType='541'><PageSheet LineStyle='0' FillStyle='0' TextStyle='0'><Cell N='PageWidth' V='3'/><Cell N='PageHeight' V='3'/><Cell N='ShdwOffsetX' V='0.125'/><Cell N='ShdwOffsetY' V='-0.125'/><Cell N='PageScale' V='1' U='IN_F'/><Cell N='DrawingScale' V='1' U='IN_F'/><Cell N='DrawingSizeType' V='4'/><Cell N='DrawingScaleType' V='0'/><Cell N='InhibitSnap' V='0'/><Cell N='PageLockReplace' V='0' U='BOOL'/><Cell N='PageLockDuplicate' V='0' U='BOOL'/><Cell N='UIVisibility' V='0'/><Cell N='ShdwType' V='0'/><Cell N='ShdwObliqueAngle' V='0'/><Cell N='ShdwScaleFactor' V='1'/><Cell N='DrawingResizeType' V='0'/><Section N='Layer'><Row IX='0'><Cell N='Name' V='Connector'/><Cell N='Color' V='255'/><Cell N='Status' V='0'/><Cell N='Visible' V='1'/><Cell N='Print' V='1'/><Cell N='Active' V='0'/><Cell N='Lock' V='0'/><Cell N='Snap' V='1'/><Cell N='Glue' V='1'/><Cell N='NameUniv' V='Connector'/><Cell N='ColorTrans' V='0'/></Row></Section></PageSheet><Icon>
-AAABAAEAICAQjwAAAADoAgAAFgAAACgAAAAgAAAAQAAAAAEABAAAAAAAgAIAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAACAAACAAAAAgIAAgAAAAIAAgACAgAAAgICAAMDAwAAAAP8AAP8AAAD//wD/AAAA/w
-D/AP//AAD///8A///////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////
-///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAA==</Icon><Rel r:id='rId1'/></Master>
-<Master ID='8' NameU='Can' IsCustomNameU='1' Name='Can' IsCustomName='1' Prompt='Drag onto the page, then use the yellow squares to modify the shape.' IconSize='1' AlignName='2' MatchByName='0' IconUpdate='1' UniqueID='{088480BF-000E-0000-8E40-00608CF305B2}' BaseID='{D41889EE-7E2E-4385-99C0-98BE8212D6A1}' PatternFlags='0' Hidden='0' MasterType='2'>
+<Masters xmlns='http://schemas.microsoft.com/office/visio/2012/main'
+  xmlns:r='http://schemas.openxmlformats.org/officeDocument/2006/relationships' xml:space='preserve'>
+  <Master ID='4' NameU='Dynamic connector' IsCustomNameU='1' Name='Dynamic connector' IsCustomName='1' Prompt='This connector automatically routes between the shapes it connects.' IconSize='1' AlignName='2' MatchByName='1' IconUpdate='0' UniqueID='{002A9108-0000-0000-8E40-00608CF305B2}' BaseID='{F7290A45-E3AD-11D2-AE4F-006008C9F5A9}' PatternFlags='0' Hidden='0' MasterType='541'>
+    <PageSheet LineStyle='0' FillStyle='0' TextStyle='0'>
+      <Cell N='PageWidth' V='3'/>
+      <Cell N='PageHeight' V='3'/>
+      <Cell N='ShdwOffsetX' V='0.125'/>
+      <Cell N='ShdwOffsetY' V='-0.125'/>
+      <Cell N='PageScale' V='1' U='IN_F'/>
+      <Cell N='DrawingScale' V='1' U='IN_F'/>
+      <Cell N='DrawingSizeType' V='4'/>
+      <Cell N='DrawingScaleType' V='0'/>
+      <Cell N='InhibitSnap' V='0'/>
+      <Cell N='PageLockReplace' V='0' U='BOOL'/>
+      <Cell N='PageLockDuplicate' V='0' U='BOOL'/>
+      <Cell N='UIVisibility' V='0'/>
+      <Cell N='ShdwType' V='0'/>
+      <Cell N='ShdwObliqueAngle' V='0'/>
+      <Cell N='ShdwScaleFactor' V='1'/>
+      <Cell N='DrawingResizeType' V='0'/>
+      <Section N='Layer'>
+        <Row IX='0'>
+          <Cell N='Name' V='Connector'/>
+          <Cell N='Color' V='255'/>
+          <Cell N='Status' V='0'/>
+          <Cell N='Visible' V='1'/>
+          <Cell N='Print' V='1'/>
+          <Cell N='Active' V='0'/>
+          <Cell N='Lock' V='0'/>
+          <Cell N='Snap' V='1'/>
+          <Cell N='Glue' V='1'/>
+          <Cell N='NameUniv' V='Connector'/>
+          <Cell N='ColorTrans' V='0'/>
+        </Row>
+      </Section>
+    </PageSheet>
+    <Icon> AAABAAEAICAQjwAAAADoAgAAFgAAACgAAAAgAAAAQAAAAAEABAAAAAAAgAIAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAACAAACAAAAAgIAAgAAAAIAAgACAgAAAgICAAMDAwAAAAP8AAP8AAAD//wD/AAAA/w D/AP//AAD///8A/////////////////////////////////////////////////////////////// ///////////////////////////////////////////////////////////////////////////// ///////////////////////////////////////////////////////////////////////////// ///////////////////////////////////////////////////////////////////////////// ///////////////////////////////////////////////////////////////////////////// ///////////////////////////////////////////////////////////////////////////// ///////////////////////////////////////////////////////////////////////////// ///////////////////////////////////////////////////////////////////////////// ///////////////////////////////////////////////////////////////////////////// ///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAA==</Icon>
+    <Rel r:id='rId1'/>
+  </Master>
+  <Master ID='8' NameU='Can' IsCustomNameU='1' Name='Can' IsCustomName='1' Prompt='Drag onto the page, then use the yellow squares to modify the shape.' IconSize='1' AlignName='2' MatchByName='0' IconUpdate='1' UniqueID='{088480BF-000E-0000-8E40-00608CF305B2}' BaseID='{D41889EE-7E2E-4385-99C0-98BE8212D6A1}' PatternFlags='0' Hidden='0' MasterType='2'>
     <PageSheet LineStyle='0' FillStyle='0' TextStyle='0'>
       <Cell N='PageWidth' V='4' U='IN'/>
       <Cell N='PageHeight' V='4' U='IN'/>
@@ -37,4 +61,27 @@ AAAAAAAAAAAAAAAAAAAAA==</Icon><Rel r:id='rId1'/></Master>
     <Icon> AAABAAEAICAQjwAAAADoAgAAFgAAACgAAAAgAAAAQAAAAAEABAAAAAAAgAIAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAACAAACAAAAAgIAAgAAAAIAAgACAgAAAgICAAMDAwAAAAP8AAP8AAAD//wD/AAAA/w D/AP//AAD///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAB3d3d3dwAAAAAAAAAAB4//////////+HAAA AAAAP//////////////AAAAAAD//////////////3AAAAAA//////////////9wAAAAAP//////// //////cAAAAAD//////////////3AAAAAA//////////////9wAAAAAP//////////////cAAAAAD //////////////3AAAAAA//////////////9wAAAAAP//////////////cAAAAAD///////////// /3AAAAAA//////////////9wAAAAAP//////////////cAAAAAD//////////////3AAAAAA///// /////////9wAAAAAP//////////////cAAAAAD//////////////3AAAAAA//////////////9wAA AAAP//////////////cAAAAAD//////////////3AAAAAA//////////////9wAAAAAP//+Hd3AHd 3iP//cAAAAAD3AAB3d4iHdwAAeHAAAAAAB4//////////+HAAAAAAAP//////////////MAAAAACP ////////////+AAAAAAAAHeP///////4hwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAD//////wAAf/gAAB/wAAAf+AAAD/gAAA/4AAAP+AAAD/gAAA/4AAAP+AAAD/gAAA/4AAAP+AAA D/gAAA/4AAAP+AAAD/gAAA/4AAAP+AAAD/gAAA/4AAAP+AAAD/gAAA/4AAAP+AAAD/AAAA/wAAAH8 AAAD/wAAB//gAH//////w==</Icon>
     <Rel r:id='rId2'/>
   </Master>
+  <Master ID='11' NameU='Hexagon' IsCustomNameU='1' Name='Hexagon' IsCustomName='1' Prompt='Drag onto the page.' IconSize='1' AlignName='2' MatchByName='0' IconUpdate='1' UniqueID='{08847D08-000A-0000-8E40-00608CF305B2}' BaseID='{017B93A4-F6E5-41F6-BBA5-AF7E167F1350}' PatternFlags='0' Hidden='0' MasterType='2'>
+    <PageSheet LineStyle='0' FillStyle='0' TextStyle='0'>
+      <Cell N='PageWidth' V='4' U='IN'/>
+      <Cell N='PageHeight' V='4' U='IN'/>
+      <Cell N='ShdwOffsetX' V='0.125'/>
+      <Cell N='ShdwOffsetY' V='-0.125'/>
+      <Cell N='PageScale' V='1' U='IN'/>
+      <Cell N='DrawingScale' V='1' U='IN'/>
+      <Cell N='DrawingSizeType' V='0'/>
+      <Cell N='DrawingScaleType' V='0'/>
+      <Cell N='InhibitSnap' V='0'/>
+      <Cell N='PageLockReplace' V='0' U='BOOL'/>
+      <Cell N='PageLockDuplicate' V='0' U='BOOL'/>
+      <Cell N='UIVisibility' V='0'/>
+      <Cell N='ShdwType' V='0'/>
+      <Cell N='ShdwObliqueAngle' V='0'/>
+      <Cell N='ShdwScaleFactor' V='1'/>
+      <Cell N='DrawingResizeType' V='1'/>
+      <Cell N='ShapeKeywords' V='basic,shape,geometry,polygon,six-sided'/>
+    </PageSheet>
+    <Icon> AAABAAEAICAQjwAAAADoAgAAFgAAACgAAAAgAAAAQAAAAAEABAAAAAAAgAIAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAACAAACAAAAAgIAAgAAAAIAAgACAgAAAgICAAMDAwAAAAP8AAP8AAAD//wD/AAAA/w D/AP//AAD///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAd3d3d3d3dwAAAAAAAAAACP/////////wAAAAAAAAAH//////////9wAAAAAAAAD/////// ////8AAAAAAAAH////////////gAAAAAAAD/////////////AAAAAAAI/////////////4AAAAAAD //////////////3AAAAAI///////////////wAAAAf///////////////+AAAAP////////////// //8AAAj/////////////////gAAP//////////////////AAD//////////////////wAAf////// ///////////gAAAj////////////////wAAAA////////////////cAAAAI//////////////+AAA AAAP//////////////AAAAAAAP////////////+AAAAAAAD/////////////AAAAAAAAD//////// ///8AAAAAAAAAj///////////AAAAAAAAAA//////////9wAAAAAAAAAI/////////4AAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAD/////////////////AAD//gAAf/4AAH/8AAA//AAAH/gAAD/4AAAP8AAAD+AAAAfgAAAHwAAA A8AAAAGAAAADgAAAAcAAAAPAAAAD4AAAB/AAAAfwAAAf/AAAD/gAAB/+AAB//AAAP/4AAH//AAB// wAA/////////////////w==</Icon>
+    <Rel r:id='rId5'/>
+  </Master>  
 </Masters>

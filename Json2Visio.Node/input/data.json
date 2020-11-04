@@ -30,8 +30,8 @@
       "y": 290,
       "id": "6YaXTdNQS6pUD5AWS8c0",
       "name": "Paper1",
-      "subName": "Box1",
-      "shape": "box",
+      "subName": "Hexagon1",
+      "shape": "hexagon",
       "backgroundColor": "#ffff00",
       "borderColor": "#ff0000"
     },

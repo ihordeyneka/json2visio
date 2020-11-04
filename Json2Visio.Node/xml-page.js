@@ -2,6 +2,7 @@ var xmlUtils = require('./xml-utils');
 var Rect = require('./shapes/rect');
 var Ellipse = require('./shapes/ellipse');
 var Can = require('./shapes/can');
+var Hexagon = require('./shapes/hexagon');
 
 var self = {};
 var xmlDoc = null;
@@ -33,6 +34,11 @@ function createShape(shapes, element)
     case 'can':
       var subShapeId = mapId(element.id + "_child");
       figure = new Can(element, subShapeId);
+      break;
+    case 'hexagon':
+      var hexShapeId = mapId(element.id + "_hex");
+      var textShapeId = mapId(element.id + "_text");
+      figure = new Hexagon(element, hexShapeId, textShapeId);
       break;
     case 'box':
     default:

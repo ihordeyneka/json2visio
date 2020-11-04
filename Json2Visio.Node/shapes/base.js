@@ -5,7 +5,7 @@ class Base
   constructor(element) {
     this.element = element;
     this.center = { x: element.x, y: element.y };
-    this.type = 'Shape';
+    this.type = 'Shape'; //might be overriden as Group
     this.rounding = 12;
   }
 
@@ -18,7 +18,7 @@ class Base
     shape.setAttribute("NameU", "Shape" + shapeId);
     shape.setAttribute("LineStyle", "0");
     shape.setAttribute("FillStyle", "0");
-    shape.setAttribute("TextStyle", "0");  
+    shape.setAttribute("TextStyle", "0");
     
     shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "PinX", this.element.x));
     shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "PinY", xmlUtils.PAGE_HEIGHT - this.element.y));
