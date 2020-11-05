@@ -3,8 +3,8 @@ var xmlUtils = require('../xml-utils');
 
 class Ellipse extends Base
 {
-  constructor(element) {
-    super(element)
+  constructor(element, shapeId) {
+    super(element, shapeId);
   }
 
   processGeometry(xmlDoc, section) {

@@ -3,8 +3,8 @@ var xmlUtils = require('../xml-utils');
 
 class Rect extends Base
 {
-  constructor(element) {
-    super(element)
+  constructor(element, shapeId) {
+    super(element, shapeId);
   }
 
   processGeometry(xmlDoc, section) {

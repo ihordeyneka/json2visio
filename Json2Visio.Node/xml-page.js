@@ -26,32 +26,30 @@ function mapId(inputId)
 function createShape(shapes, element)
 {
   var figure;
+  var shapeId = mapId(element.id);
   switch (element.shape)
   {
     case 'ellipse':
-      figure = new Ellipse(element);
+      figure = new Ellipse(element, shapeId);
       break;
     case 'can':
       var subShapeId = mapId(element.id + "_child");
-      figure = new Can(element, subShapeId);
+      figure = new Can(element, shapeId, subShapeId);
       break;
     case 'hexagon':
       var hexShapeId = mapId(element.id + "_hex");
       var textShapeId = mapId(element.id + "_text");
-      figure = new Hexagon(element, hexShapeId, textShapeId);
+      figure = new Hexagon(element, shapeId, hexShapeId, textShapeId);
       break;
     case 'box':
     default:
-      figure = new Rect(element);
+      figure = new Rect(element, shapeId);
       break;
   }
 
   figureMap[element.id] = figure;
   
-  var shapeId = mapId(element.id);
-  var shape = figure.createShape(xmlDoc, shapeId);
-  shape.setAttribute("Type", figure.type);
-  
+  var shape = figure.createShape(xmlDoc);
   shapes.appendChild(shape);
 }
 

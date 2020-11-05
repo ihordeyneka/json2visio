@@ -3,18 +3,25 @@ var xmlUtils = require('../xml-utils');
 
 class Hexagon extends Base
 {
-  constructor(element, hexShapeId, textShapeId) {
-    super(element);
-    this.type = 'Group';
+  constructor(element, shapeId, hexShapeId, textShapeId) {
+    super(element, shapeId, 'Group');
     this.hexShapeId = hexShapeId;
     this.textShapeId = textShapeId;
+    this.hexRelativeCoords = [
+      {x: 0.0749, y: 0.3543},
+      {x: -0.0279, y: 0.17715},
+      {x: 0.0749, y: 0},
+      {x: 0.2795, y: 0},
+      {x: 0.3817, y: 0.17715},
+      {x: 0.2795, y: 0.3543}
+    ];
   }
 
-  createShape(xmlDoc, shapeId) {
+  createShape(xmlDoc) {
     var shape = xmlUtils.createElt(xmlDoc, "Shape");
       
-    shape.setAttribute("ID", shapeId);
-    shape.setAttribute("Type", "Group");
+    shape.setAttribute("ID", this.shapeId);
+    shape.setAttribute("Type", this.type);
     shape.setAttribute("LineStyle", "3");
     shape.setAttribute("FillStyle", "3");
     shape.setAttribute("TextStyle", "3");
@@ -68,13 +75,12 @@ class Hexagon extends Base
     section.setAttribute("N", "Geometry");
     section.setAttribute("IX", geoIndex++);
 
-    section.appendChild(xmlUtils.createRowRel(xmlDoc, "MoveTo", geoIndex++, 0.2794275997399989, 0.3543));
-    section.appendChild(xmlUtils.createRowRel(xmlDoc, "LineTo", geoIndex++, 0.07487240026000119, 0.3543));
-    section.appendChild(xmlUtils.createRowRel(xmlDoc, "LineTo", geoIndex++, -0.02740519948000119, 0.17715));
-    section.appendChild(xmlUtils.createRowRel(xmlDoc, "LineTo", geoIndex++, 0.07487240026000119, 0));
-    section.appendChild(xmlUtils.createRowRel(xmlDoc, "LineTo", geoIndex++, 0.2794275997399989, 0));
-    section.appendChild(xmlUtils.createRowRel(xmlDoc, "LineTo", geoIndex++, 0.3817051994800119, 0.17715));
-    section.appendChild(xmlUtils.createRowRel(xmlDoc, "LineTo", geoIndex++, 0.2794275997399989, 0.3543));
+    var length = this.hexRelativeCoords.length;
+    section.appendChild(xmlUtils.createRowRel(xmlDoc, "MoveTo", geoIndex++, this.hexRelativeCoords[length - 1].x, this.hexRelativeCoords[length - 1].y));
+
+    for (var coords of this.hexRelativeCoords) {
+      section.appendChild(xmlUtils.createRowRel(xmlDoc, "LineTo", geoIndex++, coords.x, coords.y));
+    }
 
     return section;
   }
@@ -102,9 +108,9 @@ class Hexagon extends Base
   }
 
   getConnectPoints() {
-    return [
-      { x: this.element.x, y: this.element.y }
-    ];
+    return this.hexRelativeCoords.map(coords => 
+      ({ x: this.element.x + (coords.x - 0.17715)*xmlUtils.CONVERSION_FACTOR, y: this.element.y + (coords.y - 0.3543)*xmlUtils.CONVERSION_FACTOR })
+    );
   }
 }
 

@@ -3,20 +3,19 @@ var xmlUtils = require('../xml-utils');
 
 class Can extends Base
 {
-  constructor(element, subShapeId) {
-    super(element);
-    this.type = 'Group';
+  constructor(element, shapeId, subShapeId) {
+    super(element, shapeId, 'Group');
     this.subShapeId = subShapeId;
     this.width = 1 * xmlUtils.CONVERSION_FACTOR;
     this.ellipseHeight = 0.25 * xmlUtils.CONVERSION_FACTOR;
     this.boxHeight = 1 * xmlUtils.CONVERSION_FACTOR;
   }
 
-  createShape(xmlDoc, shapeId) {
+  createShape(xmlDoc) {
     var shape = xmlUtils.createElt(xmlDoc, "Shape");
       
-    shape.setAttribute("ID", shapeId);
-    shape.setAttribute("Type", "Group");
+    shape.setAttribute("ID", this.shapeId);
+    shape.setAttribute("Type", this.type);
     shape.setAttribute("Master", "8"); //Can
     shape.setAttribute("FillStyle", "0");
     shape.setAttribute("TextStyle", "0");

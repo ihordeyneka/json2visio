@@ -2,9 +2,10 @@ var xmlUtils = require('../xml-utils');
 
 class Base
 {
-  constructor(element) {
+  constructor(element, shapeId, type) {
     this.element = element;
-    this.type = 'Shape';
+    this.shapeId = shapeId;
+    this.type = type || 'Shape';
     this.geo = {
       width: 120, //hardcoded
       height: 60,
@@ -14,15 +15,16 @@ class Base
     this.rounding = 12;
   }
 
-  createShape(xmlDoc, shapeId) {
+  createShape(xmlDoc) {
     var geo = this.geo;
   
     var shape = xmlUtils.createElt(xmlDoc, "Shape");
   
     var layerIndex = 0;
       
-    shape.setAttribute("ID", shapeId);
-    shape.setAttribute("NameU", "Shape" + shapeId);
+    shape.setAttribute("ID", this.shapeId);
+    shape.setAttribute("Type", this.type);
+    shape.setAttribute("NameU", "Shape" + this.shapeId);
     shape.setAttribute("LineStyle", "0");
     shape.setAttribute("FillStyle", "0");
     shape.setAttribute("TextStyle", "0");
