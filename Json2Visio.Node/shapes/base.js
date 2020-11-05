@@ -7,8 +7,8 @@ class Base
     this.shapeId = shapeId;
     this.type = type || 'Shape';
     this.geo = {
-      width: 120, //hardcoded
-      height: 60,
+      width: element.width,
+      height: element.height,
       x: element.x, //center
       y: element.y
     };
