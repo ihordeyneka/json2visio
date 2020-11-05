@@ -39,7 +39,7 @@ function createShape(shapes, element)
     case 'hexagon':
       var hexShapeId = mapId(element.id + "_hex");
       var textShapeId = mapId(element.id + "_text");
-      figure = new Hexagon(element, shapeId, hexShapeId + 1000, textShapeId);
+      figure = new Hexagon(element, shapeId, hexShapeId, textShapeId);
       break;
     case 'box':
     default:
