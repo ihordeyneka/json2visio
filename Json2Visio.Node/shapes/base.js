@@ -4,12 +4,19 @@ class Base
 {
   constructor(element) {
     this.element = element;
-    this.center = { x: element.x, y: element.y };
-    this.type = 'Shape'; //might be overriden as Group
+    this.type = 'Shape';
+    this.geo = {
+      width: 120, //hardcoded
+      height: 60,
+      x: element.x, //center
+      y: element.y
+    };
     this.rounding = 12;
   }
 
   createShape(xmlDoc, shapeId) {
+    var geo = this.geo;
+  
     var shape = xmlUtils.createElt(xmlDoc, "Shape");
   
     var layerIndex = 0;
@@ -19,13 +26,16 @@ class Base
     shape.setAttribute("LineStyle", "0");
     shape.setAttribute("FillStyle", "0");
     shape.setAttribute("TextStyle", "0");
+    //missing IsCustomNameU, Name, IsCustomName, Type
     
-    shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "PinX", this.element.x));
-    shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "PinY", xmlUtils.PAGE_HEIGHT - this.element.y));
-    shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "Width", 0, "GUARD(TEXTWIDTH(theText) + 0.4)"));
-    shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "Height", 0, "GUARD(TEXTHEIGHT(theText,Width) + 0.4)"));
-    shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "LocPinX", 0, "Width/2"));
-    shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "LocPinY", 0, "Height/2"));
+    var hw = geo.width/2, hh = geo.height/2;
+    
+    shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "PinX", geo.x));
+    shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "PinY", xmlUtils.PAGE_HEIGHT - geo.y));
+    shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "Width", geo.width));
+    shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "Height", geo.height));
+    shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "LocPinX", hw));
+    shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "LocPinY", hh));
     shape.appendChild(xmlUtils.createCellElem(xmlDoc, "LayerMember", layerIndex + ""));
     
     shape.appendChild(xmlUtils.createCellElem(xmlDoc, "FillForegnd", this.element.backgroundColor));
@@ -106,6 +116,15 @@ class Base
 
   processGeometry() {
     //implemented in actual shapes
+  }
+
+  getConnectPoints() {
+    return [
+      { x: this.geo.x - this.geo.width/2, y: this.geo.y },
+      { x: this.geo.x + this.geo.width/2, y: this.geo.y },
+      { x: this.geo.x, y: this.geo.y - this.geo.height/2 },
+      { x: this.geo.x, y: this.geo.y + this.geo.height/2 }
+    ];
   }
 
 }

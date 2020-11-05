@@ -206,7 +206,14 @@ function getForeignShape(connection, data)
     shape.appendChild(xmlUtils.createTextElem(xmlDoc, data.name));
 
   figureMap[combinedId] = {
-    center: { x: connection.dataX, y: connection.dataY }
+    getConnectPoints: function() {
+      return [
+        { x: connection.dataX - imgWidth/2, y: connection.dataY },
+        { x: connection.dataX + imgWidth/2, y: connection.dataY },
+        { x: connection.dataX, y: connection.dataY - imgHeight/2 },
+        { x: connection.dataX, y: connection.dataY + imgHeight/2 }
+      ];
+    }
   };
 
   return shape;
@@ -217,8 +224,26 @@ function getConnectBounds(fromElementId, toElementId)
   var figureFrom = figureMap[fromElementId];
   var figureTo = figureMap[toElementId];
 
-  var p0 = figureFrom.center;
-  var pe = figureTo.center;
+  var pointsFrom = figureFrom.getConnectPoints();
+  var pointsTo = figureTo.getConnectPoints();
+
+  //find min distance between points
+  var distance = 10000000;
+  var p0, pe;
+  for (var fromPoint of pointsFrom)
+  {
+    for (var toPoint of pointsTo)
+    {
+      var curDistance = Math.sqrt((fromPoint.x - toPoint.x)*(fromPoint.x - toPoint.x) +
+        (fromPoint.y - toPoint.y)*(fromPoint.y - toPoint.y));
+      if (curDistance < distance)
+      {
+        distance = curDistance;
+        p0 = fromPoint;
+        pe = toPoint;
+      }
+    }
+  }
 
   var beginX = p0.x;
   var endX = pe.x;
