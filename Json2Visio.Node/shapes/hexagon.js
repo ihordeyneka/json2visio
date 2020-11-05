@@ -100,6 +100,12 @@ class Hexagon extends Base
 
     return textShape;
   }
+
+  getConnectPoints() {
+    return [
+      { x: this.element.x, y: this.element.y }
+    ];
+  }
 }
 
 module.exports = Hexagon;

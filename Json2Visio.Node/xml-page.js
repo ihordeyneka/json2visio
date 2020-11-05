@@ -373,17 +373,15 @@ self.getPageRelXml = function(zip, input) {
 
   var relIndex = 1;
 
-  var master1Rel = xmlUtils.createElt(relDoc, "Relationship", xmlUtils.RELS_XMLNS);
-  master1Rel.setAttribute('Id', 'rId' + relIndex++);
-  master1Rel.setAttribute('Type', 'http://schemas.microsoft.com/visio/2010/relationships/master');
-  master1Rel.setAttribute('Target', '../masters/master1.xml');
-  root.appendChild(master1Rel);
+  var masters = ['master1.xml', 'master2.xml', 'master5.xml'];
 
-  var master2Rel = xmlUtils.createElt(relDoc, "Relationship", xmlUtils.RELS_XMLNS);
-  master2Rel.setAttribute('Id', 'rId' + relIndex++);
-  master2Rel.setAttribute('Type', 'http://schemas.microsoft.com/visio/2010/relationships/master');
-  master2Rel.setAttribute('Target', '../masters/master2.xml');
-  root.appendChild(master2Rel);  
+  for (var master in masters) {
+    var masterRel = xmlUtils.createElt(relDoc, "Relationship", xmlUtils.RELS_XMLNS);
+    masterRel.setAttribute('Id', 'rId' + relIndex++);
+    masterRel.setAttribute('Type', 'http://schemas.microsoft.com/visio/2010/relationships/master');
+    masterRel.setAttribute('Target', '../masters/' + master);
+    root.appendChild(masterRel);
+  }
 
   for (var data of input.data)
   {
