@@ -10,6 +10,7 @@ var xmlDoc = null;
 var figureMap = {};
 var idsMap = {};
 var idsCounter = 1;
+var usedConnects = [];
 
 function mapId(inputId)
 {
@@ -232,6 +233,14 @@ function getConnectBounds(fromElementId, toElementId)
   {
     for (var toPoint of pointsTo)
     {
+      var alreadyUsed = usedConnects.some(el => {
+        return (el.p0.x == fromPoint.x && el.p0.y == fromPoint.y && el.pe.x == toPoint.x && el.pe.y == toPoint.y) ||
+          (el.p0.x == toPoint.x && el.p0.y == toPoint.y && el.pe.x == fromPoint.x && el.pe.y == fromPoint.y);
+      });
+
+      if (alreadyUsed)
+        continue;
+
       var curDistance = Math.sqrt((fromPoint.x - toPoint.x)*(fromPoint.x - toPoint.x) +
         (fromPoint.y - toPoint.y)*(fromPoint.y - toPoint.y));
       if (curDistance < distance)
@@ -242,6 +251,8 @@ function getConnectBounds(fromElementId, toElementId)
       }
     }
   }
+
+  usedConnects.push({ p0: p0, pe: pe });
 
   var beginX = p0.x;
   var endX = pe.x;
