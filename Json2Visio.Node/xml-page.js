@@ -51,6 +51,7 @@ function createShape(shapes, element)
   figureMap[element.id] = figure;
   
   var shape = figure.createShape(xmlDoc);
+  createShapeConnects(shape, figure.getConnectPoints());
   shapes.appendChild(shape);
 }
 
@@ -79,8 +80,6 @@ function createEdge(shapes, fromElementId, toElementId, color, label, endArrow)
   //Formula is used to make the edge dynamic 
   shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "BeginX", bounds.beginX, "_WALKGLUE(BegTrigger,EndTrigger,WalkPreference)"));
   shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "BeginY", bounds.beginY, "_WALKGLUE(BegTrigger,EndTrigger,WalkPreference)"));
-  
-  //Formula is used to make the edge dynamic 
   shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "EndX", bounds.endX, "_WALKGLUE(EndTrigger,BegTrigger,WalkPreference)"));
   shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "EndY", bounds.endY, "_WALKGLUE(EndTrigger,BegTrigger,WalkPreference)"));
 
@@ -90,7 +89,7 @@ function createEdge(shapes, fromElementId, toElementId, color, label, endArrow)
   shape.appendChild(xmlUtils.createCellElem(xmlDoc, "BegTrigger", "2", "_XFTRIGGER(Sheet."+ mapId(fromElementId) +"!EventXFMod)"));
   shape.appendChild(xmlUtils.createCellElem(xmlDoc, "EndTrigger", "2", "_XFTRIGGER(Sheet."+ mapId(toElementId) +"!EventXFMod)"));
   shape.appendChild(xmlUtils.createCellElem(xmlDoc, "ShapeRouteStyle", "16"));
-  shape.appendChild(xmlUtils.createCellElem(xmlDoc, "ConFixedCode", "6"));
+  shape.appendChild(xmlUtils.createCellElem(xmlDoc, "ConFixedCode", "2"));
   shape.appendChild(xmlUtils.createCellElem(xmlDoc, "ConLineRouteExt", "1"));
 
   shape.appendChild(xmlUtils.createCellElem(xmlDoc, "LineColor", color));
@@ -126,10 +125,16 @@ function createEdge(shapes, fromElementId, toElementId, color, label, endArrow)
   }
 
   shapes.appendChild(shape);
+
+  return {
+    indexFrom: bounds.indexFrom,
+    indexTo: bounds.indexTo
+  };
 }
 
-function createConnect(connects, fromElementId, toElementId)
+function createConnect(connects, indexes, fromElementId, toElementId)
 {
+  //details here: https://docs.microsoft.com/en-us/office/vba/api/visio.vistoparts
   var connectionId = mapId(fromElementId + toElementId);
 
   var connectBegin = xmlUtils.createElt(xmlDoc, "Connect");
@@ -137,8 +142,8 @@ function createConnect(connects, fromElementId, toElementId)
   connectBegin.setAttribute("FromCell", "BeginX");
   connectBegin.setAttribute("FromPart", "9");
   connectBegin.setAttribute("ToSheet", mapId(fromElementId));
-  connectBegin.setAttribute("ToCell", "PinX");
-  connectBegin.setAttribute("ToPart", "3");
+  connectBegin.setAttribute("ToCell", "Connections.X" + (indexes.indexFrom + 1));
+  connectBegin.setAttribute("ToPart", 100 + indexes.indexFrom);
   connects.appendChild(connectBegin);
 
   var connectEnd = xmlUtils.createElt(xmlDoc, "Connect");
@@ -146,8 +151,8 @@ function createConnect(connects, fromElementId, toElementId)
   connectEnd.setAttribute("FromCell", "EndX");
   connectEnd.setAttribute("FromPart", "12");
   connectEnd.setAttribute("ToSheet", mapId(toElementId));
-  connectEnd.setAttribute("ToCell", "PinX");
-  connectEnd.setAttribute("ToPart", "3");
+  connectEnd.setAttribute("ToCell", "Connections.X" + (indexes.indexTo + 1));
+  connectEnd.setAttribute("ToPart", 100 + indexes.indexTo);
   connects.appendChild(connectEnd);    
 }
 
@@ -215,7 +220,24 @@ function getForeignShape(connection, data)
     }
   };
 
+  createShapeConnects(shape, figureMap[combinedId].getConnectPoints());
+
   return shape;
+}
+
+function createShapeConnects(shape, connectPoints) {
+  var section = xmlUtils.createElt(xmlDoc, "Section");
+
+  section.setAttribute("N", "Connection");
+  section.setAttribute("IX", 0);
+  //missing NoShow, NoSnap, NoQuickDrag
+
+  var rowIndex = 0;
+  for (var point of connectPoints) {
+    section.appendChild(xmlUtils.createRowScaled(xmlDoc, "Connection", rowIndex++, point.x, point.y));
+  }
+
+  shape.appendChild(section);
 }
 
 function getConnectBounds(fromElementId, toElementId)
@@ -264,6 +286,9 @@ function getConnectBounds(fromElementId, toElementId)
   var midX = (beginX + endX)/2;
   var midY = (beginY + endY)/2;
 
+  var indexFrom = pointsFrom.indexOf(p0);
+  var indexTo = pointsTo.indexOf(pe);
+
   return {
     beginX: beginX,
     endX: endX,
@@ -272,7 +297,9 @@ function getConnectBounds(fromElementId, toElementId)
     width: width,
     height: height,
     midX: midX,
-    midY: midY
+    midY: midY,
+    indexFrom: indexFrom,
+    indexTo: indexTo
   };
 }
 
@@ -356,17 +383,17 @@ self.getPageXml = function(input)
       var combinedId = connection.fromElementId + connection.dataId + connection.toElementId;
       var foreignData = getForeignShape(connection, data);
 
-      createEdge(shapes, connection.fromElementId, combinedId, connection.color, null, "0");
-      createConnect(connects, connection.fromElementId, combinedId);
+      var fromIndexes = createEdge(shapes, connection.fromElementId, combinedId, connection.color, null, "0");
+      createConnect(connects, fromIndexes, connection.fromElementId, combinedId);
 
-      createEdge(shapes, combinedId, connection.toElementId, connection.color, null);
-      createConnect(connects, combinedId, connection.toElementId);
+      var toIndexes = createEdge(shapes, combinedId, connection.toElementId, connection.color, null);
+      createConnect(connects, toIndexes, combinedId, connection.toElementId);
       
       shapes.appendChild(foreignData);
     }
     else {
-      createEdge(shapes, connection.fromElementId, connection.toElementId, connection.color, connection.label);
-      createConnect(connects, connection.fromElementId, connection.toElementId);
+      var indexes = createEdge(shapes, connection.fromElementId, connection.toElementId, connection.color, connection.label);
+      createConnect(connects, indexes, connection.fromElementId, connection.toElementId);
     }
   }
 
