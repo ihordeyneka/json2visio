@@ -60,7 +60,7 @@ function createEdge(shapes, fromElementId, toElementId, color, label, endArrow)
   var shape = xmlUtils.createElt(xmlDoc, "Shape");
   var connectionId = mapId(fromElementId + toElementId);
 
-  var bounds = getConnectBounds(fromElementId, toElementId);
+  var metadata = getConnectMetadata(fromElementId, toElementId);
   var layerIndex = 0;
 
   shape.setAttribute("ID", connectionId);
@@ -70,18 +70,18 @@ function createEdge(shapes, fromElementId, toElementId, color, label, endArrow)
   shape.setAttribute("Master", "4"); //Dynamic Connector Master
 
 
-  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "PinX", bounds.midX, "GUARD((BeginX+EndX)/2)"));
-  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "PinY", bounds.midY, "GUARD((BeginY+EndY)/2)"));
-  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "Width", bounds.width, "GUARD(EndX-BeginX)"));
-  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "Height", bounds.height, "GUARD(EndY-BeginY)"));
-  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "LocPinX", bounds.width/2, "GUARD(Width*0.5)"));
-  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "LocPinY", bounds.height/2, "GUARD(Height*0.5)"));
+  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "PinX", metadata.midX, "GUARD((BeginX+EndX)/2)"));
+  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "PinY", metadata.midY, "GUARD((BeginY+EndY)/2)"));
+  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "Width", metadata.width, "GUARD(EndX-BeginX)"));
+  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "Height", metadata.height, "GUARD(EndY-BeginY)"));
+  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "LocPinX", metadata.width/2, "GUARD(Width*0.5)"));
+  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "LocPinY", metadata.height/2, "GUARD(Height*0.5)"));
 
   //Formula is used to make the edge dynamic 
-  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "BeginX", bounds.beginX, "_WALKGLUE(BegTrigger,EndTrigger,WalkPreference)"));
-  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "BeginY", bounds.beginY, "_WALKGLUE(BegTrigger,EndTrigger,WalkPreference)"));
-  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "EndX", bounds.endX, "_WALKGLUE(EndTrigger,BegTrigger,WalkPreference)"));
-  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "EndY", bounds.endY, "_WALKGLUE(EndTrigger,BegTrigger,WalkPreference)"));
+  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "BeginX", metadata.beginX, "_WALKGLUE(BegTrigger,EndTrigger,WalkPreference)"));
+  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "BeginY", metadata.beginY, "_WALKGLUE(BegTrigger,EndTrigger,WalkPreference)"));
+  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "EndX", metadata.endX, "_WALKGLUE(EndTrigger,BegTrigger,WalkPreference)"));
+  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "EndY", metadata.endY, "_WALKGLUE(EndTrigger,BegTrigger,WalkPreference)"));
 
   shape.appendChild(xmlUtils.createCellElem(xmlDoc, "LayerMember", layerIndex + ""));
 
@@ -89,7 +89,7 @@ function createEdge(shapes, fromElementId, toElementId, color, label, endArrow)
   shape.appendChild(xmlUtils.createCellElem(xmlDoc, "BegTrigger", "2", "_XFTRIGGER(Sheet."+ mapId(fromElementId) +"!EventXFMod)"));
   shape.appendChild(xmlUtils.createCellElem(xmlDoc, "EndTrigger", "2", "_XFTRIGGER(Sheet."+ mapId(toElementId) +"!EventXFMod)"));
   shape.appendChild(xmlUtils.createCellElem(xmlDoc, "ShapeRouteStyle", "16"));
-  shape.appendChild(xmlUtils.createCellElem(xmlDoc, "ConFixedCode", "2"));
+  shape.appendChild(xmlUtils.createCellElem(xmlDoc, "ConFixedCode", metadata.duplicate ? "2" : "6"));
   shape.appendChild(xmlUtils.createCellElem(xmlDoc, "ConLineRouteExt", "1"));
 
   shape.appendChild(xmlUtils.createCellElem(xmlDoc, "LineColor", color));
@@ -101,15 +101,15 @@ function createEdge(shapes, fromElementId, toElementId, color, label, endArrow)
   //missing FillPattern, LineColor, Rounding, TextBkgnd
 
   var txtWidth = 240;
-  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "TxtPinX", bounds.width/2, "Inh"));
-  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "TxtPinY", bounds.height/2, "Inh"));
+  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "TxtPinX", metadata.width/2, "Inh"));
+  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "TxtPinY", metadata.height/2, "Inh"));
   shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "TxtWidth", txtWidth));
   shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "TxtHeight", 0));
   shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "TxtLocPinX", txtWidth/2, "TxtWidth/2"));
   shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "TxtLocPinY", 0, "TxtHeight/2"));
 
-  shape.appendChild(createConnectionSectionControl(bounds.width/2, bounds.height/2));
-  shape.appendChild(createConnectionSectionGeo(bounds.width, bounds.height));
+  shape.appendChild(createConnectionSectionControl(metadata.width/2, metadata.height/2));
+  shape.appendChild(createConnectionSectionGeo(metadata.width, metadata.height));
 
   if (label) {
     var sectionChar = xmlUtils.createElt(xmlDoc, "Section");
@@ -127,8 +127,8 @@ function createEdge(shapes, fromElementId, toElementId, color, label, endArrow)
   shapes.appendChild(shape);
 
   return {
-    indexFrom: bounds.indexFrom,
-    indexTo: bounds.indexTo
+    indexFrom: metadata.indexFrom,
+    indexTo: metadata.indexTo
   };
 }
 
@@ -240,7 +240,7 @@ function createShapeConnects(shape, connectPoints) {
   shape.appendChild(section);
 }
 
-function getConnectBounds(fromElementId, toElementId)
+function getConnectMetadata(fromElementId, toElementId)
 {
   var figureFrom = figureMap[fromElementId];
   var figureTo = figureMap[toElementId];
@@ -251,6 +251,7 @@ function getConnectBounds(fromElementId, toElementId)
   //find min distance between points
   var distance = 10000000;
   var p0, pe;
+  var duplicate = false;
   for (var fromPoint of pointsFrom)
   {
     for (var toPoint of pointsTo)
@@ -260,8 +261,10 @@ function getConnectBounds(fromElementId, toElementId)
           (el.p0.x == toPoint.x && el.p0.y == toPoint.y && el.pe.x == fromPoint.x && el.pe.y == fromPoint.y);
       });
 
-      if (alreadyUsed)
+      if (alreadyUsed) {
+        duplicate = true;
         continue;
+      }
 
       var curDistance = Math.sqrt((fromPoint.x - toPoint.x)*(fromPoint.x - toPoint.x) +
         (fromPoint.y - toPoint.y)*(fromPoint.y - toPoint.y));
@@ -299,7 +302,8 @@ function getConnectBounds(fromElementId, toElementId)
     midX: midX,
     midY: midY,
     indexFrom: indexFrom,
-    indexTo: indexTo
+    indexTo: indexTo,
+    duplicate: duplicate
   };
 }
 
