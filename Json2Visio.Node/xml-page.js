@@ -3,6 +3,7 @@ var Rect = require('./shapes/rect');
 var Ellipse = require('./shapes/ellipse');
 var Can = require('./shapes/can');
 var Hexagon = require('./shapes/hexagon');
+var Diamond = require('./shapes/diamond');
 
 var self = {};
 var xmlDoc = null;
@@ -41,6 +42,11 @@ function createShape(shapes, element)
       var hexShapeId = mapId(element.id + "_hex");
       var textShapeId = mapId(element.id + "_text");
       figure = new Hexagon(element, shapeId, hexShapeId + 1000, textShapeId);
+      break;
+    case 'diamond':
+      var diaShapeId = mapId(element.id + "_dia");
+      var textShapeId = mapId(element.id + "_text");
+      figure = new Diamond(element, shapeId, diaShapeId + 1000, textShapeId);
       break;
     case 'box':
     default:
