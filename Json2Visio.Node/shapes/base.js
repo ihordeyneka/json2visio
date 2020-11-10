@@ -42,6 +42,7 @@ class Base
     
     shape.appendChild(xmlUtils.createCellElem(xmlDoc, "FillForegnd", this.element.backgroundColor));
     shape.appendChild(xmlUtils.createCellElem(xmlDoc, "LineColor", this.element.borderColor));
+    shape.appendChild(xmlUtils.createCellElem(xmlDoc, "LinePattern", xmlUtils.getLinePattern(this.element.linePattern)));
 
     if (this.rounding)
       shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "Rounding", this.rounding));

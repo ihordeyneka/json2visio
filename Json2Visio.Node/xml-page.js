@@ -55,7 +55,7 @@ function createShape(shapes, element)
   shapes.appendChild(shape);
 }
 
-function createEdge(shapes, fromElementId, toElementId, color, label, endArrow)
+function createEdge(shapes, fromElementId, toElementId, color, pattern, label, endArrow)
 {
   var shape = xmlUtils.createElt(xmlDoc, "Shape");
   var connectionId = mapId(fromElementId + toElementId);
@@ -93,10 +93,11 @@ function createEdge(shapes, fromElementId, toElementId, color, label, endArrow)
   shape.appendChild(xmlUtils.createCellElem(xmlDoc, "ConLineRouteExt", "1"));
 
   shape.appendChild(xmlUtils.createCellElem(xmlDoc, "LineColor", color));
+  shape.appendChild(xmlUtils.createCellElem(xmlDoc, "LinePattern", xmlUtils.getLinePattern(pattern)));
 
   shape.appendChild(xmlUtils.createCellElem(xmlDoc, "EndArrowSize", "2"));
   shape.appendChild(xmlUtils.createCellElem(xmlDoc, "BeginArrow", "0"));
-  shape.appendChild(xmlUtils.createCellElem(xmlDoc, "EndArrow", endArrow || "1"));
+  shape.appendChild(xmlUtils.createCellElem(xmlDoc, "EndArrow", endArrow || "13"));
   shape.appendChild(xmlUtils.createCellElem(xmlDoc, "BeginArrowSize", "2"));
   //missing FillPattern, LineColor, Rounding, TextBkgnd
 
@@ -387,16 +388,16 @@ self.getPageXml = function(input)
       var combinedId = connection.fromElementId + connection.dataId + connection.toElementId;
       var foreignData = getForeignShape(connection, data);
 
-      var fromIndexes = createEdge(shapes, connection.fromElementId, combinedId, connection.color, null, "0");
+      var fromIndexes = createEdge(shapes, connection.fromElementId, combinedId, connection.color, connection.linePattern, null, "0");
       createConnect(connects, fromIndexes, connection.fromElementId, combinedId);
 
-      var toIndexes = createEdge(shapes, combinedId, connection.toElementId, connection.color, null);
+      var toIndexes = createEdge(shapes, combinedId, connection.toElementId, connection.color, connection.linePattern, null);
       createConnect(connects, toIndexes, combinedId, connection.toElementId);
       
       shapes.appendChild(foreignData);
     }
     else {
-      var indexes = createEdge(shapes, connection.fromElementId, connection.toElementId, connection.color, connection.label);
+      var indexes = createEdge(shapes, connection.fromElementId, connection.toElementId, connection.color, connection.linePattern, connection.label);
       createConnect(connects, indexes, connection.fromElementId, connection.toElementId);
     }
   }

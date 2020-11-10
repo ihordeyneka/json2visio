@@ -91,6 +91,15 @@ self.createTextElem = function(xmlDoc, name, subName)
   return textElt;
 };
 
+self.getLinePattern = function(pattern) {
+  switch (pattern) {
+    case 'dash':
+      return 2;
+    default:
+      return 1;
+  }
+};
+
 self.xmlToString = function(xmlDoc)
 {
   var content = (new window.XMLSerializer()).serializeToString(xmlDoc);

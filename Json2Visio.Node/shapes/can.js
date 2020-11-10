@@ -30,6 +30,7 @@ class Can extends Base
     
     shape.appendChild(xmlUtils.createCellElem(xmlDoc, "FillForegnd", this.element.backgroundColor));
     shape.appendChild(xmlUtils.createCellElem(xmlDoc, "LineColor", this.element.borderColor));
+    shape.appendChild(xmlUtils.createCellElem(xmlDoc, "LinePattern", xmlUtils.getLinePattern(this.element.linePattern)));
   
     shape.appendChild(this.createControlElt(xmlDoc));
     shape.appendChild(this.createSectionChar(xmlDoc));
@@ -49,6 +50,7 @@ class Can extends Base
     subShape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "LocPinY", this.height/2, "Inh"));
     subShape.appendChild(xmlUtils.createCellElem(xmlDoc, "FillForegnd", this.element.backgroundColor));
     subShape.appendChild(xmlUtils.createCellElem(xmlDoc, "LineColor", this.element.borderColor));
+    subShape.appendChild(xmlUtils.createCellElem(xmlDoc, "LinePattern", xmlUtils.getLinePattern(this.element.linePattern)));
     subShape.appendChild(this.createSubShapeGeo(xmlDoc));
     subShapes.appendChild(subShape);
     shape.appendChild(subShapes);

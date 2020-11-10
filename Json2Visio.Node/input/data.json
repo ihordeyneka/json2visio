@@ -10,7 +10,8 @@
       "fromElementId": "EHKpzSELB7XCc8XSvhLF",
       "toElementId": "svzpDqqgtDAJx3TZTZ7e",
       "color": "#00ffff",
-      "label": ""
+      "label": "",
+      "linePattern": "dash"
     },
     {
       "fromElementId": "EHKpzSELB7XCc8XSvhLF",
@@ -53,7 +54,8 @@
       "subName": "Box2",
       "shape": "can",
       "backgroundColor": "#ffff00",
-      "borderColor": "#0000ff"
+      "borderColor": "#0000ff",
+      "linePattern": "dash"
     },
     {
       "x": 425,
