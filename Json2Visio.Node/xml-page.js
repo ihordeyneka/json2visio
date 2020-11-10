@@ -420,7 +420,7 @@ self.getPageRelXml = function(zip, input) {
 
   var relIndex = 1;
 
-  var masters = ['master1.xml', 'master2.xml', 'master5.xml'];
+  var masters = ['master1.xml', 'master2.xml', 'master4.xml', 'master5.xml'];
 
   for (var master in masters) {
     var masterRel = xmlUtils.createElt(relDoc, "Relationship", xmlUtils.RELS_XMLNS);

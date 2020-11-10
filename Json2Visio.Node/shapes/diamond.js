@@ -51,7 +51,7 @@ class Diamond extends Base
 
     diaShape.setAttribute("ID", this.diaShapeId);
     diaShape.setAttribute("Type", "Shape");
-    //diaShape.setAttribute("Master", "11");
+    diaShape.setAttribute("Master", "14");
 
     diaShape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "PinX", this.element.width/2));
     diaShape.appendChild(xmlUtils.createCellElem(xmlDoc, "PinY", 0.4527));

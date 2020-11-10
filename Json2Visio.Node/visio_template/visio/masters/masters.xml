@@ -83,5 +83,28 @@
     </PageSheet>
     <Icon> AAABAAEAICAQjwAAAADoAgAAFgAAACgAAAAgAAAAQAAAAAEABAAAAAAAgAIAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAACAAACAAAAAgIAAgAAAAIAAgACAgAAAgICAAMDAwAAAAP8AAP8AAAD//wD/AAAA/w D/AP//AAD///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAd3d3d3d3dwAAAAAAAAAACP/////////wAAAAAAAAAH//////////9wAAAAAAAAD/////// ////8AAAAAAAAH////////////gAAAAAAAD/////////////AAAAAAAI/////////////4AAAAAAD //////////////3AAAAAI///////////////wAAAAf///////////////+AAAAP////////////// //8AAAj/////////////////gAAP//////////////////AAD//////////////////wAAf////// ///////////gAAAj////////////////wAAAA////////////////cAAAAI//////////////+AAA AAAP//////////////AAAAAAAP////////////+AAAAAAAD/////////////AAAAAAAAD//////// ///8AAAAAAAAAj///////////AAAAAAAAAA//////////9wAAAAAAAAAI/////////4AAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAD/////////////////AAD//gAAf/4AAH/8AAA//AAAH/gAAD/4AAAP8AAAD+AAAAfgAAAHwAAA A8AAAAGAAAADgAAAAcAAAAPAAAAD4AAAB/AAAAfwAAAf/AAAD/gAAB/+AAB//AAAP/4AAH//AAB// wAA/////////////////w==</Icon>
     <Rel r:id='rId5'/>
+  </Master>
+  <Master ID='14' NameU='Diamond' IsCustomNameU='1' Name='Diamond' IsCustomName='1' Prompt='Drag onto the page.' IconSize='1' AlignName='2' MatchByName='0' IconUpdate='1' UniqueID='{08848284-0011-0000-8E40-00608CF305B2}' BaseID='{127A7C7B-2F15-4EF5-A459-0C6085FB6D33}' PatternFlags='0' Hidden='0' MasterType='2'>
+    <PageSheet LineStyle='0' FillStyle='0' TextStyle='0'>
+      <Cell N='PageWidth' V='4' U='IN'/>
+      <Cell N='PageHeight' V='4' U='IN'/>
+      <Cell N='ShdwOffsetX' V='0.125'/>
+      <Cell N='ShdwOffsetY' V='-0.125'/>
+      <Cell N='PageScale' V='1' U='IN'/>
+      <Cell N='DrawingScale' V='1' U='IN'/>
+      <Cell N='DrawingSizeType' V='0'/>
+      <Cell N='DrawingScaleType' V='0'/>
+      <Cell N='InhibitSnap' V='0'/>
+      <Cell N='PageLockReplace' V='0' U='BOOL'/>
+      <Cell N='PageLockDuplicate' V='0' U='BOOL'/>
+      <Cell N='UIVisibility' V='0'/>
+      <Cell N='ShdwType' V='0'/>
+      <Cell N='ShdwObliqueAngle' V='0'/>
+      <Cell N='ShdwScaleFactor' V='1'/>
+      <Cell N='DrawingResizeType' V='1'/>
+      <Cell N='ShapeKeywords' V='basic,shape,geometry,trapezoid,parallel,quadrilateral,four-sided'/>
+    </PageSheet>
+    <Icon> AAABAAEAICAQjwAAAADoAgAAFgAAACgAAAAgAAAAQAAAAAEABAAAAAAAgAIAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAACAAACAAAAAgIAAgAAAAIAAgACAgAAAgICAAMDAwAAAAP8AAP8AAAD//wD/AAAA/w D/AP//AAD///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAB/+AAAAAAAAAAAAAAAAAAI///wAAAAAAAAAAAAAAAH/////4AAAAAAAAAAA AAAj///////AAAAAAAAAAAAf/////////gAAAAAAAAACP//////////8AAAAAAAB///////////// +AAAAAAI///////////////wAAAH/////////////////4AAAP////////////////8AAAAI///// /////////+AAAAAAA/////////////wAAAAAAAAj//////////4AAAAAAAAAAD/////////AAAAAA AAAAAACP//////gAAAAAAAAAAAAAAP////8AAAAAAAAAAAAAAAAI//+AAAAAAAAAAAAAAAAAAA/wA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAD//////////////////////////////////n////gf///wD///wAP//4AB//4AAH/8AAA/8AAA D+AAAAeAAAABwAAABeAAAAf4AAAv/AAAP/8AAX//gAH//+AL///wD////F////5////////////// ////////////////////w==</Icon>
+    <Rel r:id='rId4'/>
   </Master>  
 </Masters>
