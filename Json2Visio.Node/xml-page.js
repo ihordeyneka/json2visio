@@ -218,8 +218,18 @@ function getForeignShape(connection, data)
   shape.appendChild(foreignData);
 
   //text
-  if (data.name)
+  if (data.name) {
+    var sectionChar = xmlUtils.createElt(xmlDoc, "Section");
+    sectionChar.setAttribute("N", "Character");
+    var rowChar = xmlUtils.createEltWithIX(xmlDoc, "Row", 0);
+    rowChar.appendChild(xmlUtils.createCellElem(xmlDoc, "Font", "Calibri"));
+    rowChar.appendChild(xmlUtils.createCellElem(xmlDoc, "Style", "0"));
+    rowChar.appendChild(xmlUtils.createCellElem(xmlDoc, "Size", "0.144445"));
+    sectionChar.appendChild(rowChar);
+    shape.appendChild(sectionChar);
+
     shape.appendChild(xmlUtils.createTextElem(xmlDoc, data.name));
+  }
 
   figureMap[combinedId] = {
     getConnectPoints: function() {
