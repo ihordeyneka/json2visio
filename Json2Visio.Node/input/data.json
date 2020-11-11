@@ -40,7 +40,7 @@
       "id": "6YaXTdNQS6pUD5AWS8c0",
       "name": "Paper1",
       "subName": "Hexagon1 Long Text",
-      "shape": "diamond",
+      "shape": "hexagon",
       "backgroundColor": "#ffff00",
       "borderColor": "#ff0000"
     },

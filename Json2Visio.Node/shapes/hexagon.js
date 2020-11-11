@@ -7,13 +7,18 @@ class Hexagon extends Base
     super(element, shapeId, 'Group');
     this.hexShapeId = hexShapeId;
     this.textShapeId = textShapeId;
+    this.textHeight = 23.368;
+    this.hexWidth = 29.130752;
+    this.hexHeight = 25.197816;
+    this.marginHeight = 10.16;
+    this.height = this.hexHeight + this.textHeight + this.marginHeight;
     this.hexRelativeCoords = [
-      {x: 0.052431, y: 0.24801},
-      {x: -0.01953, y: 0.124005},
-      {x: 0.05243, y: 0},
-      {x: 0.19565, y: 0},
-      {x: 0.26719, y: 0.124005},
-      {x: 0.19565, y: 0.24801}
+      {x: this.hexWidth/4, y: this.hexHeight},
+      {x: 0, y: this.hexHeight/2},
+      {x: this.hexWidth/4, y: 0},
+      {x: this.hexWidth*3/4, y: 0},
+      {x: this.hexWidth, y: this.hexHeight/2},
+      {x: this.hexWidth*3/4, y: this.hexHeight}
     ];
   }
 
@@ -28,10 +33,10 @@ class Hexagon extends Base
     
     shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "PinX", this.element.x));
     shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "PinY", xmlUtils.PAGE_HEIGHT - this.element.y));
-    shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "Width", this.element.width));
-    shape.appendChild(xmlUtils.createCellElem(xmlDoc, "Height", 0.691));
-    shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "LocPinX", this.element.width/2, "Width/2"));
-    shape.appendChild(xmlUtils.createCellElem(xmlDoc, "LocPinY", 0.3455, "Height/2"));
+    shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "Width", this.width));
+    shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "Height", this.height));
+    shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "LocPinX", this.width/2, "Width/2"));
+    shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "LocPinY", this.height/2, "Height/2"));
 
     var subShapes = xmlUtils.createElt(xmlDoc, "Shapes");
 
@@ -55,12 +60,12 @@ class Hexagon extends Base
     hexShape.setAttribute("Type", "Shape");
     hexShape.setAttribute("Master", "11");
 
-    hexShape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "PinX", this.element.width/2));
-    hexShape.appendChild(xmlUtils.createCellElem(xmlDoc, "PinY", 0.470));
-    hexShape.appendChild(xmlUtils.createCellElem(xmlDoc, "Width", 0.24801));
-    hexShape.appendChild(xmlUtils.createCellElem(xmlDoc, "Height", 0.24801));
-    hexShape.appendChild(xmlUtils.createCellElem(xmlDoc, "LocPinX", 0.124005));
-    hexShape.appendChild(xmlUtils.createCellElem(xmlDoc, "LocPinY", 0.124005));
+    hexShape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "PinX", this.width/2));
+    hexShape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "PinY", this.textHeight + 6 + this.hexHeight/2));
+    hexShape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "Width", this.hexWidth));
+    hexShape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "Height", this.hexHeight));
+    hexShape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "LocPinX", this.hexWidth/2));
+    hexShape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "LocPinY", this.hexHeight/2));
 
     hexShape.appendChild(xmlUtils.createCellElem(xmlDoc, "FillForegnd", this.element.backgroundColor));
     hexShape.appendChild(xmlUtils.createCellElem(xmlDoc, "LineColor", this.element.borderColor));
@@ -81,10 +86,10 @@ class Hexagon extends Base
     section.setAttribute("IX", geoIndex++);
 
     var length = this.hexRelativeCoords.length;
-    section.appendChild(xmlUtils.createRowRel(xmlDoc, "MoveTo", geoIndex++, this.hexRelativeCoords[length - 1].x, this.hexRelativeCoords[length - 1].y));
+    section.appendChild(xmlUtils.createRowScaled(xmlDoc, "MoveTo", geoIndex++, this.hexRelativeCoords[length - 1].x, this.hexRelativeCoords[length - 1].y));
 
     for (var coords of this.hexRelativeCoords) {
-      section.appendChild(xmlUtils.createRowRel(xmlDoc, "LineTo", geoIndex++, coords.x, coords.y));
+      section.appendChild(xmlUtils.createRowScaled(xmlDoc, "LineTo", geoIndex++, coords.x, coords.y));
     }
 
     return section;
@@ -100,11 +105,11 @@ class Hexagon extends Base
     textShape.setAttribute("TextStyle", "3");
 
     textShape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "PinX", this.element.width/2));
-    textShape.appendChild(xmlUtils.createCellElem(xmlDoc, "PinY", 0.115));
+    textShape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "PinY", this.textHeight/2));
     textShape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "Width", this.element.width));
-    textShape.appendChild(xmlUtils.createCellElem(xmlDoc, "Height", 0.23));
+    textShape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "Height", this.textHeight));
     textShape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "LocPinX", this.element.width/2));
-    textShape.appendChild(xmlUtils.createCellElem(xmlDoc, "LocPinY", 0.115));
+    textShape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "LocPinY", this.textHeight/2));
     
     textShape.appendChild(this.createSectionChar(xmlDoc));
     textShape.appendChild(xmlUtils.createTextElem(xmlDoc, this.element.name, this.element.subName));
@@ -112,9 +117,19 @@ class Hexagon extends Base
     return textShape;
   }
 
+  getConnectOrigin() {
+    return {
+      x: this.element.x - this.width/2,
+      y: this.element.y - this.height/2 - this.hexHeight,
+    };
+  }
+
   getRelativeConnectPoints() {
-    return this.hexRelativeCoords.map(coords => 
-      ({ x: (coords.x - 0.124005)*xmlUtils.CONVERSION_FACTOR, y: (coords.y - 0.24801)*xmlUtils.CONVERSION_FACTOR })
+    return this.hexRelativeCoords.map(p => 
+      ({
+        x: this.width/2 - this.hexWidth/2 + p.x,
+        y: this.height/2 + p.y
+      })
     );
   }
 }
