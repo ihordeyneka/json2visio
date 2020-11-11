@@ -4,6 +4,7 @@ var Ellipse = require('./shapes/ellipse');
 var Can = require('./shapes/can');
 var Hexagon = require('./shapes/hexagon');
 var Diamond = require('./shapes/diamond');
+var Square = require('./shapes/square');
 
 var self = {};
 var xmlDoc = null;
@@ -48,6 +49,11 @@ function createShape(shapes, element)
       var textShapeId = mapId(element.id + "_text");
       figure = new Diamond(element, shapeId, diaShapeId + 1000, textShapeId);
       break;
+    case 'square':
+      var squShapeId = mapId(element.id + "_squ");
+      var textShapeId = mapId(element.id + "_text");
+      figure = new Square(element, shapeId, squShapeId + 1000, textShapeId);
+      break;      
     case 'box':
     default:
       figure = new Rect(element, shapeId);
@@ -409,7 +415,7 @@ self.getPageRelXml = function(zip, input) {
 
   var relIndex = 1;
 
-  var masters = ['master1.xml', 'master2.xml', 'master4.xml', 'master5.xml'];
+  var masters = ['master1.xml', 'master2.xml', 'master3.xml', 'master4.xml', 'master5.xml'];
 
   for (var master in masters) {
     var masterRel = xmlUtils.createElt(relDoc, "Relationship", xmlUtils.RELS_XMLNS);

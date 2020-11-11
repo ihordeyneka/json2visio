@@ -8,6 +8,7 @@
   <Override PartName="/visio/masters/masters.xml" ContentType="application/vnd.ms-visio.masters+xml"/>
   <Override PartName="/visio/masters/master1.xml" ContentType="application/vnd.ms-visio.master+xml"/>
   <Override PartName="/visio/masters/master2.xml" ContentType="application/vnd.ms-visio.master+xml"/>
+  <Override PartName="/visio/masters/master3.xml" ContentType="application/vnd.ms-visio.master+xml"/>
   <Override PartName="/visio/masters/master4.xml" ContentType="application/vnd.ms-visio.master+xml"/>
   <Override PartName="/visio/masters/master5.xml" ContentType="application/vnd.ms-visio.master+xml"/>
   <Override PartName="/visio/pages/pages.xml" ContentType="application/vnd.ms-visio.pages+xml"/>
