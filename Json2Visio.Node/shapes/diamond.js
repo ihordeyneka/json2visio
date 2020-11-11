@@ -7,8 +7,11 @@ class Diamond extends Base
     super(element, shapeId, 'Group');
     this.diaShapeId = diaShapeId;
     this.textShapeId = textShapeId;
-    this.diaWidth = 0.3372;
-    this.diaHeight = 0.3338;
+    this.textHeight = 23.368;
+    this.diaWidth = 34.25952;
+    this.diaHeight = 33.91408;
+    this.marginHeight = 10.16;
+    this.height = this.diaHeight + this.textHeight + this.marginHeight;
     this.diaRelativeCoords = [
       {x: this.diaWidth/2, y: 0},
       {x: this.diaWidth, y: this.diaHeight/2},
@@ -28,10 +31,10 @@ class Diamond extends Base
     
     shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "PinX", this.element.x));
     shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "PinY", xmlUtils.PAGE_HEIGHT - this.element.y));
-    shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "Width", this.element.width));
-    shape.appendChild(xmlUtils.createCellElem(xmlDoc, "Height", 0.691));
-    shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "LocPinX", this.element.width/2, "Width/2"));
-    shape.appendChild(xmlUtils.createCellElem(xmlDoc, "LocPinY", 0.3455, "Height/2"));
+    shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "Width", this.width));
+    shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "Height", this.height));
+    shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "LocPinX", this.width/2, "Width/2"));
+    shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "LocPinY", this.height/2, "Height/2"));
 
     var subShapes = xmlUtils.createElt(xmlDoc, "Shapes");
 
@@ -55,12 +58,12 @@ class Diamond extends Base
     diaShape.setAttribute("Type", "Shape");
     diaShape.setAttribute("Master", "14");
 
-    diaShape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "PinX", this.element.width/2));
-    diaShape.appendChild(xmlUtils.createCellElem(xmlDoc, "PinY", 0.4527));
-    diaShape.appendChild(xmlUtils.createCellElem(xmlDoc, "Width", this.diaWidth));
-    diaShape.appendChild(xmlUtils.createCellElem(xmlDoc, "Height", this.diaHeight));
-    diaShape.appendChild(xmlUtils.createCellElem(xmlDoc, "LocPinX", this.diaWidth/2));
-    diaShape.appendChild(xmlUtils.createCellElem(xmlDoc, "LocPinY", this.diaHeight/2));
+    diaShape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "PinX", this.width/2));
+    diaShape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "PinY", this.textHeight + this.marginHeight + this.diaHeight/2));
+    diaShape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "Width", this.diaWidth));
+    diaShape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "Height", this.diaHeight));
+    diaShape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "LocPinX", this.diaWidth/2));
+    diaShape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "LocPinY", this.diaHeight/2));
 
     diaShape.appendChild(xmlUtils.createCellElem(xmlDoc, "FillForegnd", this.element.backgroundColor));
     diaShape.appendChild(xmlUtils.createCellElem(xmlDoc, "LineColor", this.element.borderColor));
@@ -81,10 +84,10 @@ class Diamond extends Base
     section.setAttribute("IX", geoIndex++);
 
     var length = this.diaRelativeCoords.length;
-    section.appendChild(xmlUtils.createRowRel(xmlDoc, "MoveTo", geoIndex++, this.diaRelativeCoords[length - 1].x, this.diaRelativeCoords[length - 1].y));
+    section.appendChild(xmlUtils.createRowScaled(xmlDoc, "MoveTo", geoIndex++, this.diaRelativeCoords[length - 1].x, this.diaRelativeCoords[length - 1].y));
 
     for (var coords of this.diaRelativeCoords) {
-      section.appendChild(xmlUtils.createRowRel(xmlDoc, "LineTo", geoIndex++, coords.x, coords.y));
+      section.appendChild(xmlUtils.createRowScaled(xmlDoc, "LineTo", geoIndex++, coords.x, coords.y));
     }
 
     return section;
@@ -99,12 +102,12 @@ class Diamond extends Base
     textShape.setAttribute("FillStyle", "3");
     textShape.setAttribute("TextStyle", "3");
 
-    textShape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "PinX", this.element.width/2));
-    textShape.appendChild(xmlUtils.createCellElem(xmlDoc, "PinY", 0.115));
-    textShape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "Width", this.element.width));
-    textShape.appendChild(xmlUtils.createCellElem(xmlDoc, "Height", 0.23));
-    textShape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "LocPinX", this.element.width/2));
-    textShape.appendChild(xmlUtils.createCellElem(xmlDoc, "LocPinY", 0.115));
+    textShape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "PinX", this.width/2));
+    textShape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "PinY", this.textHeight/2));
+    textShape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "Width", this.width));
+    textShape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "Height", this.textHeight));
+    textShape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "LocPinX", this.width/2));
+    textShape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "LocPinY", this.textHeight/2));
     
     textShape.appendChild(this.createSectionChar(xmlDoc));
     textShape.appendChild(xmlUtils.createTextElem(xmlDoc, this.element.name, this.element.subName));
@@ -112,9 +115,19 @@ class Diamond extends Base
     return textShape;
   }
 
+  getConnectOrigin() {
+    return {
+      x: this.element.x - this.width/2,
+      y: this.element.y - this.height/2 - this.diaHeight,
+    };
+  }
+
   getRelativeConnectPoints() {
-    return this.diaRelativeCoords.map(coords => 
-      ({ x: (coords.x - 0.165)*xmlUtils.CONVERSION_FACTOR, y: (coords.y - 0.275)*xmlUtils.CONVERSION_FACTOR })
+    return this.diaRelativeCoords.map(p => 
+      ({
+        x: this.width/2 - this.diaWidth/2 + p.x,
+        y: this.height/2 + p.y
+      })
     );
   }
 }

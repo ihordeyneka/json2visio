@@ -116,6 +116,13 @@ class Base
     //implemented in actual shapes
   }
 
+  getConnectOrigin() {
+    return {
+      x: this.element.x - this.width/2,
+      y: this.element.y - this.height/2,
+    };
+  }
+
   getRelativeConnectPoints() {
     //might be overriden in actual shapes
     return [
@@ -127,10 +134,7 @@ class Base
   }
 
   getConnectPoints() {
-    var origin = {
-      x: this.element.x - this.width/2,
-      y: this.element.y - this.height/2,
-    };
+    var origin = this.getConnectOrigin();
     return this.getRelativeConnectPoints().map(p => 
       ({ x: origin.x + p.x, y: origin.y + p.y })
     );
