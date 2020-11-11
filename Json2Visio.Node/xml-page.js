@@ -57,7 +57,7 @@ function createShape(shapes, element)
   figureMap[element.id] = figure;
   
   var shape = figure.createShape(xmlDoc);
-  createShapeConnects(shape, figure.getConnectPoints());
+  xmlUtils.createShapeConnects(xmlDoc, shape, figure.getConnectPoints());
   shapes.appendChild(shape);
 }
 
@@ -227,24 +227,9 @@ function getForeignShape(connection, data)
     }
   };
 
-  createShapeConnects(shape, figureMap[combinedId].getConnectPoints());
+  xmlUtils.createShapeConnects(xmlDoc, shape, figureMap[combinedId].getConnectPoints());
 
   return shape;
-}
-
-function createShapeConnects(shape, connectPoints) {
-  var section = xmlUtils.createElt(xmlDoc, "Section");
-
-  section.setAttribute("N", "Connection");
-  section.setAttribute("IX", 0);
-  //missing NoShow, NoSnap, NoQuickDrag
-
-  var rowIndex = 0;
-  for (var point of connectPoints) {
-    section.appendChild(xmlUtils.createRowScaled(xmlDoc, "Connection", rowIndex++, point.x, point.y));
-  }
-
-  shape.appendChild(section);
 }
 
 function getConnectMetadata(fromElementId, toElementId)

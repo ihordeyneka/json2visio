@@ -66,6 +66,8 @@ class Diamond extends Base
 
     diaShape.appendChild(this.createDiaGeo(xmlDoc));
 
+    xmlUtils.createShapeConnects(xmlDoc, diaShape, this.diaRelativeCoords);
+
     return diaShape;
   }
 

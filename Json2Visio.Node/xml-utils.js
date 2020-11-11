@@ -100,6 +100,21 @@ self.getLinePattern = function(pattern) {
   }
 };
 
+self.createShapeConnects = function(xmlDoc, shape, connectPoints) {
+  var section = self.createElt(xmlDoc, "Section");
+
+  section.setAttribute("N", "Connection");
+  section.setAttribute("IX", 0);
+  //missing NoShow, NoSnap, NoQuickDrag
+
+  var rowIndex = 0;
+  for (var point of connectPoints) {
+    section.appendChild(self.createRowScaled(xmlDoc, "Connection", rowIndex++, point.x, point.y));
+  }
+
+  shape.appendChild(section);
+};
+
 self.xmlToString = function(xmlDoc)
 {
   var content = (new window.XMLSerializer()).serializeToString(xmlDoc);
