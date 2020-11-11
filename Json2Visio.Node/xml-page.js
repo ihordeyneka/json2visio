@@ -228,7 +228,7 @@ function getForeignShape(connection, data)
     sectionChar.appendChild(rowChar);
     shape.appendChild(sectionChar);
 
-    shape.appendChild(xmlUtils.createTextElem(xmlDoc, data.name));
+    shape.appendChild(xmlUtils.createTextElem(xmlDoc, data.name, data.subName));
   }
 
   figureMap[combinedId] = {
