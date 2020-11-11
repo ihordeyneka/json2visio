@@ -9,8 +9,8 @@ class Rect extends Base
 
   processGeometry(xmlDoc, section) {
     var geoIndex = 1;
-    var w = this.geo.width;
-    var h = this.geo.height;
+    var w = this.element.width;
+    var h = this.element.height;
   
     section.appendChild(xmlUtils.createRowScaled(xmlDoc, "MoveTo", geoIndex++, 0, h, "0", "Height"));
     section.appendChild(xmlUtils.createRowScaled(xmlDoc, "LineTo", geoIndex++, w, h, "Width", "Height"));

@@ -54,6 +54,8 @@ class Can extends Base
     subShape.appendChild(this.createSubShapeGeo(xmlDoc));
     subShapes.appendChild(subShape);
     shape.appendChild(subShapes);
+
+    xmlUtils.createShapeConnects(xmlDoc, shape, this.getRelativeConnectPoints());
   
     return shape;
   }
@@ -106,12 +108,12 @@ class Can extends Base
     return section;
   }
 
-  getConnectPoints() {
+  getRelativeConnectPoints() {
     return [
-      { x: this.element.x - this.width/2, y: this.element.y },
-      { x: this.element.x + this.width/2, y: this.element.y },
-      { x: this.element.x, y: this.element.y - (this.ellipseHeight + this.boxHeight)/2 },
-      { x: this.element.x, y: this.element.y + (this.ellipseHeight + this.boxHeight)/2 }
+      { x: this.width/2, y: 0 },
+      { x: 0, y: (this.ellipseHeight + this.boxHeight)/2 },
+      { x: this.width/2, y: (this.ellipseHeight + this.boxHeight) },
+      { x: this.width, y: (this.ellipseHeight + this.boxHeight)/2 }
     ];
   }
 }

@@ -57,7 +57,6 @@ function createShape(shapes, element)
   figureMap[element.id] = figure;
   
   var shape = figure.createShape(xmlDoc);
-  xmlUtils.createShapeConnects(xmlDoc, shape, figure.getConnectPoints());
   shapes.appendChild(shape);
 }
 

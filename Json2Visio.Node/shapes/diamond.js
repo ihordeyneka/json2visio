@@ -42,6 +42,8 @@ class Diamond extends Base
     subShapes.appendChild(textShape);
 
     shape.appendChild(subShapes);
+
+    xmlUtils.createShapeConnects(xmlDoc, shape, this.getRelativeConnectPoints());
   
     return shape;
   }
@@ -110,9 +112,9 @@ class Diamond extends Base
     return textShape;
   }
 
-  getConnectPoints() {
+  getRelativeConnectPoints() {
     return this.diaRelativeCoords.map(coords => 
-      ({ x: this.element.x + (coords.x - 0.165)*xmlUtils.CONVERSION_FACTOR, y: this.element.y + (coords.y - 0.275)*xmlUtils.CONVERSION_FACTOR })
+      ({ x: (coords.x - 0.165)*xmlUtils.CONVERSION_FACTOR, y: (coords.y - 0.275)*xmlUtils.CONVERSION_FACTOR })
     );
   }
 }

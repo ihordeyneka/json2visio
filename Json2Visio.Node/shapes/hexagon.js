@@ -42,6 +42,8 @@ class Hexagon extends Base
     subShapes.appendChild(textShape);
 
     shape.appendChild(subShapes);
+
+    xmlUtils.createShapeConnects(xmlDoc, shape, this.getRelativeConnectPoints());
   
     return shape;
   }
@@ -110,9 +112,9 @@ class Hexagon extends Base
     return textShape;
   }
 
-  getConnectPoints() {
+  getRelativeConnectPoints() {
     return this.hexRelativeCoords.map(coords => 
-      ({ x: this.element.x + (coords.x - 0.124005)*xmlUtils.CONVERSION_FACTOR, y: this.element.y + (coords.y - 0.24801)*xmlUtils.CONVERSION_FACTOR })
+      ({ x: (coords.x - 0.124005)*xmlUtils.CONVERSION_FACTOR, y: (coords.y - 0.24801)*xmlUtils.CONVERSION_FACTOR })
     );
   }
 }

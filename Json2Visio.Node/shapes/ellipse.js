@@ -9,8 +9,8 @@ class Ellipse extends Base
 
   processGeometry(xmlDoc, section) {
     var geoIndex = 1;
-    var w = this.geo.width;
-    var h = this.geo.height;
+    var w = this.element.width;
+    var h = this.element.height;
   
     section.appendChild(xmlUtils.createRowScaled(xmlDoc, "MoveTo", geoIndex++, 0, h/2, "0", "Height/2"));
     section.appendChild(xmlUtils.createRowScaled(xmlDoc, "EllipticalArcTo", geoIndex++, w, h/2, "Width", "Height/2", w/2, h, 0, w/h, "Width/2", "Height", "No Formula", "Width/Height","DL","DL"));

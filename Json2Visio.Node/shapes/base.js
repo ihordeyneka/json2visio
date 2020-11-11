@@ -6,18 +6,12 @@ class Base
     this.element = element;
     this.shapeId = shapeId;
     this.type = type || 'Shape';
-    this.geo = {
-      width: element.width,
-      height: element.height,
-      x: element.x, //center
-      y: element.y
-    };
     this.rounding = 12;
+    this.width = this.element.width;
+    this.height = this.element.height;
   }
 
   createShape(xmlDoc) {
-    var geo = this.geo;
-  
     var shape = xmlUtils.createElt(xmlDoc, "Shape");
   
     var layerIndex = 0;
@@ -28,14 +22,13 @@ class Base
     shape.setAttribute("LineStyle", "0");
     shape.setAttribute("FillStyle", "0");
     shape.setAttribute("TextStyle", "0");
-    //missing IsCustomNameU, Name, IsCustomName, Type
     
-    var hw = geo.width/2, hh = geo.height/2;
+    var hw = this.width/2, hh = this.height/2;
     
-    shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "PinX", geo.x));
-    shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "PinY", xmlUtils.PAGE_HEIGHT - geo.y));
-    shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "Width", geo.width));
-    shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "Height", geo.height));
+    shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "PinX", this.element.x));
+    shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "PinY", xmlUtils.PAGE_HEIGHT - this.element.y));
+    shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "Width", this.width));
+    shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "Height", this.height));
     shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "LocPinX", hw));
     shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "LocPinY", hh));
     shape.appendChild(xmlUtils.createCellElem(xmlDoc, "LayerMember", layerIndex + ""));
@@ -50,6 +43,8 @@ class Base
     shape.appendChild(this.createSectionChar(xmlDoc));
     shape.appendChild(this.createSectionGeo(xmlDoc));
     shape.appendChild(xmlUtils.createTextElem(xmlDoc, this.element.name, this.element.subName));
+
+    xmlUtils.createShapeConnects(xmlDoc, shape, this.getRelativeConnectPoints());
   
     return shape;
   }
@@ -121,13 +116,24 @@ class Base
     //implemented in actual shapes
   }
 
-  getConnectPoints() {
+  getRelativeConnectPoints() {
+    //might be overriden in actual shapes
     return [
-      { x: this.geo.x - this.geo.width/2, y: this.geo.y },
-      { x: this.geo.x + this.geo.width/2, y: this.geo.y },
-      { x: this.geo.x, y: this.geo.y - this.geo.height/2 },
-      { x: this.geo.x, y: this.geo.y + this.geo.height/2 }
+      { x: this.width/2, y: 0 },
+      { x: 0, y: this.height/2 },
+      { x: this.width/2, y: this.height },
+      { x: this.width, y: this.height/2 }
     ];
+  }
+
+  getConnectPoints() {
+    var origin = {
+      x: this.element.x - this.width/2,
+      y: this.element.y - this.height/2,
+    };
+    return this.getRelativeConnectPoints().map(p => 
+      ({ x: origin.x + p.x, y: origin.y + p.y })
+    );
   }
 
 }
