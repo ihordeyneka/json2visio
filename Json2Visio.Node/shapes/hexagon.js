@@ -73,6 +73,8 @@ class Hexagon extends Base
 
     hexShape.appendChild(this.createHexGeo(xmlDoc));
 
+    var connects = this.hexRelativeCoords;
+    connects.unshift({x: this.hexWidth/2, y: this.hexHeight/2});
     xmlUtils.createShapeConnects(xmlDoc, hexShape, this.hexRelativeCoords);
 
     return hexShape;

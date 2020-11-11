@@ -226,7 +226,12 @@ function getForeignShape(connection, data)
     }
   };
 
-  xmlUtils.createShapeConnects(xmlDoc, shape, figureMap[combinedId].getConnectPoints());
+  xmlUtils.createShapeConnects(xmlDoc, shape, [
+    { x: imgWidth/2, y: 0 },
+    { x: imgWidth/2, y: imgHeight },
+    { x: 0, y: imgHeight/2 },
+    { x: imgWidth, y: imgHeight/2 }
+  ]);
 
   return shape;
 }
