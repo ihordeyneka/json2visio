@@ -41,7 +41,7 @@
       "name": "Paper1",
       "subName": "Hexagon1 Long Text",
       "shape": "square",
-      "backgroundColor": "#ffff00",
+      "backgroundColor": "1",
       "borderColor": "#ff0000"
     },
     {
@@ -53,9 +53,9 @@
       "name": "Paper2",
       "subName": "Box2",
       "shape": "can",
-      "backgroundColor": "#ffff00",
+      "backgroundColor": "1",
       "borderColor": "#0000ff",
-      "linePattern": "transparent"
+      "linePattern": "dash"
     },
     {
       "x": 425,
@@ -66,7 +66,7 @@
       "name": "PaperA",
       "subName": "BoxA",
       "shape": "ellipse",
-      "backgroundColor": "#00ff00",
+      "backgroundColor": "1",
       "borderColor": "#00ff00"
     }
   ],
