@@ -95,6 +95,8 @@ self.getLinePattern = function(pattern) {
   switch (pattern) {
     case 'dash':
       return 2;
+    case 'transparent':
+      return 0;
     default:
       return 1;
   }

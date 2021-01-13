@@ -55,7 +55,7 @@
       "shape": "can",
       "backgroundColor": "#ffff00",
       "borderColor": "#0000ff",
-      "linePattern": "dash"
+      "linePattern": "transparent"
     },
     {
       "x": 425,
