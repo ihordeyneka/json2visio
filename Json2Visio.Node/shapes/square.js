@@ -65,6 +65,7 @@ class Square extends Base
     squShape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "LocPinY", this.squSize/2));
 
     squShape.appendChild(xmlUtils.createCellElem(xmlDoc, "FillForegnd", this.element.backgroundColor));
+    squShape.appendChild(xmlUtils.createCellElem(xmlDoc, "FillForegndTrans", this.element.backgroundTransparent));
     squShape.appendChild(xmlUtils.createCellElem(xmlDoc, "LineColor", this.element.borderColor));
     squShape.appendChild(xmlUtils.createCellElem(xmlDoc, "LinePattern", xmlUtils.getLinePattern(this.element.linePattern)));
 

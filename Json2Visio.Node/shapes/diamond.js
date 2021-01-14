@@ -66,6 +66,7 @@ class Diamond extends Base
     diaShape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "LocPinY", this.diaHeight/2));
 
     diaShape.appendChild(xmlUtils.createCellElem(xmlDoc, "FillForegnd", this.element.backgroundColor));
+    diaShape.appendChild(xmlUtils.createCellElem(xmlDoc, "FillForegndTrans", this.element.backgroundTransparent));
     diaShape.appendChild(xmlUtils.createCellElem(xmlDoc, "LineColor", this.element.borderColor));
     diaShape.appendChild(xmlUtils.createCellElem(xmlDoc, "LinePattern", xmlUtils.getLinePattern(this.element.linePattern)));
 

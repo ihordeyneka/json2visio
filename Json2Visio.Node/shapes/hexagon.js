@@ -68,6 +68,7 @@ class Hexagon extends Base
     hexShape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "LocPinY", this.hexHeight/2));
 
     hexShape.appendChild(xmlUtils.createCellElem(xmlDoc, "FillForegnd", this.element.backgroundColor));
+    hexShape.appendChild(xmlUtils.createCellElem(xmlDoc, "FillForegndTrans", this.element.backgroundTransparent));
     hexShape.appendChild(xmlUtils.createCellElem(xmlDoc, "LineColor", this.element.borderColor));
     hexShape.appendChild(xmlUtils.createCellElem(xmlDoc, "LinePattern", xmlUtils.getLinePattern(this.element.linePattern)));
 
