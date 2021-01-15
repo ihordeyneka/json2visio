@@ -1,41 +1,62 @@
 {
-  "connections": [
-    {
-      "fromElementId": "svzpDqqgtDAJx3TZTZ7e",
-      "toElementId": "EHKpzSELB7XCc8XSvhLF",
-      "color": "#ffff00",
-      "label": "",
-      "connectPoints": [{"x":300,"y":550}]
-    }
-  ],
-  "elements": [{
-      "x": 290,
-      "y": 290,
-      "width": 180,
-      "height": 60,
-      "id": "EHKpzSELB7XCc8XSvhLF",
-      "name": "One",
-      "subName": "box",
-      "shape": "box",
-      "backgroundColor": "#0000ff",
-      "borderColor": "#0000ff",
-      "linePattern": "dash",
-      "backgroundTransparent": "1"
-    },
-    {
-      "x": 425,
-      "y": 510,
-      "width": 180,
-      "height": 60,
-      "id": "svzpDqqgtDAJx3TZTZ7e",
-      "name": "Two",
-      "subName": "ellipse",
-      "shape": "ellipse",
-      "backgroundColor": "1",
-      "borderColor": "#00ff00",
-      "backgroundTransparent": "1"
-    }
-  ],
-  "data": [
-  ]
-}
+    "connections": [
+      {
+        "fromElementId": "svzpDqqgtDAJx3TZTZ7e",
+        "toElementId": "EHKpzSELB7XCc8XSvhLF",
+        "color": "#ff0000",
+        "label": "",
+        "connectPoints": [{"x":300,"y":350}],
+        "beginHandle": {"x":0.5,"y":0},
+        "endHandle": {"x":0.5,"y":1}
+      },
+      {
+        "fromElementId": "svzpDqqgtDAJx3TZTZ7e",
+        "toElementId": "1",
+        "color": "#ffff00",
+        "label": ""
+      }
+    ],
+    "elements": [{
+        "x": 290,
+        "y": 290,
+        "width": 180,
+        "height": 60,
+        "id": "EHKpzSELB7XCc8XSvhLF",
+        "name": "One",
+        "subName": "box",
+        "shape": "box",
+        "backgroundColor": "#0000ff",
+        "borderColor": "#0000ff",
+        "linePattern": "dash",
+        "backgroundTransparent": "1"
+      },
+      {
+        "x": 425,
+        "y": 510,
+        "width": 180,
+        "height": 60,
+        "id": "svzpDqqgtDAJx3TZTZ7e",
+        "name": "Two",
+        "subName": "ellipse",
+        "shape": "ellipse",
+        "backgroundColor": "1",
+        "borderColor": "#00ff00",
+        "backgroundTransparent": "1"
+      },
+      {
+        "x": 100,
+        "y": 400,
+        "width": 180,
+        "height": 60,
+        "id": "1",
+        "name": "Rh",
+        "subName": "rh",
+        "shape": "rhombus",
+        "backgroundColor": "1",
+        "borderColor": "#00ff00",
+        "backgroundTransparent": "1"
+      }
+    ],
+    "data": [
+    ]
+  }

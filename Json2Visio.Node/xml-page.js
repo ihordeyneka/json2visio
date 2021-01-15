@@ -5,6 +5,7 @@ var Can = require('./shapes/can');
 var Hexagon = require('./shapes/hexagon');
 var Diamond = require('./shapes/diamond');
 var Square = require('./shapes/square');
+var Rhombus = require('./shapes/rhombus');
 
 var self = {};
 var xmlDoc = null;
@@ -34,6 +35,10 @@ function createShape(shapes, element)
   {
     case 'ellipse':
       figure = new Ellipse(element, shapeId);
+      break;
+    case 'rhombus':
+      var rhShapeId = mapId(element.id + "_rh");
+      figure = new Rhombus(element, shapeId, rhShapeId + 1000);
       break;
     case 'can':
       var subShapeId = mapId(element.id + "_child");
@@ -74,12 +79,12 @@ function createEdge(shapes, options)
   var pattern = options.connection.linePattern;
   var label = options.label || null;
   var endArrow = options.endArrow || "13";
-  var connectPoints = options.connection.connectPoints || [];
+  var connectPoints = options.connection.connectPoints;
 
   var shape = xmlUtils.createElt(xmlDoc, "Shape");
   var connectionId = mapId(fromElementId + toElementId);
 
-  var metadata = getConnectMetadata(fromElementId, toElementId);
+  var metadata = getConnectMetadata(fromElementId, toElementId, options.connection.beginHandle, options.connection.endHandle);
   var layerIndex = 0;
 
   shape.setAttribute("ID", connectionId);
@@ -107,7 +112,7 @@ function createEdge(shapes, options)
   //Formula is used to make the edge dynamic (specify source id and target id)
   shape.appendChild(xmlUtils.createCellElem(xmlDoc, "BegTrigger", "2", "_XFTRIGGER(Sheet."+ mapId(fromElementId) +"!EventXFMod)"));
   shape.appendChild(xmlUtils.createCellElem(xmlDoc, "EndTrigger", "2", "_XFTRIGGER(Sheet."+ mapId(toElementId) +"!EventXFMod)"));
-  shape.appendChild(xmlUtils.createCellElem(xmlDoc, "ShapeRouteStyle", "1"));
+  shape.appendChild(xmlUtils.createCellElem(xmlDoc, "ShapeRouteStyle", connectPoints ? "1" : "16"));
   shape.appendChild(xmlUtils.createCellElem(xmlDoc, "ConFixedCode", metadata.duplicate ? "2" : "6"));
   shape.appendChild(xmlUtils.createCellElem(xmlDoc, "ConLineRouteExt", "1"));
 
@@ -130,10 +135,16 @@ function createEdge(shapes, options)
 
   shape.appendChild(createConnectionSectionControl(metadata.width/2, metadata.height/2));
 
-  connectPoints.forEach(cp => { cp.y = xmlUtils.PAGE_HEIGHT - cp.y; });
-  connectPoints.unshift({x: metadata.beginX, y: metadata.beginY});
-  connectPoints.push({x: metadata.endX, y: metadata.endY});
-  shape.appendChild(xmlUtils.createRightAngleGeo(xmlDoc, connectPoints));
+  if (connectPoints)
+  {
+    connectPoints.forEach(cp => { cp.y = xmlUtils.PAGE_HEIGHT - cp.y; });
+    connectPoints.unshift({x: metadata.beginX, y: metadata.beginY});
+    connectPoints.push({x: metadata.endX, y: metadata.endY});
+    shape.appendChild(xmlUtils.createRightAngleGeo(xmlDoc, connectPoints));
+  }
+  else {
+    shape.appendChild(xmlUtils.createStraightLineGeo(xmlDoc, metadata.width, metadata.height));
+  }
 
   if (label) {
     var sectionChar = xmlUtils.createElt(xmlDoc, "Section");
@@ -264,7 +275,7 @@ function getForeignShape(connection, data)
   return shape;
 }
 
-function getConnectMetadata(fromElementId, toElementId)
+function getConnectMetadata(fromElementId, toElementId, beginHandle, endHandle)
 {
   var figureFrom = figureMap[fromElementId];
   var figureTo = figureMap[toElementId];
@@ -272,35 +283,56 @@ function getConnectMetadata(fromElementId, toElementId)
   var pointsFrom = figureFrom.getConnectPoints();
   var pointsTo = figureTo.getConnectPoints();
 
-  //find min distance between points
-  var distance = 10000000;
   var p0, pe;
   var duplicate = false;
-  for (var fromPoint of pointsFrom)
-  {
-    for (var toPoint of pointsTo)
+
+  //if handles are given, find connect points by handles
+  if (beginHandle) {
+    var handlePoint = {
+      x: figureFrom.element.x + figureFrom.width*(beginHandle.x - 1/2),
+      y: figureFrom.element.y + figureFrom.height*(beginHandle.y - 1/2)
+    };
+    p0 = self.findClosestPoint(handlePoint, pointsFrom);
+  }
+
+  if (endHandle) {
+    var handlePoint = {
+      x: figureTo.element.x + figureTo.width*(endHandle.x - 1/2),
+      y: figureTo.element.y + figureTo.height*(endHandle.y - 1/2)
+    };
+    pe = self.findClosestPoint(handlePoint, pointsTo);
+  }
+
+  //if handles aren't given, then find connect points by min distance
+  if (!p0 || !pe) {
+    var distance = 10000000;
+    for (var fromPoint of pointsFrom)
     {
-      var alreadyUsed = usedConnects.some(el => {
-        return (el.p0.x == fromPoint.x && el.p0.y == fromPoint.y && el.pe.x == toPoint.x && el.pe.y == toPoint.y) ||
-          (el.p0.x == toPoint.x && el.p0.y == toPoint.y && el.pe.x == fromPoint.x && el.pe.y == fromPoint.y);
-      });
-
-      if (alreadyUsed) {
-        duplicate = true;
-        continue;
-      }
-
-      var curDistance = Math.sqrt((fromPoint.x - toPoint.x)*(fromPoint.x - toPoint.x) +
-        (fromPoint.y - toPoint.y)*(fromPoint.y - toPoint.y));
-      if (curDistance < distance)
+      for (var toPoint of pointsTo)
       {
-        distance = curDistance;
-        p0 = fromPoint;
-        pe = toPoint;
+        var alreadyUsed = usedConnects.some(el => {
+          return (el.p0.x == fromPoint.x && el.p0.y == fromPoint.y && el.pe.x == toPoint.x && el.pe.y == toPoint.y) ||
+            (el.p0.x == toPoint.x && el.p0.y == toPoint.y && el.pe.x == fromPoint.x && el.pe.y == fromPoint.y);
+        });
+  
+        if (alreadyUsed) {
+          duplicate = true;
+          continue;
+        }
+  
+        var curDistance = Math.sqrt((fromPoint.x - toPoint.x)*(fromPoint.x - toPoint.x) +
+          (fromPoint.y - toPoint.y)*(fromPoint.y - toPoint.y));
+        if (curDistance < distance)
+        {
+          distance = curDistance;
+          p0 = fromPoint;
+          pe = toPoint;
+        }
       }
     }
   }
 
+  //process connect points
   usedConnects.push({ p0: p0, pe: pe });
 
   var beginX = p0.x;
@@ -329,6 +361,23 @@ function getConnectMetadata(fromElementId, toElementId)
     indexTo: indexTo,
     duplicate: duplicate
   };
+}
+
+self.findClosestPoint = function(target, points) {
+  var distance = 10000000;
+  var result = null;
+
+  for (var point of points) {
+    var curDistance = Math.sqrt((point.x - target.x)*(point.x - target.x) +
+      (point.y - target.y)*(point.y - target.y));
+    if (curDistance < distance)
+    {
+      distance = curDistance;
+      result = point;
+    }
+  }
+
+  return result;
 }
 
 function createConnectionSectionControl(x, y)

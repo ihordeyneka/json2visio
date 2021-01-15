@@ -102,6 +102,19 @@ self.getLinePattern = function(pattern) {
   }
 };
 
+self.createStraightLineGeo = function(xmlDoc, width, height)
+{
+  var section = self.createElt(xmlDoc, "Section");
+
+  section.setAttribute("N", "Geometry");
+  section.setAttribute("IX", 0);
+  //missing NoShow, NoSnap, NoQuickDrag
+
+	section.appendChild(self.createRowScaled(xmlDoc, "LineTo", 2, width, height));
+
+  return section;
+}
+
 self.createRightAngleGeo = function(xmlDoc, connectPoints) {
   var section = self.createElt(xmlDoc, "Section");
 
