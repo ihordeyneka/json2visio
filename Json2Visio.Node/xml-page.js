@@ -130,10 +130,11 @@ function createEdge(shapes, options)
 
   shape.appendChild(createConnectionSectionControl(metadata.width/2, metadata.height/2));
 
+  connectPoints.forEach(cp => { cp.y = xmlUtils.PAGE_HEIGHT - cp.y; });
   connectPoints.unshift({x: metadata.beginX, y: metadata.beginY});
   connectPoints.push({x: metadata.endX, y: metadata.endY});
   shape.appendChild(xmlUtils.createRightAngleGeo(xmlDoc, connectPoints));
-  
+
   if (label) {
     var sectionChar = xmlUtils.createElt(xmlDoc, "Section");
     sectionChar.setAttribute("N", "Character");
