@@ -102,6 +102,27 @@ self.getLinePattern = function(pattern) {
   }
 };
 
+self.createRightAngleGeo = function(xmlDoc, connectPoints) {
+  var section = self.createElt(xmlDoc, "Section");
+
+  section.setAttribute("N", "Geometry");
+  section.setAttribute("IX", 0);
+
+  var index = 2;
+  var horizontal = 0;
+  var vertical = 0;
+
+  for (var i = 1; i < connectPoints.length; i++) {
+    horizontal = connectPoints[i].x - connectPoints[0].x;
+    section.appendChild(self.createRowScaled(xmlDoc, "LineTo", index++, horizontal, vertical));
+
+    vertical = connectPoints[i].y - connectPoints[0].y;
+    section.appendChild(self.createRowScaled(xmlDoc, "LineTo", index++, horizontal, vertical));
+  }
+
+  return section;
+};
+
 self.createShapeConnects = function(xmlDoc, shape, connectPoints) {
   var section = self.createElt(xmlDoc, "Section");
 

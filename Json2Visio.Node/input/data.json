@@ -4,56 +4,19 @@
       "fromElementId": "svzpDqqgtDAJx3TZTZ7e",
       "toElementId": "EHKpzSELB7XCc8XSvhLF",
       "color": "#ffff00",
-      "label": ""
-    },
-    {
-      "fromElementId": "EHKpzSELB7XCc8XSvhLF",
-      "toElementId": "svzpDqqgtDAJx3TZTZ7e",
-      "color": "#00ffff",
       "label": "",
-      "linePattern": "dash"
-    },
-    {
-      "fromElementId": "EHKpzSELB7XCc8XSvhLF",
-      "toElementId": "6YaXTdNQS6pUD5AWS8c0",
-      "color": "#ff0000",
-      "label": "this is red"
-    },
-    {
-      "fromElementId": "6YaXTdNQS6pUD5AWS8c0",
-      "toElementId": "svzpDqqgtDAJx3TZTZ7e",
-      "color": "#00ff00",
-      "label": "",
-      "dataId": "l8catTjfvt0Za6Qw8ovw",
-      "dataX": 600,
-      "dataY": 500,
-      "dataWidth": 27,
-      "dataHeight": 36
+      "connectPoints": [{"x":300,"y":550}]
     }
   ],
-  "elements": [
-    {
-      "x": 540,
-      "y": 290,
-      "width": 180,
-      "height": 150,
-      "id": "6YaXTdNQS6pUD5AWS8c0",
-      "name": "Paper1",
-      "subName": "Hexagon1 Long Text",
-      "shape": "square",
-      "backgroundColor": "1",
-      "borderColor": "#ff0000",
-      "backgroundTransparent": "1"
-    },
-    {
+  "elements": [{
       "x": 290,
       "y": 290,
       "width": 180,
-      "height": 180,
+      "height": 60,
       "id": "EHKpzSELB7XCc8XSvhLF",
-      "name": "Paper2",
-      "subName": "Box2",
-      "shape": "can",
+      "name": "One",
+      "subName": "box",
+      "shape": "box",
       "backgroundColor": "#0000ff",
       "borderColor": "#0000ff",
       "linePattern": "dash",
@@ -65,8 +28,8 @@
       "width": 180,
       "height": 60,
       "id": "svzpDqqgtDAJx3TZTZ7e",
-      "name": "PaperA",
-      "subName": "BoxA",
+      "name": "Two",
+      "subName": "ellipse",
       "shape": "ellipse",
       "backgroundColor": "1",
       "borderColor": "#00ff00",
@@ -74,12 +37,5 @@
     }
   ],
   "data": [
-    {
-      "id": "l8catTjfvt0Za6Qw8ovw",
-      "name": "Sentence",
-      "subName": "Hello",
-      "file": "image1.png",
-      "compression": "PNG"
-    }
   ]
 }
