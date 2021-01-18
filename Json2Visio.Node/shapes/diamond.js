@@ -35,7 +35,10 @@ class Diamond extends Base
     shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "Height", this.height));
     shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "LocPinX", this.width/2, "Width/2"));
     shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "LocPinY", this.height/2, "Height/2"));
-
+    if (this.element.angle) {
+      shape.appendChild(xmlUtils.createCellElem(xmlDoc, "Angle", xmlUtils.degressToRadians(this.element.angle)));
+    }
+    
     var subShapes = xmlUtils.createElt(xmlDoc, "Shapes");
 
     var diaShape = this.createDiaShape(xmlDoc);

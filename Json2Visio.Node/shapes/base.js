@@ -32,6 +32,9 @@ class Base
     shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "LocPinX", hw));
     shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "LocPinY", hh));
     shape.appendChild(xmlUtils.createCellElem(xmlDoc, "LayerMember", layerIndex + ""));
+    if (this.element.angle) {
+      shape.appendChild(xmlUtils.createCellElem(xmlDoc, "Angle", xmlUtils.degressToRadians(this.element.angle)));
+    }
     
     shape.appendChild(xmlUtils.createCellElem(xmlDoc, "FillForegnd", this.element.backgroundColor));
     shape.appendChild(xmlUtils.createCellElem(xmlDoc, "FillForegndTrans", this.element.backgroundTransparent));
@@ -136,9 +139,13 @@ class Base
 
   getConnectPoints() {
     var origin = this.getConnectOrigin();
-    return this.getRelativeConnectPoints().map(p => 
+    var points = this.getRelativeConnectPoints().map(p => 
       ({ x: origin.x + p.x, y: origin.y + p.y })
     );
+    if (this.element.angle) {
+      points = points.map(p => xmlUtils.rotatePoint(p, {x: this.element.x, y: this.element.y}, this.element.angle))
+    }
+    return points;
   }
 
 }

@@ -151,6 +151,22 @@ self.createShapeConnects = function(xmlDoc, shape, connectPoints) {
   shape.appendChild(section);
 };
 
+self.degressToRadians = function(degrees) {
+  return degrees * (Math.PI/180);
+};
+
+self.rotatePoint = function(point, center, degrees) {
+  if (!degrees)
+    return point;
+
+  var radians = self.degressToRadians(degrees);
+  var pX = point.x - center.x;
+  var pY = point.y - center.y;
+  xNew = Math.sqrt(pX * pX + pY * pY) * Math.cos(Math.atan(pY / pX) - radians) + center.x;
+  yNew = Math.sqrt(pX * pX + pY * pY) * Math.sin(Math.atan(pY / pX) - radians) + center.y;
+  return { x: xNew, y: yNew };
+}
+
 self.xmlToString = function(xmlDoc)
 {
   var content = (new window.XMLSerializer()).serializeToString(xmlDoc);

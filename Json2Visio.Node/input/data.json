@@ -24,11 +24,12 @@
         "id": "EHKpzSELB7XCc8XSvhLF",
         "name": "One",
         "subName": "box",
-        "shape": "box",
+        "shape": "diamond",
         "backgroundColor": "#0000ff",
         "borderColor": "#0000ff",
         "linePattern": "dash",
-        "backgroundTransparent": "1"
+        "backgroundTransparent": "1",
+        "angle": 90
       },
       {
         "x": 425,
@@ -41,7 +42,8 @@
         "shape": "ellipse",
         "backgroundColor": "1",
         "borderColor": "#00ff00",
-        "backgroundTransparent": "1"
+        "backgroundTransparent": "1",
+        "angle": 90
       },
       {
         "x": 100,

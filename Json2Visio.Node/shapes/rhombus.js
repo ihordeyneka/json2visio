@@ -8,12 +8,6 @@ class Rhombus extends Base
     this.rhShapeId = rhShapeId;
     this.width = this.element.width;
     this.height = this.element.height;
-    this.rhRelativeCoords = [
-      {x: this.width/2, y: 0},
-      {x: this.width, y: this.height/2},
-      {x: this.width/2, y: this.height},
-      {x: 0, y: this.height/2}
-    ];
   }
 
   createShape(xmlDoc) {
@@ -31,7 +25,9 @@ class Rhombus extends Base
     shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "Height", this.height));
     shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "LocPinX", this.width/2, "Width/2"));
     shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "LocPinY", this.height/2, "Height/2"));
-    
+    if (this.element.angle) {
+      shape.appendChild(xmlUtils.createCellElem(xmlDoc, "Angle", xmlUtils.degressToRadians(this.element.angle)));
+    }
 
     var subShapes = xmlUtils.createElt(xmlDoc, "Shapes");
 
@@ -66,51 +62,23 @@ class Rhombus extends Base
     rhShape.appendChild(xmlUtils.createTextElem(xmlDoc, this.element.name, this.element.subName));
     
 
-    rhShape.appendChild(this.createRhGeo(xmlDoc));
+    rhShape.appendChild(this.createSectionGeo(xmlDoc));
 
-    xmlUtils.createShapeConnects(xmlDoc, rhShape, this.rhRelativeCoords);
+    xmlUtils.createShapeConnects(xmlDoc, rhShape, this.getRelativeConnectPoints());
 
     return rhShape;
   }
 
-  createRhGeo(xmlDoc) {
-    var geoIndex = 0;
-    var section = xmlUtils.createElt(xmlDoc, "Section");
-
-    section.setAttribute("N", "Geometry");
-    section.setAttribute("IX", geoIndex++);
-
-    var length = this.rhRelativeCoords.length;
-    section.appendChild(xmlUtils.createRowScaled(xmlDoc, "MoveTo", geoIndex++, this.rhRelativeCoords[length - 1].x, this.rhRelativeCoords[length - 1].y));
-
-    for (var coords of this.rhRelativeCoords) {
-      section.appendChild(xmlUtils.createRowScaled(xmlDoc, "LineTo", geoIndex++, coords.x, coords.y));
-    }
-
-    return section;
-  }
-
-  getConnectOrigin() {
-    return {
-      x: this.element.x,
-      y: this.element.y 
-    };
-  }
-
-  getRelativeConnectPoints() {
-    return this.rhRelativeCoords.map(p => 
-      ({
-        x: p.x/2,
-        y: p.y/2
-      })
-    );
-  }
-
-  getConnectPoints() {
-    var origin = this.getConnectOrigin();
-    return this.getRelativeConnectPoints().map(p => 
-      ({ x: origin.x, y: origin.y + p.y })
-    );
+  processGeometry(xmlDoc, section) {
+    var geoIndex = 1;
+    var w = this.element.width;
+    var h = this.element.height;
+  
+    section.appendChild(xmlUtils.createRowScaled(xmlDoc, "MoveTo", geoIndex++, 0, h/2, "0", "Height/2"));
+    section.appendChild(xmlUtils.createRowScaled(xmlDoc, "LineTo", geoIndex++, w/2, h, "Width/2", "Height"));
+    section.appendChild(xmlUtils.createRowScaled(xmlDoc, "LineTo", geoIndex++, w, h/2, "Width", "Height/2"));
+    section.appendChild(xmlUtils.createRowScaled(xmlDoc, "LineTo", geoIndex++, w/2, 0, "Width/2", "0"));
+    section.appendChild(xmlUtils.createRowScaled(xmlDoc, "LineTo", geoIndex++, 0, h/2, "0", "Height/2"));
   }
 }
 
