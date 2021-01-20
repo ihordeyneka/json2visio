@@ -288,19 +288,11 @@ function getConnectMetadata(fromElementId, toElementId, beginHandle, endHandle)
 
   //if handles are given, find connect points by handles
   if (beginHandle) {
-    var handlePoint = {
-      x: figureFrom.element.x + figureFrom.width*(beginHandle.x - 1/2),
-      y: figureFrom.element.y + figureFrom.height*(beginHandle.y - 1/2)
-    };
-    p0 = self.findClosestPoint(handlePoint, pointsFrom);
+    p0 = self.findConnectPointForHandle(figureFrom, beginHandle, pointsFrom);
   }
 
   if (endHandle) {
-    var handlePoint = {
-      x: figureTo.element.x + figureTo.width*(endHandle.x - 1/2),
-      y: figureTo.element.y + figureTo.height*(endHandle.y - 1/2)
-    };
-    pe = self.findClosestPoint(handlePoint, pointsTo);
+    pe = self.findConnectPointForHandle(figureTo, endHandle, pointsTo);
   }
 
   //if handles aren't given, then find connect points by min distance
@@ -363,7 +355,16 @@ function getConnectMetadata(fromElementId, toElementId, beginHandle, endHandle)
   };
 }
 
-self.findClosestPoint = function(target, points) {
+self.findConnectPointForHandle = function(figure, handle, points) {
+  var target = {
+    x: figure.element.x + figure.width*(handle.x - 1/2),
+    y: figure.element.y + figure.height*(handle.y - 1/2)
+  };
+
+  if (figure.element.angle) {
+    target = xmlUtils.rotatePoint(target, {x: figure.element.x, y: figure.element.y}, figure.element.angle);
+  }
+
   var distance = 10000000;
   var result = null;
 
