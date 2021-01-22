@@ -6,7 +6,6 @@ class Base
     this.element = element;
     this.shapeId = shapeId;
     this.type = type || 'Shape';
-    this.rounding = 12;
     this.width = this.element.width;
     this.height = this.element.height;
   }

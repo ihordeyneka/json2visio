@@ -5,6 +5,7 @@ class Rect extends Base
 {
   constructor(element, shapeId) {
     super(element, shapeId);
+    this.rounding = 12;
   }
 
   processGeometry(xmlDoc, section) {

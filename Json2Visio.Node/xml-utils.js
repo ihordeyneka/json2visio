@@ -66,17 +66,23 @@ self.createRowRel = function(xmlDoc, type, index, x, y, xF, yF, a, b, c, d, aF, 
 
 self.createTextElem = function(xmlDoc, name, subName) {
   var textElt = self.createElt(xmlDoc, "Text");
-  if (subName) {
-    textElt.appendChild(self.createEltWithIX(xmlDoc, "cp", 0));
-    textElt.appendChild(self.createEltWithIX(xmlDoc, "pp", 0));
-    textElt.appendChild(self.createEltWithIX(xmlDoc, "tp", 0));
-    textElt.appendChild(xmlDoc.createTextNode(name + "\n"));
-    textElt.appendChild(self.createEltWithIX(xmlDoc, "cp", 1));
-    textElt.appendChild(xmlDoc.createTextNode(subName));
-  }
-  else {
-    textElt.appendChild(xmlDoc.createTextNode(name));
-  }
+  textElt.appendChild(self.createEltWithIX(xmlDoc, "cp", 0));
+  textElt.appendChild(self.createEltWithIX(xmlDoc, "pp", 0));
+  textElt.appendChild(self.createEltWithIX(xmlDoc, "tp", 0));
+  textElt.appendChild(xmlDoc.createTextNode(name + "\n"));
+  textElt.appendChild(self.createEltWithIX(xmlDoc, "cp", 1));
+  textElt.appendChild(xmlDoc.createTextNode(subName || ""));
+  // if (subName) {
+  //   textElt.appendChild(self.createEltWithIX(xmlDoc, "cp", 0));
+  //   textElt.appendChild(self.createEltWithIX(xmlDoc, "pp", 0));
+  //   textElt.appendChild(self.createEltWithIX(xmlDoc, "tp", 0));
+  //   textElt.appendChild(xmlDoc.createTextNode(name + "\n"));
+  //   textElt.appendChild(self.createEltWithIX(xmlDoc, "cp", 1));
+  //   textElt.appendChild(xmlDoc.createTextNode(subName || ""));
+  // }
+  // else {
+  //   textElt.appendChild(xmlDoc.createTextNode(name));
+  // }
   return textElt;
 };
 
@@ -112,38 +118,34 @@ self.createRightAngleGeo = function(xmlDoc, connectPoints) {
   var index = 2;
   var horizontal = 0;
   var vertical = 0;
-  var len = connectPoints.length;
-  var vectAngle = Math.abs(self.getVectorsAngle(connectPoints[0], connectPoints[len - 1]));
-  if (vectAngle > Math.PI / 4 && vectAngle < Math.PI * 3 / 4) {
-    vertical = connectPoints[1].y - connectPoints[0].y;
-    section.appendChild(self.createRowScaled(xmlDoc, "LineTo", index++, horizontal, vertical));
 
-    horizontal = connectPoints[1].x - connectPoints[0].x;
-    section.appendChild(self.createRowScaled(xmlDoc, "LineTo", index++, horizontal, vertical));
+  var goVertical = null;
 
-    for (var i = 2; i < connectPoints.length; i++) {
-      horizontal = connectPoints[i].x - connectPoints[0].x;
-      section.appendChild(self.createRowScaled(xmlDoc, "LineTo", index++, horizontal, vertical));
-
-      vertical = connectPoints[i].y - connectPoints[0].y;
-      section.appendChild(self.createRowScaled(xmlDoc, "LineTo", index++, horizontal, vertical));
+  for (var i = 1; i < connectPoints.length; i++) {
+    if (i + 1 < connectPoints.length && goVertical == null) {
+      var vectAngle = Math.abs(self.getVectorsAngle(connectPoints[i - 1], connectPoints[i + 1]));
+      goVertical = vectAngle > Math.PI / 4 && vectAngle < Math.PI * 3 / 4;
     }
-  }
-  else {
-    horizontal = connectPoints[1].x - connectPoints[0].x;
-    section.appendChild(self.createRowScaled(xmlDoc, "LineTo", index++, horizontal, vertical));
 
-    vertical = connectPoints[1].y - connectPoints[0].y;
-    section.appendChild(self.createRowScaled(xmlDoc, "LineTo", index++, horizontal, vertical));
-
-    for (var i = 2; i < connectPoints.length; i++) {
+    if (goVertical) {
       vertical = connectPoints[i].y - connectPoints[0].y;
       section.appendChild(self.createRowScaled(xmlDoc, "LineTo", index++, horizontal, vertical));
 
       horizontal = connectPoints[i].x - connectPoints[0].x;
       section.appendChild(self.createRowScaled(xmlDoc, "LineTo", index++, horizontal, vertical));
+
+      goVertical = horizontal == 0;
+    } else {
+      horizontal = connectPoints[i].x - connectPoints[0].x;
+      section.appendChild(self.createRowScaled(xmlDoc, "LineTo", index++, horizontal, vertical));
+
+      vertical = connectPoints[i].y - connectPoints[0].y;
+      section.appendChild(self.createRowScaled(xmlDoc, "LineTo", index++, horizontal, vertical));
+
+      goVertical = vertical != 0;
     }
   }
+  
   return section;
 };
 
@@ -163,7 +165,8 @@ self.createShapeConnects = function(xmlDoc, shape, connectPoints) {
 };
 
 self.degressToRadians = function(degrees) {
-  return degrees * (Math.PI / 180);
+  var normalized = -degrees; //counterclockwise change to clockwise
+  return normalized * (Math.PI / 180);
 };
 
 self.rotatePoint = function(point, center, degrees) {
