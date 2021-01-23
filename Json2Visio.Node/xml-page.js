@@ -125,9 +125,12 @@ function createEdge(shapes, options)
   shape.appendChild(xmlUtils.createCellElem(xmlDoc, "BeginArrowSize", "2"));
   //missing FillPattern, LineColor, Rounding, TextBkgnd
 
+  var txtPinX = connectPoints ? connectPoints[0].x + metadata.width/2 - metadata.midX : metadata.width/2;
+  var txtPinY = connectPoints ? xmlUtils.PAGE_HEIGHT - connectPoints[0].y + metadata.height/2 - metadata.midY : metadata.height/2;
+
   var txtWidth = 240;
-  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "TxtPinX", metadata.width/2, "Inh"));
-  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "TxtPinY", metadata.height/2, "Inh"));
+  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "TxtPinX", txtPinX, "Inh"));
+  shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "TxtPinY", txtPinY, "Inh"));
   shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "TxtWidth", txtWidth));
   shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "TxtHeight", 0));
   shape.appendChild(xmlUtils.createCellElemScaled(xmlDoc, "TxtLocPinX", txtWidth/2, "TxtWidth/2"));

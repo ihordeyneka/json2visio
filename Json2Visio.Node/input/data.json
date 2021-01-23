@@ -1,15 +1,34 @@
 {
 	"connections": [{
+		"fromElementId": "5",
+		"toElementId": "3",
+		"color": "#404040",
+		"fontColor": "#404040",
+		"endArrow": true,
+		"connectPoints": [{
+			"x": 610,
+			"y": 320
+		}],
+		"label": "second",
+		"beginHandle": {
+			"x": "0.5",
+			"y": "0"
+		},
+		"endHandle": {
+			"x": "0",
+			"y": "0.5"
+		}
+	}, {
 		"fromElementId": "2",
 		"toElementId": "5",
 		"color": "#404040",
 		"fontColor": "#404040",
 		"endArrow": true,
 		"connectPoints": [{
-			"x": 380,
-			"y": 310
+			"x": 370,
+			"y": 320
 		}],
-		"label": "this",
+		"label": "first message",
 		"beginHandle": {
 			"x": "0.5",
 			"y": "1"
@@ -51,32 +70,6 @@
 		"width": 80,
 		"height": 70,
 		"shape": "rhombus",
-		"fontColor": "#404040",
-		"backgroundColor": "#ffffff",
-		"backgroundTransparent": "1",
-		"borderColor": "#404040"
-	}, {
-		"x": 548,
-		"y": 108,
-		"id": "14",
-		"name": "Before 90",
-		"angle": "-90",
-		"width": 100,
-		"height": 30,
-		"shape": "ellipse",
-		"fontColor": "#404040",
-		"backgroundColor": "#ffffff",
-		"backgroundTransparent": "1",
-		"borderColor": "#404040"
-	}, {
-		"x": 548,
-		"y": 504,
-		"id": "17",
-		"name": "After 90",
-		"angle": "-90",
-		"width": 100,
-		"height": 30,
-		"shape": "ellipse",
 		"fontColor": "#404040",
 		"backgroundColor": "#ffffff",
 		"backgroundTransparent": "1",
