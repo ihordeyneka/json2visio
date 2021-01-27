@@ -126,7 +126,23 @@ class Square extends Base
   }
 
   getRelativeConnectPoints() {
-    return this.squRelativeCoords.map(p => 
+    
+    var relativeCoords = [
+      { x: this.squSize/4, y: 0 },
+      { x: this.squSize/2, y: 0 },
+      { x: this.squSize*3/4, y: 0 },
+      { x: 0, y: this.squSize/4 },
+      { x: 0, y: this.squSize/2 },
+      { x: 0, y: this.squSize*3/4 },
+      { x: this.squSize/4, y: this.squSize },
+      { x: this.squSize/2, y: this.squSize },
+      { x: this.squSize*3/4, y: this.squSize },
+      { x: this.squSize, y: this.squSize/4 },
+      { x: this.squSize, y: this.squSize/2 },
+      { x: this.squSize, y: this.squSize*3/4 }
+    ];
+  
+    return relativeCoords.map(p => 
       ({
         x: this.width/2 - this.squSize/2 + p.x,
         y: this.height/2 + p.y

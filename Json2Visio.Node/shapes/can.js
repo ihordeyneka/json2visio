@@ -114,11 +114,26 @@ class Can extends Base
   }
 
   getRelativeConnectPoints() {
+    var w = this.width;
+    var h = this.ellipseHeight;
+    var leftMidX = w/4;
+    var rightMidX = w*3/4;
+    var topMidY = w != 0 ? (h/2 + this.boxHeight + Math.sqrt(h*h/4 - h*h/(w*w)*(leftMidX-w/2)*(leftMidX-w/2))) : h/2;
+    var bottomMidY = w != 0 ? (h/2 - Math.sqrt(h*h/4 - h*h/(w*w)*(leftMidX-w/2)*(leftMidX-w/2))) : h/2;
+
     return [
+      { x: leftMidX, y: bottomMidY },
       { x: this.width/2, y: 0 },
+      { x: rightMidX, y: bottomMidY },
+      { x: 0, y: (this.ellipseHeight + this.boxHeight)/4 },
       { x: 0, y: (this.ellipseHeight + this.boxHeight)/2 },
+      { x: 0, y: (this.ellipseHeight + this.boxHeight)*3/4 },
+      { x: leftMidX, y: topMidY },
       { x: this.width/2, y: (this.ellipseHeight + this.boxHeight) },
-      { x: this.width, y: (this.ellipseHeight + this.boxHeight)/2 }
+      { x: rightMidX, y: topMidY },
+      { x: this.width, y: (this.ellipseHeight + this.boxHeight)/4 },
+      { x: this.width, y: (this.ellipseHeight + this.boxHeight)/2 },
+      { x: this.width, y: (this.ellipseHeight + this.boxHeight)*3/4 }
     ];
   }
 }

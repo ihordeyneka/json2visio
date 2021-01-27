@@ -127,7 +127,18 @@ class Diamond extends Base
   }
 
   getRelativeConnectPoints() {
-    return this.diaRelativeCoords.map(p => 
+    var relativeCoords = [
+      { x: this.diaWidth/4, y: this.diaHeight/4 },
+      { x: this.diaWidth/2, y: 0 },
+      { x: this.diaWidth/4, y: this.diaHeight*3/4 },
+      { x: this.diaWidth, y: this.diaHeight/2 },
+      { x: this.diaWidth*3/4, y: this.diaHeight*3/4 },
+      { x: this.diaWidth/2, y: this.diaHeight },
+      { x: this.diaWidth*3/4, y: this.diaHeight/4 },
+      { x: 0, y: this.diaHeight/2 }
+    ];
+
+    return relativeCoords.map(p => 
       ({
         x: this.width/2 - this.diaWidth/2 + p.x,
         y: this.height/2 + p.y
