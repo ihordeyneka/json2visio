@@ -120,6 +120,7 @@ self.createRightAngleGeo = function(xmlDoc, connectPoints) {
   var vertical = 0;
 
   var goVertical = null;
+  var corners = [];
 
   for (var i = 1; i < connectPoints.length; i++) {
     if (i + 1 < connectPoints.length && goVertical == null) {
@@ -129,20 +130,28 @@ self.createRightAngleGeo = function(xmlDoc, connectPoints) {
 
     if (goVertical) {
       vertical = connectPoints[i].y - connectPoints[0].y;
-      section.appendChild(self.createRowScaled(xmlDoc, "LineTo", index++, horizontal, vertical));
+      corners.push({x: horizontal, y: vertical});
 
       horizontal = connectPoints[i].x - connectPoints[0].x;
-      section.appendChild(self.createRowScaled(xmlDoc, "LineTo", index++, horizontal, vertical));
+      corners.push({x: horizontal, y: vertical});
 
       goVertical = horizontal == 0;
     } else {
       horizontal = connectPoints[i].x - connectPoints[0].x;
-      section.appendChild(self.createRowScaled(xmlDoc, "LineTo", index++, horizontal, vertical));
+      corners.push({x: horizontal, y: vertical});
 
       vertical = connectPoints[i].y - connectPoints[0].y;
-      section.appendChild(self.createRowScaled(xmlDoc, "LineTo", index++, horizontal, vertical));
+      corners.push({x: horizontal, y: vertical});
 
       goVertical = vertical != 0;
+    }
+  }
+
+  for (var i = 0; i < corners.length; i++) {
+    var skip = (i > 0 && i + 1 < corners.length) &&
+      (corners[i - 1].x === corners[i + 1].x || corners[i - 1].y === corners[i + 1].y);
+    if (!skip) {
+      section.appendChild(self.createRowScaled(xmlDoc, "LineTo", index++, corners[i].x, corners[i].y));
     }
   }
   
