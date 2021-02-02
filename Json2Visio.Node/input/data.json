@@ -1,13 +1,32 @@
 {
 	"connections": [{
+		"fromElementId": "3",
+		"toElementId": "2",
+		"color": "#404040",
+		"fontColor": "#404040",
+		"endArrow": true,
+		"connectPoints": [{
+			"x": 630,
+			"y": 224
+		}],
+		"label": null,
+		"beginHandle": {
+			"x": "0.25",
+			"y": "1"
+		},
+		"endHandle": {
+			"x": "0.5",
+			"y": "1"
+		}
+	}, {
 		"fromElementId": "2",
 		"toElementId": "3",
 		"color": "#404040",
 		"fontColor": "#404040",
 		"endArrow": true,
 		"connectPoints": [{
-			"x": 590,
-			"y": 110
+			"x": 738,
+			"y": 130
 		}],
 		"label": null,
 		"beginHandle": {
@@ -20,8 +39,8 @@
 		}
 	}],
 	"elements": [{
-		"x": 442,
-		"y": 224,
+		"x": 600,
+		"y": 155,
 		"id": "2",
 		"name": "Text",
 		"width": 100,

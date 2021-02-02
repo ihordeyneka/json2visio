@@ -148,9 +148,12 @@ self.createRightAngleGeo = function(xmlDoc, connectPoints) {
   }
 
   for (var i = 0; i < corners.length; i++) {
-    var skip = (i > 0 && i + 1 < corners.length) &&
+    var redundant = (i > 0 && i + 1 < corners.length) &&
       (corners[i - 1].x === corners[i + 1].x || corners[i - 1].y === corners[i + 1].y);
-    if (!skip) {
+    if (redundant) {
+      corners.splice(i, 1);
+      i--;      
+    } else {
       section.appendChild(self.createRowScaled(xmlDoc, "LineTo", index++, corners[i].x, corners[i].y));
     }
   }
