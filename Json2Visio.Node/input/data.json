@@ -1,37 +1,61 @@
 {
 	"connections": [{
-		"fromElementId": "3",
-		"toElementId": "2",
-		"color": "#404040",
-		"fontColor": "#404040",
+		"fromElementId": "5",
+		"toElementId": "9",
+		"color": "#b80000",
 		"endArrow": true,
 		"connectPoints": [{
-			"x": 630,
-			"y": 224
+			"x": 250,
+			"y": 280
 		}],
 		"label": null,
-		"beginHandle": {
-			"x": "0.25",
-			"y": "1"
-		},
-		"endHandle": {
-			"x": "0.5",
-			"y": "1"
-		}
+		"beginHandle": {},
+		"endHandle": {}
 	}, {
-		"fromElementId": "2",
-		"toElementId": "3",
-		"color": "#404040",
-		"fontColor": "#404040",
+		"fromElementId": "10",
+		"toElementId": "5",
+		"color": "#b80000",
+		"endArrow": true,
+		"label": null,
+		"beginHandle": {},
+		"endHandle": {}
+	}, {
+		"fromElementId": "11",
+		"toElementId": "9",
+		"color": "#b80000",
 		"endArrow": true,
 		"connectPoints": [{
-			"x": 738,
-			"y": 130
+			"x": 200,
+			"y": 100
+		}],
+		"label": null,
+		"beginHandle": {},
+		"endHandle": {}
+	}, {
+		"fromElementId": "10",
+		"toElementId": "6",
+		"color": "#404040",
+		"endArrow": true,
+		"connectPoints": [{
+			"x": 360,
+			"y": 250
+		}],
+		"label": null,
+		"beginHandle": {},
+		"endHandle": {}
+	}, {
+		"fromElementId": "6",
+		"toElementId": "11",
+		"color": "#404040",
+		"endArrow": true,
+		"connectPoints": [{
+			"x": 350,
+			"y": 110
 		}],
 		"label": null,
 		"beginHandle": {
-			"x": "0.5",
-			"y": "0"
+			"x": "0",
+			"y": "0.5"
 		},
 		"endHandle": {
 			"x": "0.5",
@@ -39,11 +63,23 @@
 		}
 	}],
 	"elements": [{
-		"x": 600,
-		"y": 155,
-		"id": "2",
-		"name": "Text",
+		"x": 280,
+		"y": 220,
+		"id": "7",
+		"name": "",
 		"width": 100,
+		"height": 180,
+		"shape": "rectangle",
+		"fontColor": "#404040",
+		"backgroundColor": "#ffffff",
+		"backgroundTransparent": "1",
+		"borderColor": "#404040"
+	}, {
+		"x": 280,
+		"y": 285,
+		"id": "5",
+		"name": "Box 4",
+		"width": 80,
 		"height": 30,
 		"shape": "rectangle",
 		"fontColor": "#404040",
@@ -51,17 +87,68 @@
 		"backgroundTransparent": "1",
 		"borderColor": "#404040"
 	}, {
-		"x": 738,
-		"y": 188,
-		"id": "3",
-		"name": "Text",
-		"width": 100,
+		"x": 354.5,
+		"y": 175,
+		"id": "6",
+		"name": "Box 1",
+		"angle": "90",
+		"width": 109,
+		"height": 30,
+		"shape": "rectangle",
+		"fontColor": "#404040",
+		"backgroundColor": "#ffffff",
+		"backgroundTransparent": "1",
+		"borderColor": "#404040"
+	}, {
+		"x": 203,
+		"y": 295,
+		"id": "8",
+		"name": "Box 3",
+		"angle": "-90",
+		"width": 106,
+		"height": 30,
+		"shape": "rectangle",
+		"fontColor": "#404040",
+		"backgroundColor": "#ffffff",
+		"backgroundTransparent": "1",
+		"borderColor": "#404040"
+	}, {
+		"x": 204,
+		"y": 175,
+		"id": "9",
+		"name": "Box 2",
+		"angle": "-90",
+		"width": 128,
+		"height": 30,
+		"shape": "rectangle",
+		"fontColor": "#404040",
+		"backgroundColor": "#ffffff",
+		"backgroundTransparent": "1",
+		"borderColor": "#404040"
+	}, {
+		"x": 286.5,
+		"y": 335,
+		"id": "10",
+		"name": "Ellpise 2",
+		"width": 73,
 		"height": 30,
 		"shape": "ellipse",
 		"fontColor": "#404040",
 		"backgroundColor": "#ffffff",
 		"backgroundTransparent": "1",
-		"borderColor": "#404040"
+		"borderColor": "#b80000"
+	}, {
+		"x": 280,
+		"y": 105,
+		"id": "11",
+		"name": "Ellipse 1",
+		"width": 80,
+		"height": 30,
+		"shape": "ellipse",
+		"fontColor": "#404040",
+		"backgroundColor": "#ffffff",
+		"backgroundTransparent": "1",
+		"borderColor": "#b80000"
 	}],
 	"data": []
 }

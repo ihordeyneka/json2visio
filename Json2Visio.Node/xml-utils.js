@@ -9,6 +9,14 @@ var self = {
   RELS_XMLNS: "http://schemas.openxmlformats.org/package/2006/relationships"
 };
 
+
+var DIRECTION = {
+  TOP: 0,
+  RIGHT: 1,
+  BOTTOM: 2,
+  LEFT: 3
+};
+
 self.PAGE_HEIGHT = 11 * self.CONVERSION_FACTOR;
 
 self.createXmlDocument = function() {
@@ -109,19 +117,20 @@ self.createStraightLineGeo = function(xmlDoc, width, height) {
   return section;
 }
 
-self.createRightAngleGeo = function(xmlDoc, connectPoints) {
+self.createRightAngleGeo = function(xmlDoc, connectPoints, fromShape, toShape) {
   var section = self.createElt(xmlDoc, "Section");
 
   section.setAttribute("N", "Geometry");
   section.setAttribute("IX", 0);
 
   var index = 2;
-  var horizontal = 0;
-  var vertical = 0;
+  var horizontal = connectPoints[0].x;
+  var vertical = connectPoints[0].y;
 
   var goVertical = null;
-  var corners = [];
+  var corners = [connectPoints[0]];
 
+  //walk through connect points and determine coords of corner points
   for (var i = 1; i < connectPoints.length; i++) {
     if (i + 1 < connectPoints.length && goVertical == null) {
       var vectAngle = Math.abs(self.getVectorsAngle(connectPoints[i - 1], connectPoints[i + 1]));
@@ -129,37 +138,151 @@ self.createRightAngleGeo = function(xmlDoc, connectPoints) {
     }
 
     if (goVertical) {
-      vertical = connectPoints[i].y - connectPoints[0].y;
+      vertical = connectPoints[i].y;
       corners.push({x: horizontal, y: vertical});
 
-      horizontal = connectPoints[i].x - connectPoints[0].x;
+      horizontal = connectPoints[i].x;
       corners.push({x: horizontal, y: vertical});
 
       goVertical = horizontal == 0;
     } else {
-      horizontal = connectPoints[i].x - connectPoints[0].x;
+      horizontal = connectPoints[i].x;
       corners.push({x: horizontal, y: vertical});
 
-      vertical = connectPoints[i].y - connectPoints[0].y;
+      vertical = connectPoints[i].y;
       corners.push({x: horizontal, y: vertical});
 
       goVertical = vertical != 0;
     }
   }
 
-  for (var i = 0; i < corners.length; i++) {
+  //add more corners to walk around shapes if needed
+  var beginWalkAroundCorners = self.produceWalkAroundCorners(corners[0], corners[1], fromShape.element)
+  if (beginWalkAroundCorners.length > 0) {
+    corners.splice(1, 0, ...(beginWalkAroundCorners.reverse()));
+  }
+
+  var last = corners.length - 1;
+  var endWalkAroundCorners = self.produceWalkAroundCorners(corners[last], corners[last - 1], toShape.element)
+  if (endWalkAroundCorners.length > 0) {
+    corners.splice(last, 0, ...endWalkAroundCorners);
+  }
+
+  //remove points which are not corners (on the same line as previous and next)
+  //this helps in Visio Online when dragging
+  //then draw lines
+  for (var i = 1; i < corners.length; i++) {
     var redundant = (i > 0 && i + 1 < corners.length) &&
       (corners[i - 1].x === corners[i + 1].x || corners[i - 1].y === corners[i + 1].y);
     if (redundant) {
       corners.splice(i, 1);
       i--;      
     } else {
-      section.appendChild(self.createRowScaled(xmlDoc, "LineTo", index++, corners[i].x, corners[i].y));
+      section.appendChild(self.createRowScaled(xmlDoc, "LineTo", index++, corners[i].x - connectPoints[0].x, corners[i].y - connectPoints[0].y));
     }
   }
   
   return section;
 };
+
+self.produceWalkAroundCorners = function(shapeConnect, cornerConnect, shape) {
+  var walkAroundCorners = [];
+
+  var shapeLeft = shape.x - shape.width/2;
+  var shapeTop = self.PAGE_HEIGHT - shape.y + shape.height/2;
+  var shapeRight = shape.x + shape.width/2;
+  var shapeBottom = self.PAGE_HEIGHT - shape.y - shape.height/2;
+
+  var margin = 20;
+
+  var side = self.getShapeConnectSide(shape, shapeConnect);
+
+  if (cornerConnect.x > shapeConnect.x)
+  {
+    if (side.primary == DIRECTION.LEFT) {
+      var walkAroundY = side.secondary == DIRECTION.TOP ? shapeTop + margin : shapeBottom - margin;
+      walkAroundCorners.push({x: cornerConnect.x, y: walkAroundY});
+      walkAroundCorners.push({x: shapeConnect.x - margin, y: walkAroundY});
+      walkAroundCorners.push({x: shapeConnect.x - margin, y: shapeConnect.y});
+    } else if (side.primary == DIRECTION.TOP) {
+      walkAroundCorners.push({x: cornerConnect.x, y: shapeTop + margin});
+      walkAroundCorners.push({x: shapeConnect.x, y: shapeTop + margin});
+    } else if (side.primary == DIRECTION.BOTTOM) {
+      walkAroundCorners.push({x: cornerConnect.x, y: shapeBottom - margin});
+      walkAroundCorners.push({x: shapeConnect.x, y: shapeBottom - margin});
+    }
+  } else if (cornerConnect.x < shapeConnect.x)
+  {
+    if (side.primary == DIRECTION.RIGHT) {
+      var walkAroundY = side.secondary == DIRECTION.TOP ? shapeTop + margin : shapeBottom - margin;
+      walkAroundCorners.push({x: cornerConnect.x, y: walkAroundY});
+      walkAroundCorners.push({x: shapeConnect.x + margin, y: walkAroundY});
+      walkAroundCorners.push({x: shapeConnect.x + margin, y: shapeConnect.y});
+    } else if (side.primary == DIRECTION.TOP) {
+      walkAroundCorners.push({x: cornerConnect.x, y: shapeTop + margin});
+      walkAroundCorners.push({x: shapeConnect.x, y: shapeTop + margin});
+    } else if (side.primary == DIRECTION.BOTTOM) {
+      walkAroundCorners.push({x: cornerConnect.x, y: shapeBottom - margin});
+      walkAroundCorners.push({x: shapeConnect.x, y: shapeBottom - margin});
+    }
+  }
+  else if (cornerConnect.y > shapeConnect.y)
+  {
+    if (side.primary == DIRECTION.BOTTOM) {
+      var walkAroundX = side.secondary == DIRECTION.RIGHT ? shapeRight + margin : shapeLeft - margin;
+      walkAroundCorners.push({x: walkAroundX, y: cornerConnect.y});
+        walkAroundCorners.push({x: walkAroundX, y: shapeConnect.y - margin});
+        walkAroundCorners.push({x: shapeConnect.x, y: shapeConnect.y - margin});
+    } else if (side.primary == DIRECTION.RIGHT) {
+      walkAroundCorners.push({x: shapeRight + margin, y: cornerConnect.y});
+      walkAroundCorners.push({x: shapeRight + margin, y: shapeConnect.y});
+    } else if (side.primary == DIRECTION.LEFT) {
+      walkAroundCorners.push({x: shapeLeft - margin, y: cornerConnect.y});
+      walkAroundCorners.push({x: shapeLeft - margin, y: shapeConnect.y});
+    }
+  }
+  else if (cornerConnect.y < shapeConnect.y)
+  {
+    if (side.primary == DIRECTION.TOP) {
+      var walkAroundX = side.secondary == DIRECTION.RIGHT ? shapeRight + margin : shapeLeft - margin;
+      walkAroundCorners.push({x: walkAroundX, y: cornerConnect.y});
+      walkAroundCorners.push({x: walkAroundX, y: shapeConnect.y + margin});
+      walkAroundCorners.push({x: shapeConnect.x, y: shapeConnect.y + margin});
+    } else if (side.primary == DIRECTION.RIGHT) {
+      walkAroundCorners.push({x: shapeRight + margin, y: cornerConnect.y});
+      walkAroundCorners.push({x: shapeRight + margin, y: shapeConnect.y});
+    } else if (side.primary == DIRECTION.LEFT) {
+      walkAroundCorners.push({x: shapeLeft - margin, y: cornerConnect.y});
+      walkAroundCorners.push({x: shapeLeft - margin, y: shapeConnect.y});
+    }
+  }
+
+  return walkAroundCorners;
+}
+
+self.getShapeConnectSide = function(shape, shapeConnect) {
+  var shapeLeft = shape.x - shape.width/2;
+  var shapeTop = self.PAGE_HEIGHT - shape.y + shape.height/2;
+  var shapeRight = shape.x + shape.width/2;
+  var shapeBottom = self.PAGE_HEIGHT - shape.y - shape.height/2;
+
+  var distances = [
+    {side: DIRECTION.LEFT, isHorizontal: true, distance: Math.abs(shapeLeft - shapeConnect.x)},
+    {side: DIRECTION.TOP, isHorizontal: false, distance: Math.abs(shapeTop - shapeConnect.y)},
+    {side: DIRECTION.RIGHT, isHorizontal: true, distance: Math.abs(shapeRight - shapeConnect.x)},
+    {side: DIRECTION.BOTTOM, isHorizontal: false, distance: Math.abs(shapeBottom - shapeConnect.y)},
+  ];
+
+  distances = distances.sort((d1, d2) => d1.distance - d2.distance);
+
+  var primaryDistance = distances[0];
+  var secondaryDistance = distances.find(d => d.isHorizontal != primaryDistance.isHorizontal);
+
+  return {
+    primary: primaryDistance.side,
+    secondary: secondaryDistance.side
+  }
+}
 
 self.createShapeConnects = function(xmlDoc, shape, connectPoints) {
   var section = self.createElt(xmlDoc, "Section");

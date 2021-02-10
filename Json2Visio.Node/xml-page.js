@@ -143,7 +143,7 @@ function createEdge(shapes, options)
     connectPoints.forEach(cp => { cp.y = xmlUtils.PAGE_HEIGHT - cp.y; });
     connectPoints.unshift({x: metadata.beginX, y: metadata.beginY});
     connectPoints.push({x: metadata.endX, y: metadata.endY});
-    shape.appendChild(xmlUtils.createRightAngleGeo(xmlDoc, connectPoints));
+    shape.appendChild(xmlUtils.createRightAngleGeo(xmlDoc, connectPoints, figureMap[fromElementId], figureMap[toElementId]));
   }
   else {
     shape.appendChild(xmlUtils.createStraightLineGeo(xmlDoc, metadata.width, metadata.height));
