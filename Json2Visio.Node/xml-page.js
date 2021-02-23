@@ -27,6 +27,11 @@ function mapId(inputId)
   return generatedId;
 }
 
+function mapIdArgs(...args) {
+  var arrayId = args.join('__');
+  return mapId(arrayId);
+}
+
 function createShape(shapes, element)
 {
   var figure;
@@ -82,7 +87,7 @@ function createEdge(shapes, options)
   var connectPoints = options.connection.connectPoints;
 
   var shape = xmlUtils.createElt(xmlDoc, "Shape");
-  var connectionId = mapId(fromElementId + toElementId);
+  var connectionId = mapIdArgs(fromElementId, toElementId);
 
   var metadata = getConnectMetadata(fromElementId, toElementId, options.connection.beginHandle, options.connection.endHandle);
   var layerIndex = 0;
@@ -173,7 +178,7 @@ function createEdge(shapes, options)
 function createConnect(connects, indexes, fromElementId, toElementId)
 {
   //details here: https://docs.microsoft.com/en-us/office/vba/api/visio.vistoparts
-  var connectionId = mapId(fromElementId + toElementId);
+  var connectionId = mapIdArgs(fromElementId, toElementId);
 
   var connectBegin = xmlUtils.createElt(xmlDoc, "Connect");
   connectBegin.setAttribute("FromSheet", connectionId);
