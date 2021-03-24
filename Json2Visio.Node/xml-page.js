@@ -36,44 +36,67 @@ function createShape(shapes, element)
 {
   var figure;
   var shapeId = mapId(element.id);
-  switch (element.shape)
-  {
-    case 'ellipse':
-      figure = new Ellipse(element, shapeId);
-      break;
-    case 'rhombus':
-      var rhShapeId = mapId(element.id + "_rh");
-      figure = new Rhombus(element, shapeId, rhShapeId + 1000);
-      break;
-    case 'can':
-      var subShapeId = mapId(element.id + "_child");
-      figure = new Can(element, shapeId, subShapeId);
-      break;
-    case 'hexagon':
-      var hexShapeId = mapId(element.id + "_hex");
-      var textShapeId = mapId(element.id + "_text");
-      figure = new Hexagon(element, shapeId, hexShapeId + 1000, textShapeId);
-      break;
-    case 'diamond':
-      var diaShapeId = mapId(element.id + "_dia");
-      var textShapeId = mapId(element.id + "_text");
-      figure = new Diamond(element, shapeId, diaShapeId + 1000, textShapeId);
-      break;
-    case 'square':
-      var squShapeId = mapId(element.id + "_squ");
-      var textShapeId = mapId(element.id + "_text");
-      figure = new Square(element, shapeId, squShapeId + 1000, textShapeId);
-      break;      
-    case 'box':
-    default:
-      figure = new Rect(element, shapeId);
-      break;
-  }
 
-  figureMap[element.id] = figure;
+  if (element.innerDiagram) {
+    element.shape = 'box';
+    var group = createInnerGroup(shapes, element);
+    createInnerDiagram(group, element);
+  } else {
+    switch (element.shape)
+    {
+      case 'ellipse':
+        figure = new Ellipse(element, shapeId);
+        break;
+      case 'rhombus':
+        var rhShapeId = mapId(element.id + "_rh");
+        figure = new Rhombus(element, shapeId, rhShapeId + 1000);
+        break;
+      case 'can':
+        var subShapeId = mapId(element.id + "_child");
+        figure = new Can(element, shapeId, subShapeId);
+        break;
+      case 'hexagon':
+        var hexShapeId = mapId(element.id + "_hex");
+        var textShapeId = mapId(element.id + "_text");
+        figure = new Hexagon(element, shapeId, hexShapeId + 1000, textShapeId);
+        break;
+      case 'diamond':
+        var diaShapeId = mapId(element.id + "_dia");
+        var textShapeId = mapId(element.id + "_text");
+        figure = new Diamond(element, shapeId, diaShapeId + 1000, textShapeId);
+        break;
+      case 'square':
+        var squShapeId = mapId(element.id + "_squ");
+        var textShapeId = mapId(element.id + "_text");
+        figure = new Square(element, shapeId, squShapeId + 1000, textShapeId);
+        break;      
+      case 'box':
+      default:
+        figure = new Rect(element, shapeId);
+        break;
+    }
   
-  var shape = figure.createShape(xmlDoc);
-  shapes.appendChild(shape);
+    figureMap[element.id] = figure;
+    
+    var shape = figure.createShape(xmlDoc);
+
+    shapes.appendChild(shape);
+    return shape;
+  }
+}
+
+function createInnerGroup(shapes, element) {
+  var clone = {
+    id: element.id,
+    x: element.x,
+    y: element.y,
+    name: " ",
+    width: element.width,
+    height: element.height,
+    shape: "box",
+    backgroundTransparent: "1"
+  };
+  return createShape(shapes, clone);
 }
 
 function createEdge(shapes, options)
@@ -426,6 +449,26 @@ function createDataSectionGeo(shape)
   section.appendChild(xmlUtils.createRowRel(xmlDoc, "RelLineTo", geoIndex++, 0, 0));
 
   shape.appendChild(section);
+}
+
+function createInnerDiagram(group, element) {
+  var shapes = xmlUtils.createElt(xmlDoc, "Shapes");
+  group.appendChild(shapes);
+
+  var clone = JSON.parse(JSON.stringify(element));
+  clone.id += "_subchild";
+  clone.innerDiagram = null;
+  clone.x = clone.x - element.x + element.width/2;
+  clone.y = xmlUtils.PAGE_HEIGHT - (clone.y - element.y + element.height/2);
+  createShape(shapes, clone); //add self without inner diagram
+
+  //now add children
+  for (var subElement of element.innerDiagram.elements)
+  {
+    subElement.x = subElement.x - element.x + element.width/2;
+    subElement.y = xmlUtils.PAGE_HEIGHT - (subElement.y - element.y + element.height/2);
+    createShape(shapes, subElement);
+  }
 }
 
 self.getPageXml = function(input)

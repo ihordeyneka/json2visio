@@ -1,20 +1,5 @@
 {
 	"connections": [{
-		"fromElementId": "2",
-		"toElementId": "3",
-		"color": "#404040",
-		"fontColor": "#404040",
-		"endArrow": true,
-		"label": null,
-		"beginHandle": {
-			"x": "1",
-			"y": "0.5"
-		},
-		"endHandle": {
-			"x": "0",
-			"y": "0.5"
-		}
-	}, {
 		"fromElementId": "3",
 		"toElementId": "4",
 		"color": "#404040",
@@ -29,67 +14,38 @@
 			"x": "0",
 			"y": "0.5"
 		}
-	}, {
-		"fromElementId": "4",
-		"toElementId": "5",
-		"color": "#404040",
-		"fontColor": "#404040",
-		"endArrow": true,
-		"connectPoints": [{
-			"x": 880,
-			"y": 140
-		}],
-		"label": null,
-		"beginHandle": {
-			"x": "1",
-			"y": "0.5"
-		},
-		"endHandle": {
-			"x": "1",
-			"y": "0.5"
-		}
-	}, {
-		"fromElementId": "35",
-		"toElementId": "34",
-		"color": "#404040",
-		"fontColor": "#404040",
-		"endArrow": true,
-		"label": null,
-		"beginHandle": {
-			"x": "0",
-			"y": "0.5"
-		},
-		"endHandle": {
-			"x": "1",
-			"y": "0.5"
-		}
 	}],
 	"elements": [{
-		"x": 167.5,
-		"y": 95,
-		"id": "2",
-		"name": "BOX1",
-		"width": 235,
-		"height": 90,
-		"shape": "rectangle",
-		"fontColor": "#774400",
-		"backgroundColor": "#C3D9FF",
-		"backgroundTransparent": "0",
-		"borderColor": "#4d4d4d"
-	}, {
-		"x": 490,
+		"x": 290,
 		"y": 95,
 		"id": "3",
 		"name": "box2",
-		"width": 160,
-		"height": 50,
+		"width": 240,
+		"height": 120,
 		"shape": "rectangle",
 		"fontColor": "#774400",
 		"backgroundColor": "#C3D9FF",
 		"backgroundTransparent": "0",
-		"borderColor": "#6482B9"
+		"borderColor": "#6482B9",
+		"innerDiagram": {
+			"connections": [],
+			"elements": [{
+				"x": 290,
+				"y": 95,
+				"id": "31",
+				"name": "Circle",
+				"width": 69,
+				"height": 69,
+				"shape": "ellipse",
+				"fontColor": "#000000",
+				"backgroundColor": "#cccccc",
+				"backgroundTransparent": "0",
+				"borderColor": "#6482B9"
+			}],
+			"data": []
+		}
 	}, {
-		"x": 814.5,
+		"x": 514.5,
 		"y": 94.5,
 		"id": "4",
 		"name": "Circle",
@@ -100,42 +56,6 @@
 		"backgroundColor": "#c1e1c5",
 		"backgroundTransparent": "0",
 		"borderColor": "#6482B9"
-	}, {
-		"x": 160,
-		"y": 180,
-		"id": "5",
-		"name": "Box3",
-		"width": 220,
-		"height": 40,
-		"shape": "rectangle",
-		"fontColor": "#774400",
-		"backgroundColor": "#C3D9FF",
-		"backgroundTransparent": "0",
-		"borderColor": "#6482B9"
-	}, {
-		"x": 1090,
-		"y": 940,
-		"id": "34",
-		"name": "box4",
-		"width": 180,
-		"height": 40,
-		"shape": "rectangle",
-		"fontColor": "#774400",
-		"backgroundColor": "#C3D9FF",
-		"backgroundTransparent": "0",
-		"borderColor": "#6482B9"
-	}, {
-		"x": 1475,
-		"y": 940,
-		"id": "35",
-		"name": "box5",
-		"width": 90,
-		"height": 40,
-		"shape": "rectangle",
-		"fontColor": "#774400",
-		"backgroundColor": "#ffffff",
-		"backgroundTransparent": "0",
-		"borderColor": "#4d4d4d"
 	}],
 	"data": []
 }
